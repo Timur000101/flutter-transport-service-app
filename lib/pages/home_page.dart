@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:sto_app/core/const.dart';
-import 'package:sto_app/pages/profilePage/profile_page.dart';
-import 'package:sto_app/pages/requestPage/request_page.dart';
-import 'package:sto_app/pages/servicesPage/services_page.dart';
+import 'package:sto_app/pages/profile_page.dart';
+import 'package:sto_app/pages/request_page.dart';
+import 'package:sto_app/pages/services_page.dart';
 import 'package:sto_app/sto_icons_icons.dart';
 
 class HomePage extends StatefulWidget {
