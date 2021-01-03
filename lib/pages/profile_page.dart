@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sto_app/core/const.dart';
 import 'package:sto_app/models/menu_item.dart';
 import 'package:sto_app/sto_icons_new_icons.dart';
+import 'package:sto_app/widgets/app_widgets.dart';
 
 class ProfilePage extends StatefulWidget {
   @override
@@ -25,31 +26,7 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
-      appBar: AppBar(
-        elevation: 0,
-        title: Text("Профиль",
-            style: TextStyle(
-                color: AppColors.mainTextColor,
-                fontFamily: 'Montserrat Semibold',
-                fontSize: 18)),
-        // actions: <Widget>[
-        //   IconButton(
-        //     icon: Icon(
-        //       StoIconsNew.edit,
-        //       size: 35,
-        //       color: AppColors.mainColor,
-        //     ),
-        //     tooltip: "Edit Profile",
-        //     onPressed: () {},
-        //   ),
-        //   SizedBox(
-        //     width: 10,
-        //   )
-        // ],
-        backgroundColor: AppColors.backgroundColor,
-        shadowColor: Colors.white,
-        bottomOpacity: 1,
-      ),
+      appBar: buildAppBar("Профиль"),
       body: ListView(
         // padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         children: [
@@ -92,13 +69,16 @@ class _ProfilePageState extends State<ProfilePage> {
           SizedBox(
             height: 30.0,
           ),
-          RaisedButton(
-            onPressed: () {},
-            padding: const EdgeInsets.symmetric(vertical: 20.0),
-            textColor: Colors.white,
-            color: AppColors.mainColor,
-            elevation: 3.0,
-            child: Text("Выйти из аккаунта"),
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 20.0),
+            child: RaisedButton(
+              onPressed: () {},
+              padding: const EdgeInsets.symmetric(vertical: 20.0),
+              textColor: Colors.white,
+              color: AppColors.mainColor,
+              elevation: 3.0,
+              child: Text("Выйти из аккаунта"),
+            ),
           ),
           SizedBox(
             height: 20.0,
@@ -111,7 +91,7 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget _buildProfileHeader(BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height * 0.32,
+      height: 235,
       padding: EdgeInsets.symmetric(horizontal: 5.0, vertical: 10.0),
       decoration: BoxDecoration(
           // borderRadius: BorderRadius.circular(20),
