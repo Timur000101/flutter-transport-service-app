@@ -14,7 +14,11 @@ class _RequestPageState extends State<RequestPage> {
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
       appBar: buildAppBar("Заявки"),
-      body: Center()
+      body: Container(
+        child: Center(
+          child: Text("Страница заявки", style: TextStyle(color: AppColors.mainTextColor),),
+        ),
+      )
     );
   }
 }

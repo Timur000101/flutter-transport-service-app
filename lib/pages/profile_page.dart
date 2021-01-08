@@ -124,7 +124,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         style: TextStyle(
                             fontSize: 18, fontFamily: 'Montserrat SemiBold')),
                       Text(
-                        "8 (777) 789-78-65",
+                        "8 (702) 545-72-03",
                         style: TextStyle(
                             fontSize: 16,
                             fontFamily: 'Montserrat Regular',

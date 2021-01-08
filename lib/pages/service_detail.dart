@@ -43,12 +43,12 @@ class _ServiceDetailState extends State<ServiceDetail> {
                                       ? Icon(Icons.check_box)
                                       : Icon(
                                           Icons.check_box_outline_blank_outlined),
-                                  onTap: () {
-                                    setState(() {
-                                      isSelected = !isSelected;
-                                      print(isSelected);
-                                    });
-                                  },
+                                  // onTap: () {
+                                  //   setState(() {
+                                  //     isSelected = !isSelected;
+                                  //     print(isSelected);
+                                  //   });
+                                  // },
                                 ),
                               )
                             : SizedBox();
