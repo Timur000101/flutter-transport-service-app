@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sto_app/widgets/app_widgets.dart';
@@ -11,6 +13,8 @@ class RequestPageDetail extends StatefulWidget {
 
 class _RequestPageDetailState extends State<RequestPageDetail> {
   CarouselSlider carouselSlider;
+  final priceController = TextEditingController();
+  final timeController = TextEditingController();
 
   int _current = 0;
   List imgList = [
@@ -34,124 +38,227 @@ class _RequestPageDetailState extends State<RequestPageDetail> {
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
       appBar: buildAppBar("Заявки"),
-      body: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            carouselSlider = CarouselSlider(
-              height: 160.0,
-              initialPage: 0,
-              enlargeCenterPage: true,
-              autoPlay: true,
-              reverse: false,
-              enableInfiniteScroll: true,
-              autoPlayInterval: Duration(seconds: 2),
-              autoPlayAnimationDuration: Duration(milliseconds: 2000),
-              pauseAutoPlayOnTouch: Duration(seconds: 10),
-              scrollDirection: Axis.horizontal,
-              onPageChanged: (index) {
-                setState(() {
-                  _current = index;
-                });
-              },
-              items: imgList.map((imgUrl) {
-                return Builder(
-                  builder: (BuildContext context) {
-                    return Container(
-                      width: 290,
-                      decoration: BoxDecoration(
-                        color: Colors.grey[600],
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(15),
-                        child: Image.network(
-                          imgUrl,
-                          fit: BoxFit.cover,
+      body: SingleChildScrollView(
+        reverse: true,
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              carouselSlider = CarouselSlider(
+                height: 160.0,
+                initialPage: 0,
+                enlargeCenterPage: true,
+                // autoPlay: true,
+                reverse: false,
+                // enableInfiniteScroll: true,
+                // autoPlayInterval: Duration(seconds: 2),
+                // autoPlayAnimationDuration: Duration(milliseconds: 2000),
+                // pauseAutoPlayOnTouch: Duration(seconds: 10),
+                scrollDirection: Axis.horizontal,
+                onPageChanged: (index) {
+                  setState(() {
+                    _current = index;
+                  });
+                },
+                items: imgList.map((imgUrl) {
+                  return Builder(
+                    builder: (BuildContext context) {
+                      return Container(
+                        width: MediaQuery.of(context).size.width,
+                        margin: EdgeInsets.symmetric(horizontal: 10.0),
+                        decoration: BoxDecoration(
+                          color: Colors.grey[600],
+                          borderRadius: BorderRadius.circular(15),
                         ),
-                      ),
-                    );
-                  },
-                );
-              }).toList(),
-            ),
-            SizedBox(
-              height: 15,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: map<Widget>(imgList, (index, url) {
-                return Container(
-                  width: 10.0,
-                  height: 10.0,
-                  margin: EdgeInsets.symmetric(vertical: 1.0, horizontal: 2.0),
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color:
-                        _current == index ? Colors.redAccent : Colors.grey[500],
-                  ),
-                );
-              }),
-            ),
-            SizedBox(
-              height: 20.0,
-            ),
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: 10),
-              child: Column(
-                children: [
-                  Text(
-                    "Mercedez-Benz C55 AMG",
-                    style: TextStyle(
-                      fontFamily: 'Montserrat SemiBold',
-                      fontSize: 18,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(15),
+                          child: Image.network(
+                            imgUrl,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      );
+                    },
+                  );
+                }).toList(),
+              ),
+              SizedBox(
+                height: 15,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: map<Widget>(imgList, (index, url) {
+                  return Container(
+                    width: 10.0,
+                    height: 10.0,
+                    margin:
+                        EdgeInsets.symmetric(vertical: 1.0, horizontal: 2.0),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: _current == index
+                          ? Colors.redAccent
+                          : Colors.grey[500],
                     ),
-                  ),
-                ],
+                  );
+                }),
               ),
-            ),
-            Text("Ремонт ходовой/подвески/геометрия",
-                style: TextStyle(
-                  fontFamily: "Montserrat Medium",
-                  fontSize: 16,
-                )),
-            Container(
-              margin: const EdgeInsets.all(15.0),
-              padding: const EdgeInsets.all(10.0),
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  border: Border.all(color: Colors.grey[600])),
-              child: Text(
-                "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.",
-                style: TextStyle(fontFamily: "Montserrat Regular"),
+              SizedBox(
+                height: 20.0,
               ),
-            ),
-          ],
-        ),
-        Container(
-          margin: EdgeInsets.symmetric(horizontal: 15),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "Предложите свою цену:",
-                style: TextStyle(
-                    fontFamily: "Montserrat SemiBold",
-                    fontSize: 15,
-                    color: Colors.black87),
+              Container(
+                margin: EdgeInsets.symmetric(horizontal: 10),
+                child: Column(
+                  children: [
+                    Text(
+                      "Mercedez-Benz C55 AMG",
+                      style: TextStyle(
+                        fontFamily: 'Montserrat SemiBold',
+                        fontSize: 18,
+                      ),
+                    ),
+                  ],
+                ),
               ),
-              // TextFormField(
-              //   decoration: const InputDecoration(
-              //     hintText: 'Enter your email',
-              //     icon: Icon(Icons.picture_in_picture_alt_outlined),
-              //   ),
-              // )
+              Text("Ремонт ходовой/подвески/геометрия",
+                  style: TextStyle(
+                    fontFamily: "Montserrat Medium",
+                    fontSize: 16,
+                  )),
+              Container(
+                margin: const EdgeInsets.all(15.0),
+                padding: const EdgeInsets.all(10.0),
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    border: Border.all(color: Colors.grey[600])),
+                child: Text(
+                  "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.",
+                  style: TextStyle(fontFamily: "Montserrat Regular"),
+                ),
+              ),
             ],
           ),
-        ),
-      ]),
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: 15),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Предложите свою цену:",
+                  style: TextStyle(
+                      fontFamily: "Montserrat SemiBold",
+                      fontSize: 14,
+                      color: Colors.black87),
+                ),
+                Padding(
+                    padding: const EdgeInsets.only(top: 8, bottom: 8),
+                    child: myTextField(
+                        priceController,
+                        "Цена",
+                        Icon(
+                          Icons.ac_unit_rounded,
+                          color: Colors.grey,
+                        ),
+                        "KZT",
+                        TextInputType.number)),
+                Text(
+                  "Примерное время ремонта:",
+                  style: TextStyle(
+                      fontFamily: "Montserrat SemiBold",
+                      fontSize: 14,
+                      color: Colors.black87),
+                ),
+                Padding(
+                    padding: const EdgeInsets.only(top: 8, bottom: 8),
+                    child: myTextField(
+                        timeController,
+                        "Время",
+                        Icon(
+                          Icons.access_time_outlined,
+                          color: Colors.grey,
+                        ),
+                        "",
+                        TextInputType.text)),
+                Padding(
+                  padding: const EdgeInsets.only(top: 17),
+                  child: SizedBox(
+                    width: MediaQuery.of(context).size.width,
+                    child: RaisedButton(
+                      padding: EdgeInsets.symmetric(vertical: 17),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: new BorderRadius.circular(6.0)),
+                      child: Text(
+                        "Посмотреть машину",
+                        style: TextStyle(
+                            fontSize: 18, fontFamily: "Montserrat SemiBold"),
+                      ),
+                      color: Colors.red[600],
+                      textColor: Colors.white,
+                      onPressed: () {
+                        print(timeController.text);
+                        // Scaffold.of(context)
+                        // .showSnackBar(SnackBar(content: Text('asdasd')));
+                      },
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 17),
+                  child: SizedBox(
+                    width: MediaQuery.of(context).size.width,
+                    child: RaisedButton(
+                      padding: EdgeInsets.symmetric(vertical: 17),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: new BorderRadius.circular(6.0)),
+                      child: Text(
+                        "Принять",
+                        style: TextStyle(
+                            fontSize: 18, fontFamily: "Montserrat SemiBold"),
+                      ),
+                      color: Colors.green[700],
+                      textColor: Colors.white,
+                      onPressed: () {
+                        print(priceController.text);
+                        // Scaffold.of(context).showSnackBar(
+                        // SnackBar(content: Text(timeController.text)));
+                      },
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ]),
+      ),
     );
+  }
+
+  final OutlineInputBorder myEnabledBorder = OutlineInputBorder(
+    borderRadius: BorderRadius.all(Radius.circular(10.0)),
+    borderSide: const BorderSide(
+      color: Colors.grey,
+    ),
+  );
+  final OutlineInputBorder myFocusedBorder = OutlineInputBorder(
+    borderRadius: BorderRadius.all(Radius.circular(10.0)),
+    borderSide: BorderSide(color: Colors.grey),
+  );
+
+  Widget myTextField(TextEditingController contoller, String hintText,
+      Icon icon, String suffixText, TextInputType textInputType) {
+    return TextField(
+        keyboardType: textInputType,
+        controller: contoller,
+        cursorColor: Colors.grey,
+        decoration: InputDecoration(
+          suffixText: suffixText,
+          prefixIcon: icon,
+          hintText: hintText,
+          filled: true,
+          fillColor: Colors.white,
+          enabledBorder: myEnabledBorder,
+          focusedBorder: myFocusedBorder,
+        ));
   }
 
   // goToPrevious() {
