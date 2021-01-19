@@ -72,25 +72,3 @@ class _RequestPageState extends State<RequestPage> {
     );
   }
 }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       backgroundColor: AppColors.backgroundColor,
-//       appBar: buildAppBar("Заявки"),
-// <<<<<<< HEAD
-//       body: Container(
-//         child: Center(
-//           child: Text("Страница заявки", style: TextStyle(color: AppColors.mainTextColor),),
-//         ),
-//       )
-// =======
-//       body: ListView.builder(
-//           itemCount: name.length,
-//           itemBuilder: (BuildContext context, int index) {
-//             return RequestListItem(name[index]);
-//           }),
-// >>>>>>> fc9d157e0ee678fbe991db693a9a991e78976fbd
-//     );
-//   }
-// }

@@ -128,7 +128,6 @@ class _SignInState extends State<SignIn> {
                               children: [
                                 TextSpan(
                                   text: 'Нажимая "Продолжить", вы соглашаетесь с ',
-                                  style: TextStyle(color: AppColors.mainTextColor)
                                 ),
                                 TextSpan(
                                   text: "обработкой персональных данных ",
@@ -138,7 +137,6 @@ class _SignInState extends State<SignIn> {
                                 ),
                                 TextSpan(
                                   text: "и ",
-                                  style: TextStyle(color: AppColors.mainTextColor)
                                 ),
                                 TextSpan(
                                   text: "правилами сервиса ",

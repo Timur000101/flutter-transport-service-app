@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:sto_app/core/const.dart';
 import 'package:sto_app/models/request_item.dart';
 import 'package:sto_app/pages/request_page_detail.dart';
 
@@ -16,7 +17,7 @@ class RequestListItem extends StatelessWidget {
           margin: EdgeInsets.symmetric(vertical: 5.0, horizontal: 20.0),
           padding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
           decoration: BoxDecoration(
-              color: Colors.white,
+              color: AppColors.lightColor,
               borderRadius: BorderRadius.circular(10),
               boxShadow: [
                 BoxShadow(
@@ -43,17 +44,14 @@ class RequestListItem extends StatelessWidget {
                         Text(
                           request.name,
                           style: TextStyle(
-                              fontFamily: "Montserrat Regular",
-                              color: Colors.black87,
-                              fontSize: 17,
-                              fontWeight: FontWeight.bold),
+                            fontSize: 17,
+                            fontWeight: FontWeight.bold),
                         ),
                         Text(
                           request.year,
                           style: TextStyle(
-                              fontFamily: "Montserrat Regular",
-                              fontSize: 16,
-                              color: Colors.grey[700]),
+                            fontSize: 16,
+                            color: AppColors.mainTextColor),
                         )
                       ],
                     ),
@@ -72,8 +70,7 @@ class RequestListItem extends StatelessWidget {
                     child: Text(request.description + request.description,
                         style: TextStyle(
                             fontSize: 13,
-                            fontFamily: "Montserrat Regular",
-                            color: Colors.grey[700])),
+                            color: AppColors.primaryTextColor)),
                   ),
                   Container(
                     margin: EdgeInsets.only(top: 3),
@@ -82,10 +79,10 @@ class RequestListItem extends StatelessWidget {
                       children: [
                         Row(
                           children: [
-                            Icon(Icons.location_on, color: Colors.grey[500]),
+                            Icon(Icons.location_on, color: AppColors.primaryTextColor),
                             Text(
                               request.location,
-                              style: TextStyle(color: Colors.grey[700]),
+                              style: TextStyle(color: AppColors.primaryTextColor),
                             ),
                           ],
                         ),
@@ -101,7 +98,7 @@ class RequestListItem extends StatelessWidget {
                           },
                           child: Text("Подробнее"),
                           color: Colors.green[700],
-                          textColor: Colors.white,
+                          textColor: AppColors.lightColor,
                         ),
                       ],
                     ),
@@ -121,10 +118,10 @@ Widget chipRedText(String text) {
     margin: EdgeInsets.only(top: 5, bottom: 5),
     padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
     decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20), color: Colors.red[400]),
+        borderRadius: BorderRadius.circular(20), color: AppColors.redColor),
     child: Text(
       text,
-      style: TextStyle(color: Colors.white),
+      style: TextStyle(color: AppColors.lightColor),
     ),
   );
 }

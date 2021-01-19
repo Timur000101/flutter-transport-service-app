@@ -1,6 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:sto_app/pages/start_up.dart';
+import 'package:sto_app/core/const.dart';
+import 'package:sto_app/pages/home_page.dart';
+// import 'package:sto_app/pages/start_up.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -15,8 +17,12 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           primarySwatch: Colors.blue,
+          textTheme: Theme.of(context).textTheme.apply(
+            bodyColor: AppColors.mainTextColor,
+            fontFamily: 'Montserrat Regular'
+          ),
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-        home: StartUp());
+        home: HomePage());
   }
 }

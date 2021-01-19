@@ -42,7 +42,7 @@ class _ProfilePageState extends State<ProfilePage> {
               return Container(
                 margin: EdgeInsets.only(bottom: 2.5),
                 child: ListTile(
-                  title: Text(menu1[index].title, style: TextStyle(fontSize: 18, color: AppColors.mainTextColor)),
+                  title: Text(menu1[index].title, style: TextStyle(fontSize: 18)),
                   leading: Icon(menu1[index].icon, color: AppColors.mainColor, size: 30,),
                   trailing: Icon(Icons.keyboard_arrow_right_outlined),
                   tileColor: Colors.white,
@@ -58,7 +58,7 @@ class _ProfilePageState extends State<ProfilePage> {
               return Container(
                 margin: EdgeInsets.only(bottom: 2.5),
                 child: ListTile(
-                  title: Text(menu2[index].title, style: TextStyle(fontSize: 18, color: AppColors.mainTextColor)),
+                  title: Text(menu2[index].title, style: TextStyle(fontSize: 18)),
                   leading: Icon(menu2[index].icon, color: AppColors.mainColor, size: 30,),
                   trailing: Icon(Icons.keyboard_arrow_right_outlined),
                   tileColor: Colors.white,
@@ -90,7 +90,7 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget _buildProfileHeader(BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.width,
-      height: 235,
+      height: 240,
       padding: EdgeInsets.symmetric(horizontal: 5.0, vertical: 10.0),
       decoration: BoxDecoration(
           // borderRadius: BorderRadius.circular(20),
@@ -121,12 +121,11 @@ class _ProfilePageState extends State<ProfilePage> {
                     children: <Widget>[
                       Text("Куанаев Темур".toUpperCase(),
                         style: TextStyle(
-                            fontSize: 18, fontFamily: 'Montserrat SemiBold')),
+                            fontSize: 18, fontWeight: FontWeight.bold)),
                       Text(
                         "8 (702) 545-72-03",
                         style: TextStyle(
                             fontSize: 16,
-                            fontFamily: 'Montserrat Regular',
                             color: AppColors.primaryTextColor),
                       ),
                       FlatButton(
@@ -186,14 +185,14 @@ class _ProfilePageState extends State<ProfilePage> {
             "Заказчик",
             style: TextStyle(
               fontSize: 20,
-              fontFamily: 'Montserrat SemiBold',
+              fontWeight: FontWeight.bold
             ),
           )
         : Text(
             "Исполнитель",
             style: TextStyle(
               fontSize: 20,
-              fontFamily: 'Montserrat SemiBold',
+              fontWeight: FontWeight.bold
             ),
           );
   }

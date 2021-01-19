@@ -37,7 +37,7 @@ class _ServiceDetailState extends State<ServiceDetail> {
                                 margin: EdgeInsets.only(bottom: 3),
                                 padding: EdgeInsets.symmetric(horizontal: 10.0),
                                 child: CheckboxListTile(
-                                  // value: s,
+                                  value: true,
                                   title: new Text(showData[index]['fields']['name']),
                                   controlAffinity: ListTileControlAffinity.leading,
                                   onChanged:(bool val){

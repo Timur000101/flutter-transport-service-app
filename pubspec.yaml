@@ -70,9 +70,9 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   fonts:
-    - family: StoIcons
+    - family:  Stoappicons
       fonts:
-        - asset: icons/Stoappicons.ttf
+       - asset: fonts/Stoappicons.ttf
     - family: Montserrat Regular
       fonts:
         - asset: assets/fonts/Montserrat-Regular.ttf

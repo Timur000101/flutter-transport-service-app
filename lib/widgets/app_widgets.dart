@@ -6,10 +6,12 @@ Widget buildAppBar(String title) {
       elevation: 0,
       centerTitle: true,
       title: Text(title,
-          style: TextStyle(
-              color: AppColors.mainTextColor,
-              fontFamily: 'Montserrat Semibold',
-              fontSize: 18)),
+        style: TextStyle(
+          color: AppColors.mainTextColor,
+          fontFamily: 'Montserrat Semibold',
+          fontSize: 18
+          )
+      ),
       backgroundColor: AppColors.backgroundColor,
       shadowColor: Colors.white,
       bottomOpacity: 1,

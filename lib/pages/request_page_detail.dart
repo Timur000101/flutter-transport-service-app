@@ -68,7 +68,7 @@ class _RequestPageDetailState extends State<RequestPageDetail> {
                         width: MediaQuery.of(context).size.width,
                         margin: EdgeInsets.symmetric(horizontal: 10.0),
                         decoration: BoxDecoration(
-                          color: Colors.grey[600],
+                          color: AppColors.primaryTextColor,
                           borderRadius: BorderRadius.circular(15),
                         ),
                         child: ClipRRect(
@@ -98,7 +98,7 @@ class _RequestPageDetailState extends State<RequestPageDetail> {
                       shape: BoxShape.circle,
                       color: _current == index
                           ? Colors.redAccent
-                          : Colors.grey[500],
+                          : AppColors.primaryTextColor,
                     ),
                   );
                 }),
@@ -113,7 +113,7 @@ class _RequestPageDetailState extends State<RequestPageDetail> {
                     Text(
                       "Mercedez-Benz C55 AMG",
                       style: TextStyle(
-                        fontFamily: 'Montserrat SemiBold',
+                        fontWeight: FontWeight.bold,
                         fontSize: 18,
                       ),
                     ),
@@ -122,7 +122,7 @@ class _RequestPageDetailState extends State<RequestPageDetail> {
               ),
               Text("Ремонт ходовой/подвески/геометрия",
                   style: TextStyle(
-                    fontFamily: "Montserrat Medium",
+                    color: AppColors.primaryTextColor,
                     fontSize: 16,
                   )),
               Container(
@@ -130,10 +130,9 @@ class _RequestPageDetailState extends State<RequestPageDetail> {
                 padding: const EdgeInsets.all(10.0),
                 decoration: BoxDecoration(
                     color: Colors.white,
-                    border: Border.all(color: Colors.grey[600])),
+                    border: Border.all(color: AppColors.primaryTextColor)),
                 child: Text(
                   "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.",
-                  style: TextStyle(fontFamily: "Montserrat Regular"),
                 ),
               ),
             ],
@@ -146,9 +145,9 @@ class _RequestPageDetailState extends State<RequestPageDetail> {
                 Text(
                   "Предложите свою цену:",
                   style: TextStyle(
-                      fontFamily: "Montserrat SemiBold",
-                      fontSize: 14,
-                      color: Colors.black87),
+                    fontWeight: FontWeight.bold,
+                    fontSize: 14,
+                    color: AppColors.mainTextColor),
                 ),
                 Padding(
                     padding: const EdgeInsets.only(top: 8, bottom: 8),
@@ -157,16 +156,16 @@ class _RequestPageDetailState extends State<RequestPageDetail> {
                         "Цена",
                         Icon(
                           Icons.ac_unit_rounded,
-                          color: Colors.grey,
+                          color: AppColors.primaryTextColor,
                         ),
                         "KZT",
                         TextInputType.number)),
                 Text(
                   "Примерное время ремонта:",
                   style: TextStyle(
-                      fontFamily: "Montserrat SemiBold",
-                      fontSize: 14,
-                      color: Colors.black87),
+                    fontWeight: FontWeight.bold,
+                    fontSize: 14,
+                    color: Colors.black87),
                 ),
                 Padding(
                     padding: const EdgeInsets.only(top: 8, bottom: 8),
@@ -175,7 +174,7 @@ class _RequestPageDetailState extends State<RequestPageDetail> {
                         "Время",
                         Icon(
                           Icons.access_time_outlined,
-                          color: Colors.grey,
+                          color: AppColors.primaryTextColor,
                         ),
                         "",
                         TextInputType.text)),
@@ -190,10 +189,10 @@ class _RequestPageDetailState extends State<RequestPageDetail> {
                       child: Text(
                         "Посмотреть машину",
                         style: TextStyle(
-                            fontSize: 18, fontFamily: "Montserrat SemiBold"),
+                            fontSize: 18, fontWeight: FontWeight.bold),
                       ),
                       color: Colors.red[600],
-                      textColor: Colors.white,
+                      textColor: AppColors.lightColor,
                       onPressed: () {
                         print(timeController.text);
                         // Scaffold.of(context)
@@ -213,10 +212,10 @@ class _RequestPageDetailState extends State<RequestPageDetail> {
                       child: Text(
                         "Принять",
                         style: TextStyle(
-                            fontSize: 18, fontFamily: "Montserrat SemiBold"),
+                            fontSize: 18, fontWeight: FontWeight.bold),
                       ),
                       color: Colors.green[700],
-                      textColor: Colors.white,
+                      textColor: AppColors.lightColor,
                       onPressed: () {
                         print(priceController.text);
                         // Scaffold.of(context).showSnackBar(
@@ -235,13 +234,13 @@ class _RequestPageDetailState extends State<RequestPageDetail> {
 
   final OutlineInputBorder myEnabledBorder = OutlineInputBorder(
     borderRadius: BorderRadius.all(Radius.circular(10.0)),
-    borderSide: const BorderSide(
-      color: Colors.grey,
+    borderSide: BorderSide(
+      color: AppColors.primaryTextColor,
     ),
   );
   final OutlineInputBorder myFocusedBorder = OutlineInputBorder(
     borderRadius: BorderRadius.all(Radius.circular(10.0)),
-    borderSide: BorderSide(color: Colors.grey),
+    borderSide: BorderSide(color: AppColors.primaryTextColor),
   );
 
   Widget myTextField(TextEditingController contoller, String hintText,
@@ -249,13 +248,13 @@ class _RequestPageDetailState extends State<RequestPageDetail> {
     return TextField(
         keyboardType: textInputType,
         controller: contoller,
-        cursorColor: Colors.grey,
+        cursorColor: AppColors.primaryTextColor,
         decoration: InputDecoration(
           suffixText: suffixText,
           prefixIcon: icon,
           hintText: hintText,
           filled: true,
-          fillColor: Colors.white,
+          fillColor: AppColors.lightColor,
           enabledBorder: myEnabledBorder,
           focusedBorder: myFocusedBorder,
         ));

@@ -71,7 +71,7 @@ class _ServicesPageState extends State<ServicesPage> {
                 Text(
                   title,
                   style: TextStyle(
-                    fontFamily: 'Montserrat Medium',
+                    fontWeight: FontWeight.w600,
                     fontSize: 14,
                   ),
                   textAlign: TextAlign.center,
