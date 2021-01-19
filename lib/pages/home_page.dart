@@ -3,7 +3,6 @@ import 'package:sto_app/core/const.dart';
 import 'package:sto_app/pages/profile_page.dart';
 import 'package:sto_app/pages/request_page.dart';
 import 'package:sto_app/pages/services_page.dart';
-import 'package:sto_app/sto_icons_icons.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -28,15 +27,15 @@ class _HomePageState extends State<HomePage> {
         unselectedFontSize: 14,
         items: [
           BottomNavigationBarItem(
-            icon: Icon(StoIcons.request_icon),
+            icon: Icon(Stoappicons.request_icon),
             label: "Заявки",
           ),
           BottomNavigationBarItem(
-            icon: Icon(StoIcons.services_icon),
+            icon: Icon(Stoappicons.services_icon),
             label: "Услуги",
           ),
           BottomNavigationBarItem(
-            icon: Icon(StoIcons.profile_icon),
+            icon: Icon(Stoappicons.profile_icon),
             label: "Профиль",
           ),
         ],

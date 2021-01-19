@@ -36,20 +36,27 @@ class _ServiceDetailState extends State<ServiceDetail> {
                             ? Container(
                                 margin: EdgeInsets.only(bottom: 3),
                                 padding: EdgeInsets.symmetric(horizontal: 10.0),
-                                child: ListTile(
-                                  tileColor: Colors.white,
-                                  title: Text(showData[index]['fields']['name'], style: TextStyle(fontWeight: FontWeight.w500),),
-                                  trailing: isSelected
-                                      ? Icon(Icons.check_box)
-                                      : Icon(
-                                          Icons.check_box_outline_blank_outlined),
-                                  // onTap: () {
-                                  //   setState(() {
-                                  //     isSelected = !isSelected;
-                                  //     print(isSelected);
-                                  //   });
-                                  // },
-                                ),
+                                child: CheckboxListTile(
+                                  // value: s,
+                                  title: new Text(showData[index]['fields']['name']),
+                                  controlAffinity: ListTileControlAffinity.leading,
+                                  onChanged:(bool val){
+                                    // ItemChange(val, index);
+                                  }
+                                )
+                                // ListTile(
+                                //   tileColor: Colors.white,
+                                //   title: Text(showData[index]['fields']['name'], style: TextStyle(fontWeight: FontWeight.w500),),
+                                //   trailing: Checkbox(
+                                //     onChanged: () {},
+                                //   ),
+                                //   onTap: () {
+                                //     setState(() {
+                                //       isSelected = !isSelected;
+                                //       print(isSelected);
+                                //     });
+                                //   },
+                                // ),
                               )
                             : SizedBox();
                       },

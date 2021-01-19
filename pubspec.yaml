@@ -72,10 +72,7 @@ flutter:
   fonts:
     - family: StoIcons
       fonts:
-        - asset: icons/StoIcons.ttf
-    - family: StoIconsNew
-      fonts:
-        - asset: icons/StoIconsNew.ttf
+        - asset: icons/Stoappicons.ttf
     - family: Montserrat Regular
       fonts:
         - asset: assets/fonts/Montserrat-Regular.ttf

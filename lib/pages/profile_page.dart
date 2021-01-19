@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sto_app/core/const.dart';
 import 'package:sto_app/models/menu_item.dart';
-import 'package:sto_app/sto_icons_new_icons.dart';
 import 'package:sto_app/widgets/app_widgets.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -12,14 +11,14 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   bool isSwitched = false;
   List<MenuItem> menu1 = [
-    MenuItem(title: "Мои автомобили", icon: StoIconsNew.car_1),
+    MenuItem(title: "Мои автомобили", icon: Stoappicons.car_1),
     MenuItem(title: "История заказов", icon: Icons.history),
-    MenuItem(title: "Сообщения", icon: StoIconsNew.conversation_2),
+    MenuItem(title: "Сообщения", icon: Stoappicons.conversation),
   ];
 
   List<MenuItem> menu2 = [
-    MenuItem(title: "Служба поддержки", icon: StoIconsNew.customer_service_2),
-    MenuItem(title: "Оценить приложение", icon: StoIconsNew.star_2),
+    MenuItem(title: "Служба поддержки", icon: Stoappicons.customer_service),
+    MenuItem(title: "Оценить приложение", icon: Stoappicons.star),
     MenuItem(title: "О приложении", icon: Icons.warning_rounded)
   ];
   @override
