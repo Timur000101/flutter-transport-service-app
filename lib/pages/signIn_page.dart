@@ -1,10 +1,9 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:sto_app/core/const.dart';
-import 'package:sto_app/pages/home_page.dart';
-import 'package:sto_app/pages/sms_page.dart';
+// import 'package:sto_app/pages/home_page.dart';
+// import 'package:sto_app/pages/sms_page.dart';
 import 'package:sto_app/utils/utils.dart';
 
 TextEditingController nameController = TextEditingController();
@@ -164,7 +163,7 @@ class _SignInState extends State<SignIn> {
                                 setState(() {
                                   isLoading = true;
                                 });
-                                registerToFb(phoneController.text.trim());
+                                // registerToFb(phoneController.text.trim());
                                 FocusScopeNode currentFocus =
                                     FocusScope.of(context);
                                 if (!currentFocus.hasPrimaryFocus) {
@@ -195,70 +194,70 @@ class _SignInState extends State<SignIn> {
     );
   }
 
-  void registerToFb(String phoneNumber) async {
-    FirebaseAuth auth = FirebaseAuth.instance;
+  // void registerToFb(String phoneNumber) async {
+  //   FirebaseAuth auth = FirebaseAuth.instance;
 
-    await auth.verifyPhoneNumber(
-      phoneNumber: phoneNumber,
-      timeout: const Duration(seconds: 60),
-      verificationCompleted: (PhoneAuthCredential credential) async {
-        await auth.signInWithCredential(credential);
+  //   await auth.verifyPhoneNumber(
+  //     phoneNumber: phoneNumber,
+  //     timeout: const Duration(seconds: 60),
+  //     verificationCompleted: (PhoneAuthCredential credential) async {
+  //       await auth.signInWithCredential(credential);
 
-        setState(() {
-          isLoading = false;
-        });
+  //       setState(() {
+  //         isLoading = false;
+  //       });
 
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (BuildContext context) => HomePage()),
-        );
-      },
-      verificationFailed: (FirebaseAuthException e) {
-        var msg;
-        if (e.code == 'invalid-phone-number') {
-          msg = 'Invalid number. Enter again.';
-        } else {
-          msg = e.message;
-        }
+  //       Navigator.pushReplacement(
+  //         context,
+  //         MaterialPageRoute(builder: (BuildContext context) => HomePage()),
+  //       );
+  //     },
+  //     verificationFailed: (FirebaseAuthException e) {
+  //       var msg;
+  //       if (e.code == 'invalid-phone-number') {
+  //         msg = 'Invalid number. Enter again.';
+  //       } else {
+  //         msg = e.message;
+  //       }
 
-        setState(() {
-          isLoading = false;
-        });
+  //       setState(() {
+  //         isLoading = false;
+  //       });
 
-        showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return AlertDialog(
-                title: Text("Error"),
-                content: Text(msg.toString()),
-                actions: [
-                  FlatButton(
-                    child: Text("OK"),
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                  )
-                ],
-              );
-            });
-      },
-      codeSent: (String verificationId, int resendToken) {
-        setState(() {
-          isLoading = false;
-        });
+  //       showDialog(
+  //           context: context,
+  //           builder: (BuildContext context) {
+  //             return AlertDialog(
+  //               title: Text("Error"),
+  //               content: Text(msg.toString()),
+  //               actions: [
+  //                 FlatButton(
+  //                   child: Text("OK"),
+  //                   onPressed: () {
+  //                     Navigator.of(context).pop();
+  //                   },
+  //                 )
+  //               ],
+  //             );
+  //           });
+  //     },
+  //     codeSent: (String verificationId, int resendToken) {
+  //       setState(() {
+  //         isLoading = false;
+  //       });
 
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) =>
-                  EnterSMS(verificationId, resendToken, phoneNumber)),
-        );
-      },
-      codeAutoRetrievalTimeout: (String verificationId) {
-        setState(() {
-          isLoading = false;
-        });
-      },
-    );
-  }
+  //       Navigator.push(
+  //         context,
+  //         MaterialPageRoute(
+  //             builder: (context) =>
+  //                 EnterSMS(verificationId, resendToken, phoneNumber)),
+  //       );
+  //     },
+  //     codeAutoRetrievalTimeout: (String verificationId) {
+  //       setState(() {
+  //         isLoading = false;
+  //       });
+  //     },
+  //   );
+  // }
 }
