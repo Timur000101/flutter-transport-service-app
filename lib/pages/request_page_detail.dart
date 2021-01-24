@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:sto_app/pages/create_identifier.dart';
 import 'package:sto_app/widgets/app_widgets.dart';
 import 'package:sto_app/core/const.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -145,9 +146,9 @@ class _RequestPageDetailState extends State<RequestPageDetail> {
                 Text(
                   "Предложите свою цену:",
                   style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 14,
-                    color: AppColors.mainTextColor),
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14,
+                      color: AppColors.mainTextColor),
                 ),
                 Padding(
                     padding: const EdgeInsets.only(top: 8, bottom: 8),
@@ -163,9 +164,9 @@ class _RequestPageDetailState extends State<RequestPageDetail> {
                 Text(
                   "Примерное время ремонта:",
                   style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 14,
-                    color: Colors.black87),
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14,
+                      color: Colors.black87),
                 ),
                 Padding(
                     padding: const EdgeInsets.only(top: 8, bottom: 8),
@@ -202,7 +203,7 @@ class _RequestPageDetailState extends State<RequestPageDetail> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(top: 17),
+                  padding: const EdgeInsets.only(top: 17, bottom: 16),
                   child: SizedBox(
                     width: MediaQuery.of(context).size.width,
                     child: RaisedButton(
@@ -217,7 +218,12 @@ class _RequestPageDetailState extends State<RequestPageDetail> {
                       color: Colors.green[700],
                       textColor: AppColors.lightColor,
                       onPressed: () {
-                        print(priceController.text);
+                        // print(priceController.text);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => CreateIdentifier()),
+                        );
                         // Scaffold.of(context).showSnackBar(
                         // SnackBar(content: Text(timeController.text)));
                       },

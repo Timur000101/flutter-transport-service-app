@@ -11,6 +11,10 @@ class AppColors {
   static final Color greenCOlor = Color(0XFF35953E);
 }
 
+class AppConstants {
+  static final String baseUrl = "http://134.122.11.57";
+}
+
 class Stoappicons {
   Stoappicons._();
 
