@@ -1,5 +1,4 @@
 import 'package:flutter/widgets.dart';
-
 class AppColors {
   static final Color backgroundColor = Color(0XFFEDF2F4);
   static final Color mainColor = Color(0XFFEF233C);

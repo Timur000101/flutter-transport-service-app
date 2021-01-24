@@ -1,19 +1,20 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:sto_app/core/const.dart';
+import 'package:sto_app/models/services.dart';
 import 'package:sto_app/widgets/app_widgets.dart';
 
 class ServiceDetail extends StatefulWidget {
+  final List<Services> service;
   final int indx;
 
-  ServiceDetail({this.indx});
+  ServiceDetail({this.indx, this.service});
   @override
   _ServiceDetailState createState() => _ServiceDetailState();
 }
 
 class _ServiceDetailState extends State<ServiceDetail> {
-  bool isSelected = false;
+  bool _checked = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,50 +27,43 @@ class _ServiceDetailState extends State<ServiceDetail> {
             children: [
               Expanded(
                 child: FutureBuilder(
+                  future: DefaultAssetBundle.of(context).loadString("assets/services.json"),
                   builder: (context, snapshot) {
-                    var showData = json.decode(snapshot.data.toString());
+                    List<Services> services = parseJson(snapshot.data.toString());
                     return ListView.builder(
-                      itemCount: showData.length,
+                      itemCount: services.length,
                       itemBuilder: (BuildContext context, int index) {
-                        return showData[index]['fields']['service'] ==
+                        return services[index].fields.service ==
                                 widget.indx.toString()
                             ? Container(
-                                margin: EdgeInsets.only(bottom: 3),
-                                padding: EdgeInsets.symmetric(horizontal: 10.0),
                                 child: CheckboxListTile(
-                                  value: true,
-                                  title: new Text(showData[index]['fields']['name']),
-                                  controlAffinity: ListTileControlAffinity.leading,
-                                  onChanged:(bool val){
-                                    // ItemChange(val, index);
-                                  }
-                                )
-                                // ListTile(
-                                //   tileColor: Colors.white,
-                                //   title: Text(showData[index]['fields']['name'], style: TextStyle(fontWeight: FontWeight.w500),),
-                                //   trailing: Checkbox(
-                                //     onChanged: () {},
-                                //   ),
-                                //   onTap: () {
-                                //     setState(() {
-                                //       isSelected = !isSelected;
-                                //       print(isSelected);
-                                //     });
-                                //   },
-                                // ),
-                              )
+                                title: Text(services[index].fields.name),
+                                controlAffinity: ListTileControlAffinity.leading,
+                                value: services[index].checked,
+                                onChanged: (bool value) {
+                                  setState(() {
+                                    services[index].checked = value;
+                                  });
+                                },
+                              ))
                             : SizedBox();
                       },
                     );
                   },
-                  future: DefaultAssetBundle.of(context)
-                      .loadString("assets/services.json"),
-                ),
+                )
               ),
             ],
           ),
         ),
       ),
     );
+  }
+
+  List<Services> parseJson(String response) {
+    if (response == null) {
+      return [];
+    }
+    List<dynamic> parsed = jsonDecode(response.toString());
+    return parsed.map<Services>((json) => Services.fromJson(json)).toList();
   }
 }

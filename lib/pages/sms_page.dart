@@ -23,12 +23,12 @@ class _EnterSMSState extends State<EnterSMS> {
   var isLoading = false;
   var repeatSend = false;
   int _start = 30;
-  Timer _timer;
+  // Timer _timer;
 
   @override
   void initState() {
     super.initState();
-    repeatCodeTimer();
+    // repeatCodeTimer();
   }
 
   @override
@@ -90,7 +90,6 @@ class _EnterSMSState extends State<EnterSMS> {
                             borderRadius: BorderRadius.circular(10.0),
                           ),
                         ),
-                        // The validator receives the text that the user has entered.
                         validator: (value) {
                           if (value.isEmpty) {
                             return 'Введите код';
@@ -142,18 +141,7 @@ class _EnterSMSState extends State<EnterSMS> {
                         width: MediaQuery.of(context).size.width,
                         child: FlatButton(
                           onPressed: () async {
-                            await FirebaseAuth.instance.verifyPhoneNumber(
-                              phoneNumber: widget.phoneN,
-                              forceResendingToken: widget.tkn,
-                              verificationCompleted:
-                                  (PhoneAuthCredential credential) {},
-                              verificationFailed: (FirebaseAuthException e) {},
-                              codeSent:
-                                  (String verificationId, int resendToken) {
-                                setState(() {});
-                              },
-                              //codeAutoRetrievalTimeout: (String verificationId) {},
-                            );
+                            print("Nothing to do");
                           },
                           textColor: Colors.blue,
                           splashColor: Colors.grey.withOpacity(0.5),
@@ -175,58 +163,56 @@ class _EnterSMSState extends State<EnterSMS> {
                     ])))));
   }
 
-  void repeatCodeTimer() {
-    const oneSec = const Duration(seconds: 1);
-    _timer = new Timer.periodic(
-        oneSec,
-        (Timer timer) => setState(() {
-              if (_start == 0) {
-                _start = 30;
-              } else {
-                setState(() {
-                  _start--;
-                });
-                print(_start);
-              }
-            }));
-  }
+  // void repeatCodeTimer() {
+  //   const oneSec = const Duration(seconds: 1);
+  //   _timer = new Timer.periodic(
+  //       oneSec,
+  //       (Timer timer) => setState(() {
+  //             if (_start == 0) {
+  //               _start = 30;
+  //             } else {
+  //               setState(() {
+  //                 _start--;
+  //               });
+  //               print(_start);
+  //             }
+  //           }));
+  // }
 
   void verifySMS(String vID, String msg) async {
-    // Create a PhoneAuthCredential with the code
-    PhoneAuthCredential phoneAuthCredential =
-        PhoneAuthProvider.credential(verificationId: vID, smsCode: msg);
-    // Sign the user in (or link) with the credential
-    try {
-      await FirebaseAuth.instance.signInWithCredential(phoneAuthCredential);
-      setState(() {
-        isLoading = false;
-      });
+    // PhoneAuthCredential phoneAuthCredential =
+    //     PhoneAuthProvider.credential(verificationId: vID, smsCode: msg);
+    // try {
+    //   await FirebaseAuth.instance.signInWithCredential(phoneAuthCredential);
+    //   setState(() {
+    //     isLoading = false;
+    //   });
 
-      Navigator.of(context).popUntil((route) => route.isFirst);
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => HomePage()),
-      );
-    } catch (err) {
-      setState(() {
-        isLoading = false;
-      });
-      showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: Text("Код не верный"),
-              content: Text(err.message),
-              actions: [
-                FlatButton(
-                  child: Text("OK"),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                )
-              ],
-            );
-          });
-    }
+    //   Navigator.of(context).popUntil((route) => route.isFirst);
+    //   Navigator.pushReplacement(
+    //     context,
+    //     MaterialPageRoute(builder: (context) => HomePage()),
+    //   );
+    // } catch (err) {
+    //   setState(() {
+    //     isLoading = false;
+    //   });
+    //   showDialog(
+    //       context: context,
+    //       builder: (BuildContext context) {
+    //         return AlertDialog(
+    //           title: Text("Код не верный"),
+    //           content: Text(err.message),
+    //           actions: [
+    //             FlatButton(
+    //               child: Text("OK"),
+    //               onPressed: () {
+    //                 Navigator.of(context).pop();
+    //               },
+    //             )
+    //           ],
+    //         );
+    //       });
+    // }
   }
 }
