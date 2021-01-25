@@ -1,6 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:sto_app/pages/create_identifier.dart';
 import 'package:sto_app/widgets/app_widgets.dart';
 import 'package:sto_app/core/const.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -212,6 +213,7 @@ class _RequestDetailPageState extends State<RequestDetailPage> {
                       textColor: AppColors.lightColor,
                       onPressed: () {
                         print(priceController.text);
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => CreateIdentifier()),);
                         // Scaffold.of(context).showSnackBar(
                         // SnackBar(content: Text(timeController.text)));
                       },

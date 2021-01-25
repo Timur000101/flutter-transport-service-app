@@ -12,7 +12,7 @@ class Services {
     return Services(
         model: json["model"],
         pk: json["pk"],
-        checked: false,
+        checked: json["checked"],
         fields: Fields.fromJson(json["fields"]));
   }
 

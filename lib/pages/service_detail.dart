@@ -26,17 +26,19 @@ class _ServiceDetailState extends State<ServiceDetail> {
           child: Column(
             children: [
               Expanded(
-                child: FutureBuilder(
-                  future: DefaultAssetBundle.of(context).loadString("assets/services.json"),
-                  builder: (context, snapshot) {
-                    List<Services> services = parseJson(snapshot.data.toString());
-                    return ListView.builder(
-                      itemCount: services.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return services[index].fields.service ==
-                                widget.indx.toString()
-                            ? Container(
-                                child: CheckboxListTile(
+                  child: FutureBuilder(
+                future: DefaultAssetBundle.of(context)
+                    .loadString("assets/services.json"),
+                builder: (context, snapshot) {
+                  List<Services> services = parseJson(snapshot.data.toString());
+                  return ListView.builder(
+                    itemCount: services.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return services[index].fields.service ==
+                              widget.indx.toString()
+                          ? Container(
+                              child: CheckboxListTile(
+                                dense: true,
                                 title: Text(services[index].fields.name),
                                 controlAffinity: ListTileControlAffinity.leading,
                                 value: services[index].checked,
@@ -46,12 +48,11 @@ class _ServiceDetailState extends State<ServiceDetail> {
                                   });
                                 },
                               ))
-                            : SizedBox();
-                      },
-                    );
-                  },
-                )
-              ),
+                          : SizedBox();
+                    },
+                  );
+                },
+              )),
               Container(
                 width: MediaQuery.of(context).size.width,
                 padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
