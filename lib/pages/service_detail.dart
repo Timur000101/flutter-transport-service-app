@@ -52,6 +52,26 @@ class _ServiceDetailState extends State<ServiceDetail> {
                   },
                 )
               ),
+              Container(
+                width: MediaQuery.of(context).size.width,
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                child: RaisedButton(
+                  onPressed: () {},
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                      side: BorderSide(color: AppColors.primaryTextColor)),
+                  padding: const EdgeInsets.symmetric(vertical: 20.0),
+                  textColor: Colors.white,
+                  color: AppColors.primaryTextColor,
+                  elevation: 3.0,
+                  child: Text(
+                    "Продолжить",
+                    style: TextStyle(
+                      fontSize: 20,
+                    ),
+                  ),
+                ),
+              ),
             ],
           ),
         ),

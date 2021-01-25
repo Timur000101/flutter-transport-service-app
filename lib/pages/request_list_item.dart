@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sto_app/core/const.dart';
 import 'package:sto_app/models/request_item.dart';
-import 'package:sto_app/pages/request_page_detail.dart';
+import 'package:sto_app/pages/request_detail_page.dart';
 
 class RequestListItem extends StatelessWidget {
   final RequestItem request;
@@ -93,7 +93,7 @@ class RequestListItem extends StatelessWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => RequestPageDetail()),
+                                  builder: (context) => RequestDetailPage()),
                             );
                           },
                           child: Text("Подробнее"),
