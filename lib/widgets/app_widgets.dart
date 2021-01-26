@@ -12,6 +12,7 @@ Widget buildAppBar(String title) {
           fontSize: 18
           )
       ),
+      brightness: Brightness.light,
       backgroundColor: AppColors.backgroundColor,
       shadowColor: Colors.white,
       bottomOpacity: 1,

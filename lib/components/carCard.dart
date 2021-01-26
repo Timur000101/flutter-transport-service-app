@@ -1,6 +1,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:sto_app/core/const.dart';
 import 'package:sto_app/models/car.dart';
 
 class CarCard extends StatefulWidget {
@@ -80,7 +81,7 @@ class _CarCardState extends State<CarCard> {
                               child: RaisedButton( 
                                 child: Text("Изменить", style: TextStyle(fontSize: 14),),  
                                 onPressed: (){},
-                                color: Colors.green[400],  
+                                color: AppColors.primaryColor,  
                                 textColor: Colors.white,
                               ),
                             ),
@@ -90,7 +91,7 @@ class _CarCardState extends State<CarCard> {
                               child: RaisedButton( 
                                 child: Text("Удалить", style: TextStyle(fontSize: 14),),  
                                 onPressed: (){},
-                                color: Colors.redAccent,  
+                                color: AppColors.mainColor,  
                                 textColor: Colors.white,
                               ),
                             ),

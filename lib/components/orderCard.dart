@@ -2,6 +2,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:sto_app/core/const.dart';
 import 'package:sto_app/models/order.dart';
 
 class OrderCard extends StatefulWidget {
@@ -70,10 +71,10 @@ class _OrderCardState extends State<OrderCard> {
                                               padding: const EdgeInsets.only(top: 10.0, left: 10),
                                               child: Row(
                                               children: <Widget>[
-                                                  Icon(Icons.directions_bike, color: Colors.black54,),
+                                                  Icon(Stoappicons.distance, color: AppColors.primaryTextColor,),
                                                   Padding(
                                                     padding: const EdgeInsets.only(left: 8.0),
-                                                    child: Text(widget.order.range, style: TextStyle(fontSize: 16, color: Colors.black54),),
+                                                    child: Text(widget.order.range, style: TextStyle(fontSize: 16, color: AppColors.primaryTextColor),),
                                                   ),
                                                   Spacer(),
                                               ],
@@ -91,7 +92,7 @@ class _OrderCardState extends State<OrderCard> {
                                             crossAxisAlignment: CrossAxisAlignment.end,
                                             children: [
                                               Row(children: [
-                                                Icon(Icons.location_on),
+                                                Icon(Icons.location_on, color: AppColors.primaryTextColor,),
                                                 Text(widget.order.city),
                                               ],),
                                               Padding(
@@ -103,7 +104,7 @@ class _OrderCardState extends State<OrderCard> {
                                                 padding: const EdgeInsets.only(top: 45.0, right: 10.0),
                                                 child: FlatButton(
                                                   child: Text('Отклонить', style: TextStyle(color: Colors.white),),
-                                                  color: Colors.redAccent,
+                                                  color: AppColors.mainColor,
                                                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
                                                   onPressed: () {
                                                     setState(() {

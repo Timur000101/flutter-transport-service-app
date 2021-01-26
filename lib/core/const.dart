@@ -7,7 +7,7 @@ class AppColors {
   static final Color primaryTextColor = Color(0XFF717171);
   static final Color lightColor = Color(0XFFFFFFFF);
   static final Color redColor = Color(0XFFF55367);
-  static final Color greenCOlor = Color(0XFF35953E);
+  static final Color greenColor = Color(0XFF35953E);
 }
 
 class AppConstants {

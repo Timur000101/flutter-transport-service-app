@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:sto_app/components/carCard.dart';
+import 'package:sto_app/core/const.dart';
 import 'package:sto_app/models/car.dart';
 
 
@@ -39,7 +40,7 @@ class _MyCarsPageState extends State<MyCarsPage> {
                   padding: const EdgeInsets.symmetric(horizontal: 15.0),
                   child: Container(
                   decoration: BoxDecoration(
-                    color: Colors.redAccent,
+                    color: AppColors.primaryColor,
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child:
@@ -47,7 +48,7 @@ class _MyCarsPageState extends State<MyCarsPage> {
                         child:  RaisedButton( 
                             child: Text("Добавить машину", style: TextStyle(fontSize: 20),),  
                             onPressed: (){},
-                            color: Colors.redAccent,  
+                            color: AppColors.mainColor,  
                             textColor: Colors.white,
                             padding: EdgeInsets.all(10),
                             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
