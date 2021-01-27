@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sto_app/core/const.dart';
 import 'package:sto_app/models/request_item.dart';
-import 'package:sto_app/pages/request_detail_page.dart';
+import 'package:sto_app/pages/request/request_detail_page.dart';
 
 class RequestListItem extends StatelessWidget {
   final RequestItem request;
@@ -44,14 +44,12 @@ class RequestListItem extends StatelessWidget {
                         Text(
                           request.name,
                           style: TextStyle(
-                            fontSize: 17,
-                            fontWeight: FontWeight.bold),
+                              fontSize: 17, fontWeight: FontWeight.bold),
                         ),
                         Text(
                           request.year,
                           style: TextStyle(
-                            fontSize: 16,
-                            color: AppColors.mainTextColor),
+                              fontSize: 16, color: AppColors.mainTextColor),
                         )
                       ],
                     ),
@@ -69,8 +67,7 @@ class RequestListItem extends StatelessWidget {
                     margin: EdgeInsets.only(top: 5, bottom: 5, left: 2),
                     child: Text(request.description + request.description,
                         style: TextStyle(
-                            fontSize: 13,
-                            color: AppColors.primaryTextColor)),
+                            fontSize: 13, color: AppColors.primaryTextColor)),
                   ),
                   Container(
                     margin: EdgeInsets.only(top: 3),
@@ -79,10 +76,12 @@ class RequestListItem extends StatelessWidget {
                       children: [
                         Row(
                           children: [
-                            Icon(Icons.location_on, color: AppColors.primaryTextColor),
+                            Icon(Icons.location_on,
+                                color: AppColors.primaryTextColor),
                             Text(
                               request.location,
-                              style: TextStyle(color: AppColors.primaryTextColor),
+                              style:
+                                  TextStyle(color: AppColors.primaryTextColor),
                             ),
                           ],
                         ),

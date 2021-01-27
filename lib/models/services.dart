@@ -12,7 +12,7 @@ class Services {
     return Services(
         model: json["model"],
         pk: json["pk"],
-        checked: json["checked"],
+        checked: false,
         fields: Fields.fromJson(json["fields"]));
   }
 
@@ -47,5 +47,3 @@ class Fields {
 }
 
 //  == null ? null : service
-
-

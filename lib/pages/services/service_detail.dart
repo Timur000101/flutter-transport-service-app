@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:sto_app/components/service_detail_item.dart';
 import 'package:sto_app/core/const.dart';
 import 'package:sto_app/models/services.dart';
 import 'package:sto_app/widgets/app_widgets.dart';
@@ -14,7 +15,6 @@ class ServiceDetail extends StatefulWidget {
 }
 
 class _ServiceDetailState extends State<ServiceDetail> {
-  bool _checked = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,16 +37,15 @@ class _ServiceDetailState extends State<ServiceDetail> {
                       return services[index].fields.service ==
                               widget.indx.toString()
                           ? Container(
-                              child: CheckboxListTile(
-                                dense: true,
-                                title: Text(services[index].fields.name),
-                                controlAffinity: ListTileControlAffinity.leading,
-                                value: services[index].checked,
-                                onChanged: (bool value) {
-                                  setState(() {
-                                    services[index].checked = value;
-                                  });
-                                },
+                              margin: EdgeInsets.only(
+                                  right: 10.0, left: 10.0, bottom: 5.0),
+                              decoration: BoxDecoration(
+                                  color: AppColors.lightColor,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(5.0))),
+                              child: ServiceDetailItem(
+                                index: index,
+                                services: services[index],
                               ))
                           : SizedBox();
                     },

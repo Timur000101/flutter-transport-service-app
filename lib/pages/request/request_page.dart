@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:sto_app/core/const.dart';
 import 'package:sto_app/models/request_item.dart';
-import 'package:sto_app/pages/request_list_item.dart';
+import 'package:sto_app/pages/request/request_list_item.dart';
 import 'package:sto_app/widgets/app_widgets.dart';
 
 class RequestPage extends StatefulWidget {

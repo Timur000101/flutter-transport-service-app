@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:sto_app/core/const.dart';
-import 'package:sto_app/pages/service_detail.dart';
+import 'package:sto_app/pages/services/service_detail.dart';
 import 'package:sto_app/widgets/app_widgets.dart';
 
 class ServicesPage extends StatefulWidget {
@@ -52,7 +52,8 @@ class _ServicesPageState extends State<ServicesPage> {
   Widget _buildCard(imagePath, title, path) {
     return InkWell(
         child: Card(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
           elevation: 4,
           child: Padding(
             padding: EdgeInsets.all(10.0),
