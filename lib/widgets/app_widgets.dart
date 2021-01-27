@@ -16,5 +16,8 @@ Widget buildAppBar(String title) {
       backgroundColor: AppColors.backgroundColor,
       shadowColor: Colors.white,
       bottomOpacity: 1,
+      iconTheme: IconThemeData(
+        color: Colors.black,
+      ),
     );
   }
