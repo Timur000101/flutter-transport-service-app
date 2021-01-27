@@ -3,6 +3,8 @@ import 'package:sto_app/core/const.dart';
 import 'package:sto_app/models/menu_item.dart';
 import 'package:sto_app/widgets/app_widgets.dart';
 
+import 'my_cars_page.dart';
+
 class ProfilePage extends StatefulWidget {
   @override
   _ProfilePageState createState() => _ProfilePageState();
@@ -11,7 +13,7 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   bool isSwitched = false;
   List<MenuItem> menu1 = [
-    MenuItem(title: "Мои автомобили", icon: Stoappicons.car_1),
+    MenuItem(title: "Мои автомобили", icon: Stoappicons.car_1,),
     MenuItem(title: "История заказов", icon: Icons.history),
     MenuItem(title: "Сообщения", icon: Stoappicons.conversation),
   ];
@@ -46,6 +48,12 @@ class _ProfilePageState extends State<ProfilePage> {
                   leading: Icon(menu1[index].icon, color: AppColors.mainColor, size: 30,),
                   trailing: Icon(Icons.keyboard_arrow_right_outlined),
                   tileColor: Colors.white,
+                  onTap: (){
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => MyCarsPage()),
+                    );
+                  },
                 ),
               );
             }),

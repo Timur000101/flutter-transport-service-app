@@ -4,6 +4,9 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:sto_app/components/carCard.dart';
 import 'package:sto_app/core/const.dart';
 import 'package:sto_app/models/car.dart';
+import 'package:sto_app/widgets/app_widgets.dart';
+
+import 'add_car_page.dart';
 
 
 class MyCarsPage extends StatefulWidget {
@@ -21,16 +24,7 @@ class _MyCarsPageState extends State<MyCarsPage> {
     Widget build(BuildContext context) {
         return Scaffold(
             backgroundColor: HexColor("#EDF2F4"),
-            appBar: AppBar(
-                title: Text(
-                    'Мои автомобили',
-                    style: TextStyle(color: Colors.black87),
-                ),
-                centerTitle: true,
-                backgroundColor: Colors.transparent,
-                elevation: 0.0,
-                brightness: Brightness.light,
-            ),
+            appBar: buildAppBar("Мои автомобили"),
             body: Column(
               children: [
               Expanded(
@@ -47,7 +41,12 @@ class _MyCarsPageState extends State<MyCarsPage> {
                   SizedBox.expand(
                         child:  RaisedButton( 
                             child: Text("Добавить машину", style: TextStyle(fontSize: 20),),  
-                            onPressed: (){},
+                            onPressed: (){
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => AddCarPage()),
+                              );
+                            },
                             color: AppColors.mainColor,  
                             textColor: Colors.white,
                             padding: EdgeInsets.all(10),
