@@ -61,12 +61,15 @@ class _CarCardState extends State<CarCard> {
                                   child: Container(
                                     width: MediaQuery.of(context).size.width * 0.32,
                                     child: Column(children: [
-                                        Image.network(
-                                          'https://a.d-cd.net/8bb322es-960.jpg', 
-                                          fit: BoxFit.fitHeight,
-                                          width: MediaQuery.of(context).size.width * 0.35,
-                                          height: 90,
-                                        ),
+                                        ClipRRect(
+                                          borderRadius: BorderRadius.circular(10.0),
+                                          child: Image.network(
+                                            widget.car.photo, 
+                                            fit: BoxFit.fitHeight,
+                                            width: MediaQuery.of(context).size.width * 0.35,
+                                            height: 90,
+                                          ),
+                                        )
                                       ],
                                     ),
                                   ),
@@ -83,6 +86,7 @@ class _CarCardState extends State<CarCard> {
                                 onPressed: (){},
                                 color: AppColors.primaryColor,  
                                 textColor: Colors.white,
+                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                               ),
                             ),
                             Spacer(),
@@ -93,6 +97,7 @@ class _CarCardState extends State<CarCard> {
                                 onPressed: (){},
                                 color: AppColors.mainColor,  
                                 textColor: Colors.white,
+                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                               ),
                             ),
                           ],),
