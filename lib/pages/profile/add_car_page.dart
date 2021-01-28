@@ -1,4 +1,6 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:sto_app/core/const.dart';
 import 'package:sto_app/widgets/app_widgets.dart';
 
@@ -9,6 +11,9 @@ class AddCarPage extends StatefulWidget {
 }
 
 class _AddCarPageState extends State<AddCarPage> {
+
+  Image _image = Image.asset('assets/images/Add_photo_placeholder.png', height: 100, width: 100,);
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -17,6 +22,7 @@ class _AddCarPageState extends State<AddCarPage> {
         body:  Container(
           color: AppColors.backgroundColor,
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(
                 height: 10,
@@ -88,7 +94,7 @@ class _AddCarPageState extends State<AddCarPage> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(15,5,15,5),
+                padding: const EdgeInsets.fromLTRB(15,10,15,5),
                 child: TextField(
                   style: TextStyle(fontSize: 16.0, color: AppColors.primaryTextColor, fontWeight: FontWeight.bold),
                   decoration: new InputDecoration(
@@ -108,6 +114,22 @@ class _AddCarPageState extends State<AddCarPage> {
                     ),
                   ),
                 ),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(25, 15, 10, 10),
+                child: Text('Добавить фото', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black87),),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(25, 5, 5, 5),
+                child: Material(
+                  child: InkWell(
+                    onTap: (){
+                      _imgFromGallery();
+                      Navigator.of(context).pop();
+                    },
+                    child: _image,
+                  )
+                )
               ),
               Spacer(),
               Padding(
@@ -140,5 +162,15 @@ class _AddCarPageState extends State<AddCarPage> {
         )
       ),
     );
+  }
+
+  _imgFromGallery() async {
+    File image = await  ImagePicker.pickImage(
+        source: ImageSource.gallery, imageQuality: 50
+    );
+
+    setState(() {
+      _image = Image.file(image, height: 100, width: 100,);
+    });
   }
 }
