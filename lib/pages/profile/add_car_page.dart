@@ -12,11 +12,13 @@ class AddCarPage extends StatefulWidget {
 
 class _AddCarPageState extends State<AddCarPage> {
   List<Image> img_array = [Image.asset('assets/images/Add_photo_placeholder.png', height: 100, width: 100,fit: BoxFit.fitHeight)];
+  final globalKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
     return Container(
       child: Scaffold(
+        key: globalKey,
         appBar: buildAppBar("Добавить машину"),
         body:  Container(
           color: AppColors.backgroundColor,
@@ -127,23 +129,25 @@ class _AddCarPageState extends State<AddCarPage> {
                     itemCount: img_array.length,
                     itemBuilder: (context, int index) {
                       if (index == img_array.length-1){
-                        return Material(
-                          child: InkWell(
-                            onTap: (){
-                              _imgFromGallery();
-                            },
-                            child: img_array[index],
-                          )
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8),
+                          child: GestureDetector(
+                              onTap: (){
+                                _imgFromGallery();
+                              },
+                              child: img_array[index],
+                            )
                         );
                       }
                       else{
-                        return Material(
-                          child: InkWell(
-                            onTap: (){
-                              _deleteImage();
-                            },
-                            child: img_array[index],
-                          )
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8),
+                          child: GestureDetector(
+                              onTap: (){
+                                _deleteImage(index);
+                              },
+                              child: img_array[index],
+                            )
                         );
                       }
                     }
@@ -157,7 +161,7 @@ class _AddCarPageState extends State<AddCarPage> {
                   width: MediaQuery.of(context).size.width,
                   child: RaisedButton(
                     onPressed: () {
-                      
+                      print(img_array.length);
                     },
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10.0),
@@ -184,16 +188,30 @@ class _AddCarPageState extends State<AddCarPage> {
   }
 
   _imgFromGallery() async {
-    File image = await  ImagePicker.pickImage(
-        source: ImageSource.gallery, imageQuality: 50
-    );
+    if (img_array.length == 6){
+      final snackBar = SnackBar(content: Text("Не более 5-ти фотографии."));
+      globalKey.currentState.showSnackBar(snackBar);
+    }
+    else{
+      File image = await  ImagePicker.pickImage(
+          source: ImageSource.gallery, imageQuality: 50
+      );
 
-    setState(() {
-      img_array.insert(0,Image.file(image, height: 100, width: 100, fit: BoxFit.fitHeight));
-    });
+      setState(() {
+        if (image==null) {
+        } 
+        else{
+          img_array.insert(0,Image.file(image, height: 100, width: 100, fit: BoxFit.fitHeight));
+        }
+      });
+    }
   }
 
-  _deleteImage(){
-    print('Deleted');
+  _deleteImage(int index) {
+    setState((){
+      img_array.removeAt(index);
+      final snackBar = SnackBar(content: Text("Фотография удалена."));
+      globalKey.currentState.showSnackBar(snackBar);
+    });
   }
 }
