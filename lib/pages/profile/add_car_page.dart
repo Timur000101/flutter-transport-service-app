@@ -1,8 +1,5 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:sto_app/core/const.dart';
-import 'package:sto_app/utils/utils.dart';
 import 'package:sto_app/widgets/app_widgets.dart';
 
 class AddCarPage extends StatefulWidget {

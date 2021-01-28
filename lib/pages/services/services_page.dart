@@ -58,7 +58,7 @@ class _ServicesPageState extends State<ServicesPage> {
           child: Padding(
             padding: EdgeInsets.all(10.0),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 Image.asset(
@@ -67,7 +67,7 @@ class _ServicesPageState extends State<ServicesPage> {
                   width: 60,
                 ),
                 SizedBox(
-                  height: 5,
+                  height: 10,
                 ),
                 Text(
                   title,
