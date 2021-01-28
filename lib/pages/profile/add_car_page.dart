@@ -11,8 +11,7 @@ class AddCarPage extends StatefulWidget {
 }
 
 class _AddCarPageState extends State<AddCarPage> {
-
-  Image _image = Image.asset('assets/images/Add_photo_placeholder.png', height: 100, width: 100,);
+  List<Image> img_array = [Image.asset('assets/images/Add_photo_placeholder.png', height: 100, width: 100,fit: BoxFit.fitHeight)];
 
   @override
   Widget build(BuildContext context) {
@@ -121,15 +120,35 @@ class _AddCarPageState extends State<AddCarPage> {
               ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(25, 5, 5, 5),
-                child: Material(
-                  child: InkWell(
-                    onTap: (){
-                      _imgFromGallery();
-                      Navigator.of(context).pop();
-                    },
-                    child: _image,
-                  )
-                )
+                child: SizedBox(
+                  height: 100,
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: img_array.length,
+                    itemBuilder: (context, int index) {
+                      if (index == img_array.length-1){
+                        return Material(
+                          child: InkWell(
+                            onTap: (){
+                              _imgFromGallery();
+                            },
+                            child: img_array[index],
+                          )
+                        );
+                      }
+                      else{
+                        return Material(
+                          child: InkWell(
+                            onTap: (){
+                              _deleteImage();
+                            },
+                            child: img_array[index],
+                          )
+                        );
+                      }
+                    }
+                  ),
+                ),
               ),
               Spacer(),
               Padding(
@@ -170,7 +189,11 @@ class _AddCarPageState extends State<AddCarPage> {
     );
 
     setState(() {
-      _image = Image.file(image, height: 100, width: 100,);
+      img_array.insert(0,Image.file(image, height: 100, width: 100, fit: BoxFit.fitHeight));
     });
+  }
+
+  _deleteImage(){
+    print('Deleted');
   }
 }
