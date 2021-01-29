@@ -16,11 +16,11 @@ class MyCarsPage extends StatefulWidget {
 class _MyCarsPageState extends State<MyCarsPage> {
   final List<Car> carList = [
     Car('Mersedec Benz C55 AMG1', 'год 2020',
-        Image.network('https://a.d-cd.net/8bb322es-960.jpg')),
+        'https://a.d-cd.net/8bb322es-960.jpg'),
     Car('Mersedec Benz C55 AMG1', 'год 2020',
-        Image.network('https://a.d-cd.net/8bb322es-960.jpg')),
+        'https://a.d-cd.net/8bb322es-960.jpg'),
     Car('Mersedec Benz C55 AMG1', 'год 2020',
-        Image.network('https://a.d-cd.net/8bb322es-960.jpg')),
+        'https://a.d-cd.net/8bb322es-960.jpg'),
   ];
   @override
   Widget build(BuildContext context) {

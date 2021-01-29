@@ -13,7 +13,7 @@ Widget buildAppBar(String title) {
               fontFamily: 'Montserrat Regular',
               fontSize: 18)),
       brightness: Brightness.light,
-      automaticallyImplyLeading: false,
+      automaticallyImplyLeading: true,
       backgroundColor: AppColors.backgroundColor,
       shadowColor: Colors.white,
       bottomOpacity: 1,
