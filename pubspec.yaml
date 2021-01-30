@@ -36,6 +36,7 @@ flutter:
     - assets/images/
     - assets/images/categories/
     - assets/services.json
+    - assets/cars_model.json
   fonts:
     - family:  Stoappicons
       fonts:

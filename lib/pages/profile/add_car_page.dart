@@ -4,6 +4,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:sto_app/core/const.dart';
 import 'package:sto_app/widgets/app_widgets.dart';
 
+import 'car_brand_page.dart';
+
 class AddCarPage extends StatefulWidget {
 
   @override
@@ -13,6 +15,8 @@ class AddCarPage extends StatefulWidget {
 class _AddCarPageState extends State<AddCarPage> {
   List<Image> img_array = [Image.asset('assets/images/Add_photo_placeholder.png', height: 100, width: 100,fit: BoxFit.fitHeight)];
   final globalKey = GlobalKey<ScaffoldState>();
+  var _carBrand = 'Выберите марку машины';
+  var brandTextField = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -31,12 +35,21 @@ class _AddCarPageState extends State<AddCarPage> {
               Padding(
                 padding: const EdgeInsets.fromLTRB(15,10,15,5),
                 child: TextField(
+                  controller: brandTextField,
+                  showCursor: false,
+                  onTap: () async {
+                    var result = await Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => CarBrandPage()),
+                    );
+                    brandTextField.text = result;
+                  },
                   style: TextStyle(fontSize: 16.0, color: AppColors.primaryTextColor, fontWeight: FontWeight.bold),
                   decoration: new InputDecoration(
                     filled: true,
                     fillColor: Colors.white,
                     prefixIcon: Icon(Stoappicons.car_model, color: Colors.black),
-                    hintText: "Выберите марку машины",
+                    hintText: _carBrand,
                     enabledBorder: const OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(10.0)),
                     borderSide: const BorderSide(
