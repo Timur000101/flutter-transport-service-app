@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:sto_app/core/const.dart';
+import 'package:sto_app/pages/auth/signIn_page.dart';
 import 'package:sto_app/pages/home_page.dart';
+
 // import 'package:sto_app/pages/start_up.dart';
 
 void main() async {
@@ -20,6 +22,6 @@ class MyApp extends StatelessWidget {
               fontFamily: 'Montserrat Regular'),
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-        home: HomePage());
+        home: SignIn());
   }
 }

@@ -22,6 +22,9 @@ dependencies:
   cupertino_icons: ^1.0.0
   hexcolor:
   image_picker: ^0.6.0+9
+  shared_preferences: ^0.5.12+4
+  http: ^0.12.2
+  connectivity: ^2.0.2
 
 dev_dependencies:
   flutter_test:

@@ -1,10 +1,42 @@
+import 'dart:convert';
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:sto_app/core/const.dart';
+import 'package:sto_app/pages/auth/sms_page.dart';
 // import 'package:sto_app/pages/home_page.dart';
 // import 'package:sto_app/pages/sms_page.dart';
 import 'package:sto_app/utils/utils.dart';
+import 'package:http/http.dart' as http;
+import 'dart:io';
+import 'package:connectivity/connectivity.dart';
+
+Future<String> registration(String name, String phone) async {
+  final response = await http.post(AppConstants.baseUrl + "users/phone/",
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{
+        'phone': phone,
+        'nickname': name,
+      }));
+  if (response.statusCode == 200) {
+    return response.body;
+  } else {
+    throw Exception("Falied to registration");
+  }
+}
+
+Future<bool> checkInternetConnection() async {
+  var connectivityResult = await (Connectivity().checkConnectivity());
+  if (connectivityResult == ConnectivityResult.mobile) {
+    return true;
+  } else if (connectivityResult == ConnectivityResult.wifi) {
+    return true;
+  }
+  return false;
+}
 
 TextEditingController nameController = TextEditingController();
 
@@ -25,6 +57,44 @@ class _SignInState extends State<SignIn> {
   void initState() {
     super.initState();
     nameController.text = '';
+  }
+
+  String cleanPhone(String phone) {
+    var ph = "";
+    for (int i = 0; i < phone.length; i++) {
+      if (isNumeric(phone[i])) {
+        ph += phone[i];
+      }
+    }
+    return ph.substring(1, ph.length);
+  }
+
+  void reg(String nickname, String phone) async {
+    String jsonString = await registration(
+      cleanPhone(phone),
+      nickname,
+    );
+    Map<String, dynamic> status = jsonDecode(jsonString);
+    // String status = jsonEncode(statusJson);
+    print(status['status']);
+
+    if (status['status'] == "ok") {
+      print("status ok");
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+            builder: (BuildContext context) => EnterSMS(nickname, phone)),
+      );
+    } else {
+      print("status no ok");
+    }
+  }
+
+  bool isNumeric(String s) {
+    if (s == null) {
+      return false;
+    }
+    return double.tryParse(s) != null;
   }
 
   @override
@@ -121,32 +191,27 @@ class _SignInState extends State<SignIn> {
                           height: 10.0,
                         ),
                         Container(
-                          width: MediaQuery.of(context).size.width,
-                          child: RichText(
-                            text: TextSpan(
-                              children: [
-                                TextSpan(
-                                  text: 'Нажимая "Продолжить", вы соглашаетесь с ',
-                                ),
-                                TextSpan(
+                            width: MediaQuery.of(context).size.width,
+                            child: RichText(
+                                text: TextSpan(children: [
+                              TextSpan(
+                                text:
+                                    'Нажимая "Продолжить", вы соглашаетесь с ',
+                              ),
+                              TextSpan(
                                   text: "обработкой персональных данных ",
                                   style: TextStyle(color: Colors.blue),
                                   recognizer: TapGestureRecognizer()
-                                    ..onTap = () {}
-                                ),
-                                TextSpan(
-                                  text: "и ",
-                                ),
-                                TextSpan(
+                                    ..onTap = () {}),
+                              TextSpan(
+                                text: "и ",
+                              ),
+                              TextSpan(
                                   text: "правилами сервиса ",
                                   style: TextStyle(color: Colors.blue),
                                   recognizer: TapGestureRecognizer()
-                                    ..onTap = () {}
-                                ),
-                              ]
-                            )
-                          )
-                        ),
+                                    ..onTap = () {}),
+                            ]))),
                         Divider(
                           color: Colors.grey.withOpacity(0.5),
                           height: 30,
@@ -159,10 +224,26 @@ class _SignInState extends State<SignIn> {
                           child: RaisedButton(
                             onPressed: () {
                               if (_formKey.currentState.validate()) {
-                                createAlertDialog(context);
+                                // createAlertDialog(context);
                                 setState(() {
                                   isLoading = true;
                                 });
+                                var isConnected = checkInternetConnection();
+                                isConnected.then((value) => {
+                                      if (value)
+                                        {
+                                          reg(nickNameController.text,
+                                              phoneController.text.trim())
+                                        }
+                                      else
+                                        {
+                                          _showDialog(
+                                              "Внимание",
+                                              "У вас нет соединения с интернетом!",
+                                              context)
+                                        }
+                                    });
+
                                 // registerToFb(phoneController.text.trim());
                                 FocusScopeNode currentFocus =
                                     FocusScope.of(context);
@@ -194,6 +275,22 @@ class _SignInState extends State<SignIn> {
     );
   }
 
+  void _showDialog(String title, String content, BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+              title: new Text(title),
+              content: new Text(content),
+              actions: <Widget>[
+                new FlatButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: new Text("Close"))
+              ]);
+        });
+  }
   // void registerToFb(String phoneNumber) async {
   //   FirebaseAuth auth = FirebaseAuth.instance;
 
@@ -260,4 +357,5 @@ class _SignInState extends State<SignIn> {
   //     },
   //   );
   // }
+
 }

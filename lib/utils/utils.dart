@@ -32,26 +32,26 @@ class NumberTextInputFormatter extends TextInputFormatter {
 
 // Модальное окно загрузки
 createAlertDialog(BuildContext context) {
-    return showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-              content: Container(
-                  width: MediaQuery.of(context).size.width - 40,
-                  height: MediaQuery.of(context).size.height / 6,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Text("Загрузка"),
-                      SizedBox(
-                        height: 20.0,
-                      ),
-                      SpinKitFadingCube(
-                        color: AppColors.mainColor,
-                        size: 35,
-                      ),
-                    ],
-                  )));
-        });
-  }
+  return showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+            content: Container(
+                width: MediaQuery.of(context).size.width - 40,
+                height: MediaQuery.of(context).size.height / 6,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Text("Загрузка"),
+                    SizedBox(
+                      height: 20.0,
+                    ),
+                    SpinKitFadingCube(
+                      color: AppColors.mainColor,
+                      size: 35,
+                    ),
+                  ],
+                )));
+      });
+}

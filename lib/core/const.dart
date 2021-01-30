@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+
 class AppColors {
   static final Color backgroundColor = Color(0XFFEDF2F4);
   static final Color mainColor = Color(0XFFEF233C);
@@ -11,7 +12,7 @@ class AppColors {
 }
 
 class AppConstants {
-  static final String baseUrl = "http://134.122.11.57";
+  static final String baseUrl = "http://134.122.11.57/";
 }
 
 class Stoappicons {

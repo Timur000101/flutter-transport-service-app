@@ -7,10 +7,10 @@ import 'package:sto_app/pages/home_page.dart';
 import 'package:sto_app/utils/utils.dart';
 
 class EnterSMS extends StatefulWidget {
-  EnterSMS(this.vId, this.tkn, this.phoneN);
-  final String vId;
-  final int tkn;
-  final String phoneN;
+  EnterSMS(this.nickname, this.phone);
+  final String nickname;
+  // final int tkn;
+  final String phone;
 
   @override
   _EnterSMSState createState() => _EnterSMSState();
@@ -63,7 +63,7 @@ class _EnterSMSState extends State<EnterSMS> {
                         margin: EdgeInsets.only(bottom: 5.0),
                         alignment: Alignment.center,
                         child: Text(
-                          "Код подтверждения отправлен на номер ${widget.phoneN}",
+                          "Код подтверждения отправлен на номер ${widget.phone}",
                           style: TextStyle(
                               color: AppColors.mainTextColor, fontSize: 16),
                           textAlign: TextAlign.center,
@@ -109,7 +109,7 @@ class _EnterSMSState extends State<EnterSMS> {
                               setState(() {
                                 isLoading = true;
                               });
-                              verifySMS(widget.vId, smsController.text.trim());
+                              // verifySMS(widget.vId, smsController.text.trim());
                             }
                           },
                           shape: RoundedRectangleBorder(
