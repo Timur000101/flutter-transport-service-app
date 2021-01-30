@@ -20,7 +20,8 @@ class _RequestPageState extends State<RequestPage> {
         location: "Almaty",
         description:
             "Contrary to popular belief, Lorem Ipsum is not simply random text ...",
-        urlImage: "https://pngimg.com/uploads/ferrari/ferrari_PNG10679.png"),
+        urlImage:
+            "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/bugatti-chiron-pur-sport-106-1582836604.jpg"),
     RequestItem(
         name: "Mercedes Benz C55 AMG",
         chipfirst: "CTO",
@@ -29,7 +30,8 @@ class _RequestPageState extends State<RequestPage> {
         location: "Almaty",
         description:
             "Contrary to popular belief, Lorem Ipsum is not simply random text ...",
-        urlImage: "https://pngimg.com/uploads/ferrari/ferrari_PNG10679.png"),
+        urlImage:
+            "https://cdn.luxe.digital/media/2020/04/30200414/best-electric-cars-luxury-tesla-model-x-luxe-digital.jpg"),
     RequestItem(
         name: "Mercedes Benz C55 AMG",
         chipfirst: "CTO",

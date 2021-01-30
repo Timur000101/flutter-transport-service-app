@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:sto_app/core/const.dart';
 import 'package:sto_app/pages/profile/profile_page.dart';
-// import 'package:sto_app/pages/request/request_page.dart';
+import 'package:sto_app/pages/request/request_page.dart';
 import 'package:sto_app/pages/services/services_page.dart';
-import 'order/orders_from_executor_page.dart';
+// import 'order/orders_from_executor_page.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -12,12 +12,8 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _currentIndex = 0;
-  final List<Widget> _children = [
-    OrdersFromExecutorPage(),
-    ServicesPage(),
-    ProfilePage()
-  ];
-
+  final List<Widget> _children = [RequestPage(), ServicesPage(), ProfilePage()];
+  // OrdersFromExecutorPage()
   @override
   Widget build(BuildContext context) {
     return Scaffold(

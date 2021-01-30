@@ -14,7 +14,7 @@ class RequestListItem extends StatelessWidget {
     return Column(
       children: [
         Container(
-          margin: EdgeInsets.symmetric(vertical: 5.0, horizontal: 20.0),
+          margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
           padding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
           decoration: BoxDecoration(
               color: AppColors.lightColor,
@@ -54,7 +54,11 @@ class RequestListItem extends StatelessWidget {
                       ],
                     ),
                   ),
-                  Expanded(child: cornerImageView(request.urlImage))
+                  Expanded(
+                      child: Padding(
+                    padding: const EdgeInsets.only(left: 15, top: 3),
+                    child: cornerImageView(request.urlImage),
+                  ))
                 ],
               ),
               Column(
@@ -129,9 +133,6 @@ Widget cornerImageView(String url) {
   return ClipRRect(
     borderRadius: BorderRadius.circular(10),
     child: Image.network(url,
-        width: 140,
-        height: 125,
-        alignment: Alignment.topCenter,
-        fit: BoxFit.fill),
+        height: 90, alignment: Alignment.topCenter, fit: BoxFit.fill),
   );
 }
