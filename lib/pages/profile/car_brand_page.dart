@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:sto_app/components/mainBrandCard.dart';
+import 'package:sto_app/components/carBrandCard.dart';
 import 'package:sto_app/core/const.dart';
 import 'package:sto_app/models/brand.dart';
 import 'package:sto_app/widgets/app_widgets.dart';
@@ -38,7 +38,7 @@ class _CarBrandPageState extends State<CarBrandPage> {
                         decoration: BoxDecoration(
                             color: AppColors.lightColor,
                             borderRadius: BorderRadius.all(Radius.circular(5.0))),
-                        child: MainBrandCard(
+                        child: CarBrandCard(
                           index: index,
                           brand: widget.brands[index],
                         )
