@@ -9,10 +9,9 @@ import 'package:sto_app/pages/auth/sms_page.dart';
 // import 'package:sto_app/pages/sms_page.dart';
 import 'package:sto_app/utils/utils.dart';
 import 'package:http/http.dart' as http;
-import 'dart:io';
-import 'package:connectivity/connectivity.dart';
+import 'package:sto_app/utils/internet_manager.dart';
 
-Future<String> registration(String name, String phone) async {
+Future<String> registration(String phone, String name) async {
   final response = await http.post(AppConstants.baseUrl + "users/phone/",
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
@@ -27,18 +26,6 @@ Future<String> registration(String name, String phone) async {
     throw Exception("Falied to registration");
   }
 }
-
-Future<bool> checkInternetConnection() async {
-  var connectivityResult = await (Connectivity().checkConnectivity());
-  if (connectivityResult == ConnectivityResult.mobile) {
-    return true;
-  } else if (connectivityResult == ConnectivityResult.wifi) {
-    return true;
-  }
-  return false;
-}
-
-TextEditingController nameController = TextEditingController();
 
 class SignIn extends StatefulWidget {
   @override
@@ -56,7 +43,6 @@ class _SignInState extends State<SignIn> {
   @override
   void initState() {
     super.initState();
-    nameController.text = '';
   }
 
   String cleanPhone(String phone) {
@@ -70,23 +56,29 @@ class _SignInState extends State<SignIn> {
   }
 
   void reg(String nickname, String phone) async {
+    String ph = cleanPhone(phone);
     String jsonString = await registration(
-      cleanPhone(phone),
+      ph,
       nickname,
     );
     Map<String, dynamic> status = jsonDecode(jsonString);
-    // String status = jsonEncode(statusJson);
     print(status['status']);
 
     if (status['status'] == "ok") {
-      print("status ok");
-      Navigator.pushReplacement(
+      // print("status ok");
+      Navigator.pop(context);
+      Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (BuildContext context) => EnterSMS(nickname, phone)),
+            builder: (BuildContext context) => EnterSMS(nickname, ph)),
       );
     } else {
-      print("status no ok");
+      Navigator.pop(context);
+      _scaffoldKey.currentState.showSnackBar(SnackBar(
+          content: Text(
+        'Проверьте соединения с интернетом или попробуйте позже!',
+      )));
+      // print("status no ok");
     }
   }
 
@@ -96,6 +88,8 @@ class _SignInState extends State<SignIn> {
     }
     return double.tryParse(s) != null;
   }
+
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
@@ -108,6 +102,7 @@ class _SignInState extends State<SignIn> {
         }
       },
       child: Scaffold(
+          key: _scaffoldKey,
           backgroundColor: Colors.white,
           appBar: AppBar(
             backgroundColor: Colors.white,
@@ -167,11 +162,13 @@ class _SignInState extends State<SignIn> {
                           child: TextFormField(
                             keyboardType: TextInputType.phone,
                             controller: phoneController,
+                            maxLength: 13,
                             inputFormatters: <TextInputFormatter>[
                               WhitelistingTextInputFormatter.digitsOnly,
                               _mobileFormatter,
                             ],
                             decoration: InputDecoration(
+                              counterText: "",
                               labelText: "Введите номер",
                               enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10.0),
@@ -224,7 +221,6 @@ class _SignInState extends State<SignIn> {
                           child: RaisedButton(
                             onPressed: () {
                               if (_formKey.currentState.validate()) {
-                                // createAlertDialog(context);
                                 setState(() {
                                   isLoading = true;
                                 });
@@ -232,12 +228,13 @@ class _SignInState extends State<SignIn> {
                                 isConnected.then((value) => {
                                       if (value)
                                         {
+                                          createAlertDialog(context),
                                           reg(nickNameController.text,
                                               phoneController.text.trim())
                                         }
                                       else
                                         {
-                                          _showDialog(
+                                          showAlert(
                                               "Внимание",
                                               "У вас нет соединения с интернетом!",
                                               context)
@@ -275,22 +272,6 @@ class _SignInState extends State<SignIn> {
     );
   }
 
-  void _showDialog(String title, String content, BuildContext context) {
-    showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-              title: new Text(title),
-              content: new Text(content),
-              actions: <Widget>[
-                new FlatButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                    child: new Text("Close"))
-              ]);
-        });
-  }
   // void registerToFb(String phoneNumber) async {
   //   FirebaseAuth auth = FirebaseAuth.instance;
 
