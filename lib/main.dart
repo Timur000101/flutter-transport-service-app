@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sto_app/core/const.dart';
+import 'package:sto_app/pages/home_page.dart';
 import 'package:sto_app/pages/start_up.dart';
 
 // import 'package:sto_app/pages/start_up.dart';
@@ -22,6 +23,6 @@ class MyApp extends StatelessWidget {
               fontFamily: 'Montserrat Regular'),
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-        home: StartUp());
+        home: HomePage());
   }
 }
