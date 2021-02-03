@@ -63,11 +63,14 @@ class _CarCardState extends State<CarCard> {
                                     child: Column(children: [
                                         ClipRRect(
                                           borderRadius: BorderRadius.circular(10.0),
-                                          child: Image.network(
-                                            widget.car.photo, 
-                                            fit: BoxFit.fitHeight,
-                                            width: MediaQuery.of(context).size.width * 0.35,
-                                            height: 90,
+                                          child: Container(
+                                            color: Colors.blue,
+                                            child: Image.network(
+                                              widget.car.photo, 
+                                              fit: BoxFit.fitHeight,
+                                              width: MediaQuery.of(context).size.width * 0.35,
+                                              height: 90,
+                                            ),
                                           ),
                                         )
                                       ],

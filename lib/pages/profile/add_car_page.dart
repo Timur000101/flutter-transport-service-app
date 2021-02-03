@@ -17,6 +17,9 @@ class _AddCarPageState extends State<AddCarPage> {
   final globalKey = GlobalKey<ScaffoldState>();
   var _carBrand = 'Выберите марку машины';
   var brandTextField = TextEditingController();
+  var yearTextField = TextEditingController();
+  var volumeTextField = TextEditingController();
+  var mileageTextField = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +28,15 @@ class _AddCarPageState extends State<AddCarPage> {
         backgroundColor: AppColors.backgroundColor,
         key: globalKey,
         appBar: buildAppBar("Добавить машину"),
-        body:  SingleChildScrollView(
+        body:  GestureDetector(
+          onTap: () {
+            FocusScopeNode currentFocus = FocusScope.of(context);
+
+            if (!currentFocus.hasPrimaryFocus) {
+              currentFocus.unfocus();
+            }
+          },
+          child: SingleChildScrollView(
           child: Stack(
             children: <Widget>[
               Container(
@@ -42,12 +53,16 @@ class _AddCarPageState extends State<AddCarPage> {
                     child: TextField(
                       controller: brandTextField,
                       showCursor: false,
+                      onChanged: (text) {
+                        brandTextField.text = _carBrand;
+                      },
                       onTap: () async {
                         var result = await Navigator.push(
                           context,
                           MaterialPageRoute(builder: (context) => CarBrandPage()),
                         );
                         brandTextField.text = result;
+                        _carBrand = result;
                       },
                       style: TextStyle(fontSize: 16.0, color: AppColors.primaryTextColor, fontWeight: FontWeight.bold),
                       decoration: new InputDecoration(
@@ -71,6 +86,8 @@ class _AddCarPageState extends State<AddCarPage> {
                   Padding(
                     padding: const EdgeInsets.fromLTRB(15,10,15,5),
                     child: TextField(
+                      controller: yearTextField,
+                      keyboardType: TextInputType.number,
                       style: TextStyle(fontSize: 16.0, color: AppColors.primaryTextColor, fontWeight: FontWeight.bold),
                       decoration: new InputDecoration(
                         filled: true,
@@ -93,6 +110,8 @@ class _AddCarPageState extends State<AddCarPage> {
                   Padding(
                     padding: const EdgeInsets.fromLTRB(15,10,15,5),
                     child: TextField(
+                      controller: volumeTextField,
+                      // keyboardType: TextInputType.,
                       style: TextStyle(fontSize: 16.0, color: AppColors.primaryTextColor, fontWeight: FontWeight.bold),
                       decoration: new InputDecoration(
                         filled: true,
@@ -115,6 +134,8 @@ class _AddCarPageState extends State<AddCarPage> {
                   Padding(
                     padding: const EdgeInsets.fromLTRB(15,10,15,5),
                     child: TextField(
+                      controller: mileageTextField,
+                      keyboardType: TextInputType.number,
                       style: TextStyle(fontSize: 16.0, color: AppColors.primaryTextColor, fontWeight: FontWeight.bold),
                       decoration: new InputDecoration(
                         filled: true,
@@ -178,9 +199,9 @@ class _AddCarPageState extends State<AddCarPage> {
                     child: Container(
                       width: MediaQuery.of(context).size.width,
                       child: RaisedButton(
-                        onPressed: () {
-                          print(img_array.length);
-                        },
+                        onPressed: (){
+                          _addCar();
+                          },
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10.0),
                             side: BorderSide(color: Colors.red)),
@@ -202,6 +223,7 @@ class _AddCarPageState extends State<AddCarPage> {
               ),
             )
           ]
+        )
         )
         )
       ),
@@ -234,5 +256,38 @@ class _AddCarPageState extends State<AddCarPage> {
       final snackBar = SnackBar(content: Text("Фотография удалена."));
       globalKey.currentState.showSnackBar(snackBar);
     });
+  }
+
+  _addCar(){
+    if (_carBrand != 'Выберите марку машины'){
+      if (int.tryParse(yearTextField.text) != null && (int.tryParse(yearTextField.text) < 2030 || int.tryParse(yearTextField.text) > 1980)){
+        if (double.tryParse(volumeTextField.text) != null && (double.tryParse(volumeTextField.text) < 12.0 && double.tryParse(volumeTextField.text) > 0.5)){
+          if (double.tryParse(mileageTextField.text) != null && (int.tryParse(mileageTextField.text) > 0 && int.tryParse(mileageTextField.text) < 3000000)){
+            _sendCarInfo();
+          }
+          else{
+            final snackBar = SnackBar(content: Text('Введите корректный км. пробега.'));
+            globalKey.currentState.showSnackBar(snackBar);
+          }
+        }
+        else{
+          final snackBar = SnackBar(content: Text('Введите корректный объем.'));
+          globalKey.currentState.showSnackBar(snackBar);
+        }
+      }
+      else{
+        final snackBar = SnackBar(content: Text('Введите корректный год.'));
+        globalKey.currentState.showSnackBar(snackBar);
+      }
+    }
+    else{
+      final snackBar = SnackBar(content: Text('Выберите марку машины.'));
+      globalKey.currentState.showSnackBar(snackBar);
+    }
+  }
+
+
+  _sendCarInfo(){
+    print(brandTextField.text);
   }
 }
