@@ -263,7 +263,13 @@ class _AddCarPageState extends State<AddCarPage> {
       if (int.tryParse(yearTextField.text) != null && (int.tryParse(yearTextField.text) < 2030 || int.tryParse(yearTextField.text) > 1980)){
         if (double.tryParse(volumeTextField.text) != null && (double.tryParse(volumeTextField.text) < 12.0 && double.tryParse(volumeTextField.text) > 0.5)){
           if (double.tryParse(mileageTextField.text) != null && (int.tryParse(mileageTextField.text) > 0 && int.tryParse(mileageTextField.text) < 3000000)){
-            _sendCarInfo();
+            if (img_array.length > 1){
+              _sendCarInfo();
+            }
+            else{
+              final snackBar = SnackBar(content: Text('Добавьте фото автомобиля.'));
+              globalKey.currentState.showSnackBar(snackBar);
+            }
           }
           else{
             final snackBar = SnackBar(content: Text('Введите корректный км. пробега.'));
