@@ -19,15 +19,15 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       body: _children[_currentIndex],
       bottomNavigationBar: SizedBox(
-        height: 45,
+        height: MediaQuery.of(context).size.width * 0.14,
         child: BottomNavigationBar(
           currentIndex: _currentIndex,
           elevation: 15.0,
-          iconSize: 15,
+          iconSize: 17,
           selectedItemColor: AppColors.mainColor,
           unselectedItemColor: AppColors.primaryTextColor,
-          selectedFontSize: 12,
-          unselectedFontSize: 10,
+          selectedFontSize: 13,
+          unselectedFontSize: 11,
           items: [
             BottomNavigationBarItem(
               icon: Icon(
