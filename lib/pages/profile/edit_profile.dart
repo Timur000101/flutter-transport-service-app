@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sto_app/core/const.dart';
 import 'package:sto_app/widgets/app_widgets.dart';
 
 class EditProfile extends StatefulWidget {
@@ -12,6 +13,9 @@ class _EditProfileState extends State<EditProfile> {
     return Container(
        child: Scaffold(
          appBar: buildAppBar("Редактирование"),
+         body: Container(
+           color: AppColors.backgroundColor,
+         ),
        ),
     );
   }

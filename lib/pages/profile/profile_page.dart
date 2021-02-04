@@ -6,6 +6,7 @@ import 'package:sto_app/models/menu_item.dart';
 import 'package:sto_app/pages/auth/signIn_page.dart';
 import 'package:sto_app/widgets/app_widgets.dart';
 
+import 'edit_profile.dart';
 import 'my_cars_page.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -181,7 +182,16 @@ class _ProfilePageState extends State<ProfilePage> {
                         FlatButton(
                             padding: EdgeInsets.symmetric(
                                 horizontal: 0, vertical: 0),
-                            onPressed: () {},
+                            onPressed: () {
+                              if (isReg == true){
+                                Navigator.push(context,
+                                  MaterialPageRoute(builder: (context) => EditProfile()),
+                                );
+                              }
+                              else{
+                                showCustomAlert();
+                              }
+                            },
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: <Widget>[
