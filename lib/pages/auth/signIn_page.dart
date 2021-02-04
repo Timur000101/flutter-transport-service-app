@@ -107,6 +107,10 @@ class _SignInState extends State<SignIn> {
           appBar: AppBar(
             backgroundColor: Colors.white,
             elevation: 0,
+            brightness: Brightness.light,
+            iconTheme: IconThemeData(
+              color: Colors.black,
+            ),
           ),
           body: SingleChildScrollView(
             child: Form(

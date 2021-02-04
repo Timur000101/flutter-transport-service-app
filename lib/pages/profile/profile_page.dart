@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sto_app/components/alert.dart';
 import 'package:sto_app/core/const.dart';
 import 'package:sto_app/models/menu_item.dart';
+import 'package:sto_app/pages/auth/signIn_page.dart';
 import 'package:sto_app/widgets/app_widgets.dart';
 
 import 'my_cars_page.dart';
@@ -11,6 +14,12 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  final globalKey = GlobalKey<ScaffoldState>();
+  String avaURL = "https://www.sunsetlearning.com/wp-content/uploads/2019/09/User-Icon-Grey.png";
+  String name = "Пользователь";
+  String phone = "+7 (___) ___-__-__";
+  bool isReg = false;
+
   bool isSwitched = false;
   List<MenuItem> menu1 = [
     MenuItem(
@@ -28,6 +37,7 @@ class _ProfilePageState extends State<ProfilePage> {
   ];
   @override
   Widget build(BuildContext context) {
+    getInfo();
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
       appBar: buildAppBar("Профиль"),
@@ -63,10 +73,20 @@ class _ProfilePageState extends State<ProfilePage> {
                     trailing: Icon(Icons.keyboard_arrow_right_outlined),
                     tileColor: Colors.white,
                     onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => MyCarsPage()),
-                      );
+                      if (isReg == true){
+                        if (index == 0){
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => MyCarsPage()),
+                          );
+                        }
+                        else if (index == 1){
+                          print(1);
+                        }
+                      }
+                      else{
+                        showCustomAlert();
+                      }
                     },
                   ),
                 );
@@ -139,8 +159,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     child: Column(
                       children: <Widget>[
                         CircleAvatar(
-                          backgroundImage: NetworkImage(
-                              "https://thumbs.dreamstime.com/b/portrait-white-man-isolated-portrait-white-man-isolated-113528288.jpg"),
+                          backgroundImage: NetworkImage(avaURL),
                           radius: 50,
                         ),
                       ],
@@ -151,11 +170,11 @@ class _ProfilePageState extends State<ProfilePage> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        Text("Куанаев Темур".toUpperCase(),
+                        Text(name.toUpperCase(),
                             style: TextStyle(
                                 fontSize: 18, fontWeight: FontWeight.bold)),
                         Text(
-                          "8 (702) 545-72-03",
+                          phone,
                           style: TextStyle(
                               fontSize: 16, color: AppColors.primaryTextColor),
                         ),
@@ -209,12 +228,8 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                     SizedBox(
                         width: MediaQuery.of(context).size.width * 0.8,
-                        child: Text(
-                          "Принимайте заказы в режиме исполнителей!",
-                          style: TextStyle(
-                              color: AppColors.primaryTextColor, fontSize: 16),
-                          textAlign: TextAlign.center,
-                        ))
+                        child: userRoleDescriptionText(),
+                      )
                   ],
                 )
               ],
@@ -234,4 +249,49 @@ class _ProfilePageState extends State<ProfilePage> {
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           );
   }
+
+  userRoleDescriptionText() {
+    return !isSwitched
+        ? Text(
+            "Принимайте заказы в режиме исполнителей!",
+            style: TextStyle(fontSize: 16, color: AppColors.primaryTextColor), textAlign: TextAlign.center,
+          )
+        : Text(
+            "Выбирайте заказы на свое усмотрение!",
+            style: TextStyle(fontSize: 16, color: AppColors.primaryTextColor), textAlign: TextAlign.center,
+          );
+  }
+
+  getInfo() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    isReg = sharedPreferences.getBool(AppConstants.isReg);
+    if (isReg == true){
+      setState(() {
+        name = sharedPreferences.getString(AppConstants.name);
+        String number = sharedPreferences.getString(AppConstants.phone);
+        phone = "+7 (${number.substring(0,3)}) ${number.substring(3,6)}-${number.substring(6,8)}-${number.substring(8,10)}";
+      });
+    }
+  }
+
+  showCustomAlert(){
+    var dialog = CustomAlertDialog(
+      title: "Внимание",
+      message: "Вы не зарегистрированы, зарегистрироваться?",
+      onPostivePressed: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => SignIn()),
+        );
+      },
+      positiveBtnText: 'Да',
+      negativeBtnText: 'Нет'
+    );
+    showDialog(
+      context: context,
+      builder: (BuildContext context) => dialog
+    );
+  }
+
+
 }
