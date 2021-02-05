@@ -1,6 +1,9 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sto_app/core/const.dart';
 import 'package:sto_app/utils/internet_manager.dart';
 import 'package:sto_app/utils/utils.dart';
@@ -17,8 +20,12 @@ class _EditProfileState extends State<EditProfile> {
   var additionalPhone2TextField = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   final _mobileFormatter = NumberTextInputFormatter();
+
+  String phone = "+7 (___) ___-__-__";
+
   @override
   Widget build(BuildContext context) {
+    getInfo();
     return Container(
        child: Scaffold(
          appBar: buildAppBar("Редактирование"),
@@ -86,7 +93,7 @@ class _EditProfileState extends State<EditProfile> {
                           physics: const NeverScrollableScrollPhysics(),
                           children: [
                             Padding(
-                              padding: const EdgeInsets.only(top: 10, bottom: 5, left: 30, right: 30),
+                              padding: const EdgeInsets.only(top: 10, bottom: 5, left: 30, right: 60),
                               child: GestureDetector(
                               onTap: (){
                               },
@@ -98,7 +105,7 @@ class _EditProfileState extends State<EditProfile> {
                                     Text('Город', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
                                     Spacer(),
                                     Text('Алматы', style: TextStyle(fontSize: 13, color: AppColors.primaryTextColor)),
-                                    Icon(Icons.keyboard_arrow_right_outlined, size: 30),
+                                    // Icon(Icons.keyboard_arrow_right_outlined, size: 30),
                                   ]),
                                 )
                               )
@@ -116,7 +123,7 @@ class _EditProfileState extends State<EditProfile> {
                                     children: [
                                     Text('Сменить номер', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
                                     Spacer(),
-                                    Text('+7 (778) 357-92-79', style: TextStyle(fontSize: 13, color: AppColors.primaryTextColor)),
+                                    Text(phone, style: TextStyle(fontSize: 13, color: AppColors.primaryTextColor)),
                                     Icon(Icons.keyboard_arrow_right_outlined, size: 30),
                                   ]),
                                 )
@@ -152,13 +159,7 @@ class _EditProfileState extends State<EditProfile> {
                             ),
                           ),
                           validator: (value) {
-                            if (value.isEmpty) {
-                              return 'Введите номер телефона';
-                            } 
-                            else if (!value.contains('+')) {
-                              return 'Введите корректный номер телефона';
-                            }
-                            else if (value.length < 13) {
+                            if (value.length < 13 && value.length > 1) {
                               return 'Введите корректный номер телефона';
                             }
                             return null;
@@ -192,13 +193,7 @@ class _EditProfileState extends State<EditProfile> {
                             ),
                           ),
                           validator: (value) {
-                            if (value.isEmpty) {
-                              return 'Введите номер телефона';
-                            } 
-                            else if (!value.contains('+')) {
-                              return 'Введите корректный номер телефона';
-                            }
-                            else if (value.length < 13) {
+                            if (value.length < 13 && value.length > 1){
                               return 'Введите корректный номер телефона';
                             }
                             return null;
@@ -260,5 +255,35 @@ class _EditProfileState extends State<EditProfile> {
         currentFocus.unfocus();
       }
     }
+  }
+
+  getInfo() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    setState(() {
+      nameTextField.text = sharedPreferences.getString(AppConstants.name);
+      String number = sharedPreferences.getString(AppConstants.phone);
+      phone = "+7 (${number.substring(0,3)}) ${number.substring(3,6)}-${number.substring(6,8)}-${number.substring(8,10)}";
+    });
+  }
+
+  sendInfo(){
+
+  }
+}
+
+
+Future<String> registration(String phone, String name) async {
+  final response = await http.post(AppConstants.baseUrl + "users/phone/",
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{
+        'phone': phone,
+        'nickname': name,
+      }));
+  if (response.statusCode == 200) {
+    return response.body;
+  } else {
+    throw Exception("Falied to registration");
   }
 }
