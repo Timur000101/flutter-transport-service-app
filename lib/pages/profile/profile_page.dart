@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:sto_app/components/alert.dart';
 import 'package:sto_app/core/const.dart';
 import 'package:sto_app/models/menu_item.dart';
 import 'package:sto_app/pages/auth/signIn_page.dart';
+import 'package:sto_app/utils/alert.dart';
 import 'package:sto_app/widgets/app_widgets.dart';
 
 import 'edit_profile.dart';
