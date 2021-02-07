@@ -2,12 +2,30 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sto_app/core/const.dart';
 import 'package:sto_app/models/menu_item.dart';
+import 'package:sto_app/models/user_detail.dart';
 import 'package:sto_app/pages/auth/signIn_page.dart';
 import 'package:sto_app/utils/alert.dart';
 import 'package:sto_app/widgets/app_widgets.dart';
 
 import 'edit_profile.dart';
 import 'my_cars_page.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+import 'package:sto_app/utils/internet_manager.dart';
+
+Future<UserDetail> getUserDetail(int userId, String token) async {
+  var url = "${AppConstants.baseUrl}${AppConstants.getUserDetail}$userId";
+  final response = await http.get(url, headers: {
+    "Content-type": "application/json",
+    "Accept": "application/json",
+    "Authorization": "Token $token"
+  });
+  if (response.statusCode == 200) {
+    return UserDetail.fromJson(jsonDecode(response.body));
+  } else {
+    throw Exception("Falied to getUserDetail");
+  }
+}
 
 class ProfilePage extends StatefulWidget {
   @override
@@ -16,7 +34,8 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   final globalKey = GlobalKey<ScaffoldState>();
-  String avaURL = "https://www.sunsetlearning.com/wp-content/uploads/2019/09/User-Icon-Grey.png";
+  String avaURL =
+      "https://www.sunsetlearning.com/wp-content/uploads/2019/09/User-Icon-Grey.png";
   String name = "Пользователь";
   String phone = "+7 (___) ___-__-__";
   bool isReg = false;
@@ -36,9 +55,49 @@ class _ProfilePageState extends State<ProfilePage> {
     MenuItem(title: "Оценить приложение", icon: Stoappicons.star),
     MenuItem(title: "О приложении", icon: Icons.warning_rounded)
   ];
+
+  void getuserdetail() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    isReg = sharedPreferences.getBool(AppConstants.isReg);
+    if (isReg == true) {
+      var userId = sharedPreferences.getInt(AppConstants.uid);
+
+      var token = sharedPreferences.getString(AppConstants.key);
+      UserDetail userDetail = await getUserDetail(userId, token);
+
+      setState(() {
+        name = sharedPreferences.getString(AppConstants.name);
+        String number = sharedPreferences.getString(AppConstants.phone);
+
+        phone =
+            "+7 (${number.substring(1, 4)}) ${number.substring(4, 7)}-${number.substring(7, 9)}-${number.substring(9, 11)}";
+        avaURL = userDetail.avatar;
+      });
+
+      sharedPreferences.setString(AppConstants.email, userDetail.email);
+      sharedPreferences.setString(AppConstants.name, userDetail.nickname);
+      sharedPreferences.setString(AppConstants.avatar, userDetail.avatar);
+      sharedPreferences.setString(AppConstants.phone, userDetail.phone);
+    }
+  }
+
+  @override
+  void initState() {
+    getInfo();
+    checkInternetConnection().then((value) => {
+          if (value)
+            {getuserdetail()}
+          else
+            {
+              showAlert(
+                  "Внимание", "У вас нет соединения с интернетом!", context)
+            }
+        });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    getInfo();
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
       appBar: buildAppBar("Профиль"),
@@ -74,18 +133,17 @@ class _ProfilePageState extends State<ProfilePage> {
                     trailing: Icon(Icons.keyboard_arrow_right_outlined),
                     tileColor: Colors.white,
                     onTap: () {
-                      if (isReg == true){
-                        if (index == 0){
+                      if (isReg == true) {
+                        if (index == 0) {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => MyCarsPage()),
+                            MaterialPageRoute(
+                                builder: (context) => MyCarsPage()),
                           );
-                        }
-                        else if (index == 1){
+                        } else if (index == 1) {
                           print(1);
                         }
-                      }
-                      else{
+                      } else {
                         showCustomAlert();
                       }
                     },
@@ -183,12 +241,13 @@ class _ProfilePageState extends State<ProfilePage> {
                             padding: EdgeInsets.symmetric(
                                 horizontal: 0, vertical: 0),
                             onPressed: () {
-                              if (isReg == true){
-                                Navigator.push(context,
-                                  MaterialPageRoute(builder: (context) => EditProfile()),
+                              if (isReg == true) {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => EditProfile()),
                                 );
-                              }
-                              else{
+                              } else {
                                 showCustomAlert();
                               }
                             },
@@ -237,9 +296,9 @@ class _ProfilePageState extends State<ProfilePage> {
                       height: 5.0,
                     ),
                     SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.8,
-                        child: userRoleDescriptionText(),
-                      )
+                      width: MediaQuery.of(context).size.width * 0.8,
+                      child: userRoleDescriptionText(),
+                    )
                   ],
                 )
               ],
@@ -264,44 +323,43 @@ class _ProfilePageState extends State<ProfilePage> {
     return !isSwitched
         ? Text(
             "Принимайте заказы в режиме исполнителей!",
-            style: TextStyle(fontSize: 16, color: AppColors.primaryTextColor), textAlign: TextAlign.center,
+            style: TextStyle(fontSize: 16, color: AppColors.primaryTextColor),
+            textAlign: TextAlign.center,
           )
         : Text(
             "Выбирайте заказы на свое усмотрение!",
-            style: TextStyle(fontSize: 16, color: AppColors.primaryTextColor), textAlign: TextAlign.center,
+            style: TextStyle(fontSize: 16, color: AppColors.primaryTextColor),
+            textAlign: TextAlign.center,
           );
   }
 
-  getInfo() async {
+  void getInfo() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     isReg = sharedPreferences.getBool(AppConstants.isReg);
-    if (isReg == true){
+    if (isReg == true) {
       setState(() {
         name = sharedPreferences.getString(AppConstants.name);
         String number = sharedPreferences.getString(AppConstants.phone);
-        phone = "+7 (${number.substring(0,3)}) ${number.substring(3,6)}-${number.substring(6,8)}-${number.substring(8,10)}";
+        phone =
+            "+7 (${number.substring(1, 4)}) ${number.substring(4, 7)}-${number.substring(7, 9)}-${number.substring(9, 11)}";
+        // phone =
+        //     "+7 (${number.substring(0, 3)}) ${number.substring(3, 6)}-${number.substring(6, 8)}-${number.substring(8, 10)}";
       });
     }
   }
 
-  showCustomAlert(){
+  showCustomAlert() {
     var dialog = CustomAlertDialog(
-      title: "Внимание",
-      message: "Вы не зарегистрированы, зарегистрироваться?",
-      onPostivePressed: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => SignIn()),
-        );
-      },
-      positiveBtnText: 'Да',
-      negativeBtnText: 'Нет'
-    );
-    showDialog(
-      context: context,
-      builder: (BuildContext context) => dialog
-    );
+        title: "Внимание",
+        message: "Вы не зарегистрированы, зарегистрироваться?",
+        onPostivePressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => SignIn()),
+          );
+        },
+        positiveBtnText: 'Да',
+        negativeBtnText: 'Нет');
+    showDialog(context: context, builder: (BuildContext context) => dialog);
   }
-
-
 }
