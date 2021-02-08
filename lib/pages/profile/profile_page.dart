@@ -62,13 +62,11 @@ class _ProfilePageState extends State<ProfilePage> {
       var userId = sharedPreferences.getInt(AppConstants.uid);
 
       var token = sharedPreferences.getString(AppConstants.key);
-      print(token);
       UserDetail userDetail = await getUserDetail(userId, token);
 
       setState(() {
         name = userDetail.nickname;
         String number = userDetail.phone.substring(1,userDetail.phone.length);
-        print(number);
 
         phone = "+7 (${number.substring(1, 4)}) ${number.substring(4, 7)}-${number.substring(7, 9)}-${number.substring(9, 11)}";
         if (userDetail.avatar != "${AppConstants.baseUrl}media/default/default.png")
