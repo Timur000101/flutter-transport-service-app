@@ -6,7 +6,6 @@ import 'package:sto_app/models/user_detail.dart';
 import 'package:sto_app/pages/auth/signIn_page.dart';
 import 'package:sto_app/utils/alert.dart';
 import 'package:sto_app/widgets/app_widgets.dart';
-
 import 'edit_profile.dart';
 import 'my_cars_page.dart';
 import 'dart:convert';
@@ -63,6 +62,7 @@ class _ProfilePageState extends State<ProfilePage> {
       var userId = sharedPreferences.getInt(AppConstants.uid);
 
       var token = sharedPreferences.getString(AppConstants.key);
+      print(token);
       UserDetail userDetail = await getUserDetail(userId, token);
 
       setState(() {
@@ -245,7 +245,10 @@ class _ProfilePageState extends State<ProfilePage> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => EditProfile()),
+                                      builder: (context) => EditProfile(
+                                          imageurl: avaURL,
+                                          name: name,
+                                          phone: phone)),
                                 );
                               } else {
                                 showCustomAlert();
