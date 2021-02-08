@@ -66,17 +66,19 @@ class _ProfilePageState extends State<ProfilePage> {
       UserDetail userDetail = await getUserDetail(userId, token);
 
       setState(() {
-        name = sharedPreferences.getString(AppConstants.name);
-        String number = sharedPreferences.getString(AppConstants.phone);
+        name = userDetail.nickname;
+        String number = userDetail.phone.substring(1,userDetail.phone.length);
+        print(number);
 
-        phone = "+7 (${number.substring(0, 3)}) ${number.substring(3, 6)}-${number.substring(6, 8)}-${number.substring(8, 10)}";
-        avaURL = userDetail.avatar;
+        phone = "+7 (${number.substring(1, 4)}) ${number.substring(4, 7)}-${number.substring(7, 9)}-${number.substring(9, 11)}";
+        if (userDetail.avatar != "${AppConstants.baseUrl}media/default/default.png")
+          avaURL = userDetail.avatar;
       });
 
       sharedPreferences.setString(AppConstants.email, userDetail.email);
       sharedPreferences.setString(AppConstants.name, userDetail.nickname);
       sharedPreferences.setString(AppConstants.avatar, userDetail.avatar);
-      sharedPreferences.setString(AppConstants.phone, userDetail.phone);
+      sharedPreferences.setString(AppConstants.phone, userDetail.phone.substring(1,userDetail.phone.length));
     }
   }
 
@@ -343,7 +345,7 @@ class _ProfilePageState extends State<ProfilePage> {
         name = sharedPreferences.getString(AppConstants.name);
         String number = sharedPreferences.getString(AppConstants.phone);
         phone =
-            "+7 (${number.substring(0, 3)}) ${number.substring(3, 6)}-${number.substring(6, 8)}-${number.substring(8, 10)}";
+            "+7 (${number.substring(1, 4)}) ${number.substring(4, 7)}-${number.substring(7, 9)}-${number.substring(9, 11)}";
       });
     }
   }

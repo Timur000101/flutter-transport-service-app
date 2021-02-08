@@ -52,7 +52,7 @@ class _SignInState extends State<SignIn> {
         ph += phone[i];
       }
     }
-    return ph.substring(1, ph.length);
+    return ph.substring(0, ph.length);
   }
 
   void reg(String nickname, String phone) async {
