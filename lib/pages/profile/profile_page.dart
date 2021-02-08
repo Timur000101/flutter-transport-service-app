@@ -37,6 +37,9 @@ class _ProfilePageState extends State<ProfilePage> {
       "https://www.sunsetlearning.com/wp-content/uploads/2019/09/User-Icon-Grey.png";
   String name = "Пользователь";
   String phone = "+7 (___) ___-__-__";
+  String secondPhone = "";
+  String thirdPhone = "";
+
   bool isReg = false;
 
   bool isSwitched = false;
@@ -72,6 +75,16 @@ class _ProfilePageState extends State<ProfilePage> {
         if (userDetail.avatar != "${AppConstants.baseUrl}media/default/default.png")
           avaURL = userDetail.avatar;
       });
+
+      if (userDetail.secondPhone != null){
+        String number = userDetail.secondPhone.toString().substring(1,userDetail.secondPhone.toString().length);
+        secondPhone = "+7 (${number.substring(1, 4)}) ${number.substring(4, 7)}-${number.substring(7, 9)}-${number.substring(9, 11)}";
+      }
+
+      if (userDetail.thirdPhone != null){
+        String number = userDetail.thirdPhone.toString().substring(1,userDetail.thirdPhone.toString().length);
+        thirdPhone = "+7 (${number.substring(1, 4)}) ${number.substring(4, 7)}-${number.substring(7, 9)}-${number.substring(9, 11)}";
+      }
 
       sharedPreferences.setString(AppConstants.email, userDetail.email);
       sharedPreferences.setString(AppConstants.name, userDetail.nickname);
@@ -246,7 +259,9 @@ class _ProfilePageState extends State<ProfilePage> {
                                       builder: (context) => EditProfile(
                                           imageurl: avaURL,
                                           name: name,
-                                          phone: phone)),
+                                          phone: phone,
+                                          secondPhone: secondPhone,
+                                          thirdPhone: thirdPhone,)),
                                 ).whenComplete(() => {getuserdetail()});
                               } else {
                                 showCustomAlert();

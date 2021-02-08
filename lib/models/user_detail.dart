@@ -4,8 +4,10 @@ class UserDetail {
   String avatar;
   Null email;
   String nickname;
+  Null secondPhone;
+  Null thirdPhone;
 
-  UserDetail({this.id, this.phone, this.avatar, this.email, this.nickname});
+  UserDetail({this.id, this.phone, this.avatar, this.email, this.nickname, this.secondPhone, this.thirdPhone});
 
   UserDetail.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -13,6 +15,8 @@ class UserDetail {
     avatar = json['avatar'];
     email = json['email'];
     nickname = json['nickname'];
+    secondPhone = json['second_phone'];
+    thirdPhone = json['third_phone'];
   }
 
   Map<String, dynamic> toJson() {
@@ -22,6 +26,8 @@ class UserDetail {
     data['avatar'] = this.avatar;
     data['email'] = this.email;
     data['nickname'] = this.nickname;
+    data['second_phone'] = this.secondPhone;
+    data['third_phone'] = this.thirdPhone;
     return data;
   }
 }

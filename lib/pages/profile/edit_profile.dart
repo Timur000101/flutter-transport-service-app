@@ -17,8 +17,10 @@ class EditProfile extends StatefulWidget {
   final String imageurl;
   final String name;
   final String phone;
+  final String secondPhone;
+  final String thirdPhone;
 
-  const EditProfile({Key key, this.imageurl, this.name, this.phone})
+  const EditProfile({Key key, this.imageurl, this.name, this.phone, this.secondPhone, this.thirdPhone})
       : super(key: key);
 
   @override
@@ -289,7 +291,7 @@ class _EditProfileState extends State<EditProfile> {
       var isConnected = checkInternetConnection();
       isConnected.then((value) => {
         if (value){
-          sendInfo()
+          sendInfo(context)
         }
         else{
           showAlert(
@@ -358,16 +360,27 @@ class _EditProfileState extends State<EditProfile> {
     return sharedPreferences.getInt(AppConstants.uid);
   }
 
-  sendInfo() async {
+  sendInfo(context) async {
     var token = await getToken();
     var uid = await getUID();
     String jsonString = await changeProfile(uid, token, nameTextField.text, additionalPhone1TextField.text, additionalPhone2TextField.text);
     Map<String, dynamic> decodedJson = jsonDecode(jsonString);
     print(decodedJson);
+    if (decodedJson['status'] == 'ok'){
+      Navigator.pop(context);
+    }
   }
 }
 
 Future<String> changeProfile(int userID, String token, String name, String addPhone1, String addPhone2) async {
+  String secondP = "";
+  String thirdP = "";
+  if (addPhone1 != null){
+    secondP = addPhone1;
+  }
+  if (addPhone2 != null){
+    thirdP = addPhone2;
+  }
   final response = await http.post(AppConstants.baseUrl + "users/detail/$userID",
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
