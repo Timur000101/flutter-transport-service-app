@@ -32,8 +32,6 @@ class _EditProfileState extends State<EditProfile> {
   final _formKey = GlobalKey<FormState>();
   final _mobileFormatter = NumberTextInputFormatter();
 
-  // String phone = "+7 (___) ___-__-__";
-
   @override
   void initState() {
     getAvatar(widget.imageurl);
@@ -289,14 +287,14 @@ class _EditProfileState extends State<EditProfile> {
     if (_formKey.currentState.validate()) {
       var isConnected = checkInternetConnection();
       isConnected.then((value) => {
-            if (value)
-              {print('All right!')}
-            else
-              {
-                showAlert(
-                    "Внимание", "У вас нет соединения с интернетом!", context)
-              }
-          });
+        if (value){
+          print('All right!')
+        }
+        else{
+          showAlert(
+              "Внимание", "У вас нет соединения с интернетом!", context)
+        }
+      });
 
       FocusScopeNode currentFocus = FocusScope.of(context);
       if (!currentFocus.hasPrimaryFocus) {
@@ -337,12 +335,9 @@ class _EditProfileState extends State<EditProfile> {
     request.headers['authorization'] = "Token $token";
     var multipartFile = new http.MultipartFile('avatar', stream, length,
         filename: basename(imageFile.path));
-    // contentType: new MediaType('image', 'png'));
 
     request.files.add(multipartFile);
     var response = await request.send();
-
-    // print(response.statusCode);
 
     if (response.statusCode == 200) {
       setState(() {
@@ -350,9 +345,6 @@ class _EditProfileState extends State<EditProfile> {
             DecorationImage(fit: BoxFit.fill, image: FileImage(imageFile));
       });
     }
-    // response.stream.transform(utf8.decoder).listen((value) {
-    // print(value);
-    // });
   }
 
   Future<String> getToken() async {
@@ -360,31 +352,7 @@ class _EditProfileState extends State<EditProfile> {
     return sharedPreferences.getString(AppConstants.key);
   }
 
-  // getInfo() async {
-  //   SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-  //   setState(() {
-  //     nameTextField.text = sharedPreferences.getString(AppConstants.name);
-  //     String number = sharedPreferences.getString(AppConstants.phone);
-  //     phone =
-  //         "+7 (${number.substring(0, 3)}) ${number.substring(3, 6)}-${number.substring(6, 8)}-${number.substring(8, 10)}";
-  //   });
-  // }
+  sendInfo() {
 
-  sendInfo() {}
-}
-
-Future<String> registration(String phone, String name) async {
-  final response = await http.post(AppConstants.baseUrl + "users/phone/",
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      body: jsonEncode(<String, String>{
-        'phone': phone,
-        'nickname': name,
-      }));
-  if (response.statusCode == 200) {
-    return response.body;
-  } else {
-    throw Exception("Falied to registration");
   }
 }

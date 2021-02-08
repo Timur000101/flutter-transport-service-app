@@ -69,8 +69,7 @@ class _ProfilePageState extends State<ProfilePage> {
         name = sharedPreferences.getString(AppConstants.name);
         String number = sharedPreferences.getString(AppConstants.phone);
 
-        phone =
-            "+7 (${number.substring(1, 4)}) ${number.substring(4, 7)}-${number.substring(7, 9)}-${number.substring(9, 11)}";
+        phone = "+7 (${number.substring(0, 3)}) ${number.substring(3, 6)}-${number.substring(6, 8)}-${number.substring(8, 10)}";
         avaURL = userDetail.avatar;
       });
 
@@ -344,9 +343,7 @@ class _ProfilePageState extends State<ProfilePage> {
         name = sharedPreferences.getString(AppConstants.name);
         String number = sharedPreferences.getString(AppConstants.phone);
         phone =
-            "+7 (${number.substring(1, 4)}) ${number.substring(4, 7)}-${number.substring(7, 9)}-${number.substring(9, 11)}";
-        // phone =
-        //     "+7 (${number.substring(0, 3)}) ${number.substring(3, 6)}-${number.substring(6, 8)}-${number.substring(8, 10)}";
+            "+7 (${number.substring(0, 3)}) ${number.substring(3, 6)}-${number.substring(6, 8)}-${number.substring(8, 10)}";
       });
     }
   }
