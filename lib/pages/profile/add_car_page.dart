@@ -1,9 +1,11 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sto_app/core/const.dart';
 import 'package:sto_app/widgets/app_widgets.dart';
-
+import 'package:http/http.dart' as http;
 import 'car_brand_page.dart';
 
 class AddCarPage extends StatefulWidget {
@@ -292,8 +294,43 @@ class _AddCarPageState extends State<AddCarPage> {
     }
   }
 
+  Future<String> getToken() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    return sharedPreferences.getString(AppConstants.key);
+  }
 
-  _sendCarInfo(){
-    print(brandTextField.text);
+  Future<int> getUID() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    return sharedPreferences.getInt(AppConstants.uid);
+  }
+
+  _sendCarInfo() async {
+    var token = await getToken();
+    var uid = await getUID();
+    String jsonString = await addCar(uid, token, brandTextField.text, int.parse(yearTextField.text), double.parse(volumeTextField.text), double.parse(mileageTextField.text));
+    Map<String, dynamic> decodedJson = jsonDecode(jsonString);
+    if (decodedJson['status'] == 'ok'){
+      Navigator.pop(context);
+    }
+  }
+}
+
+Future<String> addCar(int userID, String token, String name, int year, double size, double milage) async {
+  final response = await http.post(AppConstants.baseUrl + AppConstants.carsUrl,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        "Accept": "application/json",
+        "Authorization": "Token $token"
+      },
+      body: jsonEncode(<String, Object>{
+        'name' : name,
+        'year' : year,
+        'size' : size,
+        'milage' : milage,
+      }));
+  if (response.statusCode == 200) {
+    return response.body;
+  } else {
+    throw Exception("Falied to Change Profile Information.");
   }
 }

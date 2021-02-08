@@ -1,11 +1,15 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sto_app/components/carCard.dart';
 import 'package:sto_app/core/const.dart';
 import 'package:sto_app/models/car.dart';
+import 'package:sto_app/utils/internet_manager.dart';
 import 'package:sto_app/widgets/app_widgets.dart';
-
+import 'package:http/http.dart' as http;
 import 'add_car_page.dart';
 
 class MyCarsPage extends StatefulWidget {
@@ -14,14 +18,23 @@ class MyCarsPage extends StatefulWidget {
 }
 
 class _MyCarsPageState extends State<MyCarsPage> {
-  final List<Car> carList = [
-    Car('Mersedec Benz C55 AMG1', 'год 2020',
-        'https://a.d-cd.net/8bb322es-960.jpg'),
-    Car('Mersedec Benz C55 AMG1', 'год 2020',
-        'https://a.d-cd.net/8bb322es-960.jpg'),
-    Car('Mersedec Benz C55 AMG1', 'год 2020',
-        'https://a.d-cd.net/8bb322es-960.jpg'),
-  ];
+  List<Car> carList = new List<Car>();
+
+  // bool isEmpty = true;
+
+  @override
+  void initState() {
+    checkInternetConnection().then((value) => {
+      if (value){
+        getCars()
+      }
+      else{
+        showAlert("Внимание", "У вас нет соединения с интернетом!", context)
+      }
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,14 +53,14 @@ class _MyCarsPageState extends State<MyCarsPage> {
                 child: SizedBox.expand(
                   child: RaisedButton(
                     child: Text(
-                      "Добавить машину",
-                      style: TextStyle(fontSize: 20),
+                      "Добавить автомобиль",
+                      style: TextStyle(fontSize: 18),
                     ),
                     onPressed: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) => AddCarPage()),
-                      );
+                      ).whenComplete(() => {getCars()});
                     },
                     color: AppColors.mainColor,
                     textColor: Colors.white,
@@ -72,5 +85,38 @@ class _MyCarsPageState extends State<MyCarsPage> {
             ),
           ),
         ]));
+  }
+
+  Future<String> getToken() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    return sharedPreferences.getString(AppConstants.key);
+  }
+
+  getCars() async {
+    print(1);
+    var token = await getToken();
+    List<Car> list = await getMyCars(token);
+    setState(() {
+      carList = list;
+    });
+  }
+}
+
+Future<List<Car>> getMyCars(String token) async {
+  var url = "${AppConstants.baseUrl}${AppConstants.carsUrl}";
+  final response = await http.get(url, headers: {
+    "Content-type": "application/json",
+    "Accept": "application/json",
+    "Authorization": "Token $token"
+  });
+  if (response.statusCode == 200) {
+    List<Car> carList = new List<Car>();
+    var responseBody = jsonDecode(response.body);
+    for (Object i in responseBody){
+      carList.add(Car.fromJson(i));
+    }
+    return carList;
+  } else {
+    throw Exception("Falied to getUserDetail");
   }
 }

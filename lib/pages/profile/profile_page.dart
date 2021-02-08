@@ -82,7 +82,6 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   void initState() {
-    getInfo();
     checkInternetConnection().then((value) => {
           if (value)
             {getuserdetail()}
@@ -248,7 +247,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                           imageurl: avaURL,
                                           name: name,
                                           phone: phone)),
-                                );
+                                ).whenComplete(() => {getuserdetail()});
                               } else {
                                 showCustomAlert();
                               }
@@ -333,19 +332,6 @@ class _ProfilePageState extends State<ProfilePage> {
             style: TextStyle(fontSize: 16, color: AppColors.primaryTextColor),
             textAlign: TextAlign.center,
           );
-  }
-
-  void getInfo() async {
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    isReg = sharedPreferences.getBool(AppConstants.isReg);
-    if (isReg == true) {
-      setState(() {
-        name = sharedPreferences.getString(AppConstants.name);
-        String number = sharedPreferences.getString(AppConstants.phone);
-        phone =
-            "+7 (${number.substring(1, 4)}) ${number.substring(4, 7)}-${number.substring(7, 9)}-${number.substring(9, 11)}";
-      });
-    }
   }
 
   showCustomAlert() {

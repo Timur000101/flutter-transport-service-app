@@ -43,8 +43,9 @@ class _EditProfileState extends State<EditProfile> {
   Widget build(BuildContext context) {
     return Container(
         child: Scaffold(
-      appBar: buildAppBar("Редактирование"),
-      body: GestureDetector(
+          backgroundColor: AppColors.backgroundColor,
+          appBar: buildAppBar("Редактирование"),
+          body: GestureDetector(
           onTap: () {
             FocusScopeNode currentFocus = FocusScope.of(context);
             if (!currentFocus.hasPrimaryFocus) {
@@ -121,7 +122,7 @@ class _EditProfileState extends State<EditProfile> {
                             children: [
                               Padding(
                                   padding: const EdgeInsets.only(
-                                      top: 10, bottom: 5, left: 30, right: 60),
+                                      top: 10, bottom: 5, left: 30, right: 30),
                                   child: GestureDetector(
                                       onTap: () {},
                                       child: Container(
@@ -148,7 +149,7 @@ class _EditProfileState extends State<EditProfile> {
                                       vertical: 5, horizontal: 30),
                                   child: GestureDetector(
                                       onTap: () {
-                                        print('Change number');
+                                        // print('Change number');
                                       },
                                       child: Container(
                                         height: 50,
@@ -156,7 +157,7 @@ class _EditProfileState extends State<EditProfile> {
                                             MediaQuery.of(context).size.width *
                                                 0.8,
                                         child: Row(children: [
-                                          Text('Сменить номер',
+                                          Text('Номер телефона',
                                               style: TextStyle(
                                                   fontWeight: FontWeight.bold,
                                                   fontSize: 15)),
@@ -166,10 +167,10 @@ class _EditProfileState extends State<EditProfile> {
                                                   fontSize: 13,
                                                   color: AppColors
                                                       .primaryTextColor)),
-                                          Icon(
-                                              Icons
-                                                  .keyboard_arrow_right_outlined,
-                                              size: 30),
+                                          // Icon(
+                                          //     Icons
+                                          //         .keyboard_arrow_right_outlined,
+                                          //     size: 30),
                                         ]),
                                       ))),
                             ],
@@ -288,7 +289,7 @@ class _EditProfileState extends State<EditProfile> {
       var isConnected = checkInternetConnection();
       isConnected.then((value) => {
         if (value){
-          print('All right!')
+          sendInfo()
         }
         else{
           showAlert(
@@ -352,7 +353,33 @@ class _EditProfileState extends State<EditProfile> {
     return sharedPreferences.getString(AppConstants.key);
   }
 
-  sendInfo() {
+  Future<int> getUID() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    return sharedPreferences.getInt(AppConstants.uid);
+  }
 
+  sendInfo() async {
+    var token = await getToken();
+    var uid = await getUID();
+    String jsonString = await changeProfile(uid, token, nameTextField.text, additionalPhone1TextField.text, additionalPhone2TextField.text);
+    Map<String, dynamic> decodedJson = jsonDecode(jsonString);
+    print(decodedJson);
+  }
+}
+
+Future<String> changeProfile(int userID, String token, String name, String addPhone1, String addPhone2) async {
+  final response = await http.post(AppConstants.baseUrl + "users/detail/$userID",
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        "Accept": "application/json",
+        "Authorization": "Token $token"
+      },
+      body: jsonEncode(<String, String>{
+        'nickname': name,
+      }));
+  if (response.statusCode == 200) {
+    return response.body;
+  } else {
+    throw Exception("Falied to Change Profile Information.");
   }
 }

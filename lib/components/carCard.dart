@@ -47,10 +47,10 @@ class _CarCardState extends State<CarCard> {
                                     child: Column(
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
-                                        Text(widget.car.carName, style: new TextStyle(fontSize: 18)),
+                                        Text(widget.car.name, style: new TextStyle(fontSize: 18)),
                                         Padding(
                                           padding: const EdgeInsets.symmetric(vertical: 10),
-                                          child: Text(widget.car.year, style: TextStyle(fontSize: 16, color: Colors.black54),),
+                                          child: Text("год ${widget.car.year}", style: TextStyle(fontSize: 16, color: Colors.black54),),
                                         ),
                                       ],
                                     ),
@@ -66,7 +66,7 @@ class _CarCardState extends State<CarCard> {
                                           child: Container(
                                             color: Colors.blue,
                                             child: Image.network(
-                                              widget.car.photo, 
+                                              "https://static.autoblog.nl/images/wp2019/mercedes-benz-c55-amg-w203-grey-front-side-2019-750.jpg", 
                                               fit: BoxFit.fitHeight,
                                               width: MediaQuery.of(context).size.width * 0.35,
                                               height: 90,
