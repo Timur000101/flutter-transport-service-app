@@ -4,6 +4,8 @@ import 'package:sto_app/core/const.dart';
 import 'package:sto_app/models/menu_item.dart';
 import 'package:sto_app/models/user_detail.dart';
 import 'package:sto_app/pages/auth/signIn_page.dart';
+import 'package:sto_app/pages/order/order_history_item.dart';
+import 'package:sto_app/pages/order/order_history_page.dart';
 import 'package:sto_app/utils/alert.dart';
 import 'package:sto_app/widgets/app_widgets.dart';
 import 'edit_profile.dart';
@@ -69,27 +71,36 @@ class _ProfilePageState extends State<ProfilePage> {
 
       setState(() {
         name = userDetail.nickname;
-        String number = userDetail.phone.substring(1,userDetail.phone.length);
+        String number = userDetail.phone.substring(1, userDetail.phone.length);
 
-        phone = "+7 (${number.substring(1, 4)}) ${number.substring(4, 7)}-${number.substring(7, 9)}-${number.substring(9, 11)}";
-        if (userDetail.avatar != "${AppConstants.baseUrl}media/default/default.png")
+        phone =
+            "+7 (${number.substring(1, 4)}) ${number.substring(4, 7)}-${number.substring(7, 9)}-${number.substring(9, 11)}";
+        if (userDetail.avatar !=
+            "${AppConstants.baseUrl}media/default/default.png")
           avaURL = userDetail.avatar;
       });
 
-      if (userDetail.secondPhone != null){
-        String number = userDetail.secondPhone.toString().substring(1,userDetail.secondPhone.toString().length);
-        secondPhone = "+7 (${number.substring(1, 4)}) ${number.substring(4, 7)}-${number.substring(7, 9)}-${number.substring(9, 11)}";
+      if (userDetail.secondPhone != null) {
+        String number = userDetail.secondPhone
+            .toString()
+            .substring(1, userDetail.secondPhone.toString().length);
+        secondPhone =
+            "+7 (${number.substring(1, 4)}) ${number.substring(4, 7)}-${number.substring(7, 9)}-${number.substring(9, 11)}";
       }
 
-      if (userDetail.thirdPhone != null){
-        String number = userDetail.thirdPhone.toString().substring(1,userDetail.thirdPhone.toString().length);
-        thirdPhone = "+7 (${number.substring(1, 4)}) ${number.substring(4, 7)}-${number.substring(7, 9)}-${number.substring(9, 11)}";
+      if (userDetail.thirdPhone != null) {
+        String number = userDetail.thirdPhone
+            .toString()
+            .substring(1, userDetail.thirdPhone.toString().length);
+        thirdPhone =
+            "+7 (${number.substring(1, 4)}) ${number.substring(4, 7)}-${number.substring(7, 9)}-${number.substring(9, 11)}";
       }
 
       sharedPreferences.setString(AppConstants.email, userDetail.email);
       sharedPreferences.setString(AppConstants.name, userDetail.nickname);
       sharedPreferences.setString(AppConstants.avatar, userDetail.avatar);
-      sharedPreferences.setString(AppConstants.phone, userDetail.phone.substring(1,userDetail.phone.length));
+      sharedPreferences.setString(AppConstants.phone,
+          userDetail.phone.substring(1, userDetail.phone.length));
     }
   }
 
@@ -152,7 +163,10 @@ class _ProfilePageState extends State<ProfilePage> {
                                 builder: (context) => MyCarsPage()),
                           );
                         } else if (index == 1) {
-                          print(1);
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => OrderHistoryPage()));
                         }
                       } else {
                         showCustomAlert();
@@ -257,11 +271,12 @@ class _ProfilePageState extends State<ProfilePage> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) => EditProfile(
-                                          imageurl: avaURL,
-                                          name: name,
-                                          phone: phone,
-                                          secondPhone: secondPhone,
-                                          thirdPhone: thirdPhone,)),
+                                            imageurl: avaURL,
+                                            name: name,
+                                            phone: phone,
+                                            secondPhone: secondPhone,
+                                            thirdPhone: thirdPhone,
+                                          )),
                                 ).whenComplete(() => {getuserdetail()});
                               } else {
                                 showCustomAlert();
