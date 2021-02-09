@@ -6,8 +6,10 @@ import 'package:sto_app/models/user_detail.dart';
 import 'package:sto_app/pages/auth/signIn_page.dart';
 import 'package:sto_app/pages/order/order_history_item.dart';
 import 'package:sto_app/pages/order/order_history_page.dart';
+import 'package:sto_app/pages/profile/support_page.dart';
 import 'package:sto_app/utils/alert.dart';
 import 'package:sto_app/widgets/app_widgets.dart';
+import 'about_app_page.dart';
 import 'edit_profile.dart';
 import 'message_item.dart';
 import 'message_page.dart';
@@ -15,6 +17,7 @@ import 'my_cars_page.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:sto_app/utils/internet_manager.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 Future<UserDetail> getUserDetail(int userId, String token) async {
   var url = "${AppConstants.baseUrl}${AppConstants.getUserDetail}$userId";
@@ -207,6 +210,27 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                     trailing: Icon(Icons.keyboard_arrow_right_outlined),
                     tileColor: Colors.white,
+                    onTap: () {
+                      if (isReg == true) {
+                        if (index == 0) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => SupportPage()),
+                          );
+                        } else if (index == 1) {
+                          _launchURL();
+                        }
+                        else if (index == 2) {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => AboutAppPage()));
+                        }
+                      } else {
+                        showCustomAlert();
+                      }
+                    }
                   ),
                 );
               }),
@@ -216,7 +240,7 @@ class _ProfilePageState extends State<ProfilePage> {
           Container(
             padding: EdgeInsets.symmetric(horizontal: 20.0),
             child: RaisedButton(
-              onPressed: () {},
+              onPressed: () {print('Exit');},
               padding: const EdgeInsets.symmetric(vertical: 20.0),
               textColor: Colors.white,
               color: AppColors.mainColor,
@@ -321,9 +345,14 @@ class _ProfilePageState extends State<ProfilePage> {
                         child: Switch(
                           value: isSwitched,
                           onChanged: (value) {
-                            setState(() {
-                              isSwitched = value;
-                            });
+                            if (isReg == true){
+                              setState(() {
+                                isSwitched = value;
+                              });
+                            }
+                            else{
+                              showCustomAlert();
+                            }
                           },
                           activeTrackColor: AppColors.mainColor,
                           activeColor: Colors.white,
@@ -385,5 +414,15 @@ class _ProfilePageState extends State<ProfilePage> {
         positiveBtnText: 'Да',
         negativeBtnText: 'Нет');
     showDialog(context: context, builder: (BuildContext context) => dialog);
+  }
+
+  _launchURL() async {
+    const url = 'https://google.com';
+    if (await canLaunch(url)) {
+      await launch(url);
+    } 
+    else {
+      throw 'Could not launch $url';
+    }
   }
 }
