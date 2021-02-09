@@ -1,4 +1,6 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sto_app/core/const.dart';
 import 'package:sto_app/models/order_history.dart';
 import 'package:sto_app/pages/order/order_history_item.dart';
@@ -15,7 +17,7 @@ class _OrderHistoryPageState extends State<OrderHistoryPage> {
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
       new GlobalKey<RefreshIndicatorState>();
 
-  final List<OrderHistory> name = <OrderHistory>[
+  final List<OrderHistory> historyList = <OrderHistory>[
     new OrderHistory(
         time: "7 янв. 2021г",
         location: "Алматы",
@@ -43,6 +45,12 @@ class _OrderHistoryPageState extends State<OrderHistoryPage> {
   ];
 
   @override
+  void initState() {
+    getHistory();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
@@ -51,9 +59,9 @@ class _OrderHistoryPageState extends State<OrderHistoryPage> {
         key: _refreshIndicatorKey,
         onRefresh: _refresh,
         child: ListView.builder(
-            itemCount: name.length,
+            itemCount: historyList.length,
             itemBuilder: (BuildContext context, int index) {
-              return OrderHistoryItem(orderHistory: name[index]);
+              return OrderHistoryItem(orderHistory: historyList[index]);
             }),
       ),
     );
@@ -62,8 +70,33 @@ class _OrderHistoryPageState extends State<OrderHistoryPage> {
   Future<Null> _refresh() async {
     await Future.delayed(Duration(seconds: 2));
     setState(() {
-      name.removeAt(0);
+      historyList.removeAt(0);
     });
     return null;
+  }
+
+  Future<String> getToken() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    return sharedPreferences.getString(AppConstants.key);
+  }
+
+  getHistory() async {
+    var token = await getToken();
+    await Dio().get(
+      "${AppConstants.baseUrl}order/history/", 
+      options: Options(
+          headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          "Accept": "application/json",
+          "Authorization": "Token $token"
+        },
+        followRedirects: false,
+        validateStatus: (status) {
+          return status < 500;
+        },
+      ),
+      ).then((response) {
+        print(response);
+      }).catchError((error) => print(error));
   }
 }

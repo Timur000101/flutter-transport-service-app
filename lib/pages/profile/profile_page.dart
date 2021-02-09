@@ -417,7 +417,7 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   _launchURL() async {
-    const url = 'https://google.com';
+    const url = 'https://apple.com';
     if (await canLaunch(url)) {
       await launch(url);
     } 

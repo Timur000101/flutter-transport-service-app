@@ -1,5 +1,7 @@
 // import 'dart:convert';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sto_app/core/const.dart';
 import 'package:sto_app/models/request_item.dart';
 import 'package:sto_app/pages/request/request_list_item.dart';
@@ -62,6 +64,12 @@ class _RequestPageState extends State<RequestPage> {
   ];
 
   @override
+  void initState() {
+    getOrders();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
@@ -72,5 +80,30 @@ class _RequestPageState extends State<RequestPage> {
             return RequestListItem(name[index]);
           }),
     );
+  }
+
+  Future<String> getToken() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    return sharedPreferences.getString(AppConstants.key);
+  }
+
+  getOrders() async {
+    var token = await getToken();
+    await Dio().get(
+      "${AppConstants.baseUrl}order/", 
+      options: Options(
+          headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          "Accept": "application/json",
+          "Authorization": "Token $token"
+        },
+        followRedirects: false,
+        validateStatus: (status) {
+          return status < 500;
+        },
+      ),
+      ).then((response) {
+        print(response);
+      }).catchError((error) => print(error));
   }
 }
