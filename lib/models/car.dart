@@ -5,8 +5,9 @@ class Car{
   double size;
   double milage;
   int user;
+  List<Map<String,String>> car_img;
 
-  Car({this.id, this.name, this.year, this.size, this.milage, this.user});
+  Car({this.id, this.name, this.year, this.size, this.milage, this.user, this.car_img});
 
   Car.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -15,6 +16,7 @@ class Car{
     size = json['size'];
     milage = json['milage'];
     user = json['user'];
+    car_img = json['car_img'];
   }
 
   Map<String, dynamic> toJson() {
@@ -25,6 +27,7 @@ class Car{
     data['size'] = this.size;
     data['milage'] = this.milage;
     data['user'] = this.user;
+    data['car_img'] = this.car_img;
     return data;
   }
 

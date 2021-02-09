@@ -66,7 +66,7 @@ class _CarCardState extends State<CarCard> {
                                           child: Container(
                                             color: Colors.blue,
                                             child: Image.network(
-                                              "https://static.autoblog.nl/images/wp2019/mercedes-benz-c55-amg-w203-grey-front-side-2019-750.jpg", 
+                                              AppConstants.baseUrl + widget.car.car_img[0]['image'].substring(1,widget.car.car_img[0]['image'].length),
                                               fit: BoxFit.fitHeight,
                                               width: MediaQuery.of(context).size.width * 0.35,
                                               height: 90,
@@ -84,20 +84,22 @@ class _CarCardState extends State<CarCard> {
                           child: Row(children: [
                             SizedBox(
                               width: 120,
-                              child: RaisedButton( 
+                              child: Opacity(
+                                opacity: 0.0,
+                                child: RaisedButton(
                                 child: Text("Изменить", style: TextStyle(fontSize: 14),),  
                                 onPressed: (){},
                                 color: AppColors.primaryColor,  
                                 textColor: Colors.white,
                                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                              ),
+                              )),
                             ),
                             Spacer(),
                             SizedBox(
                               width: 120,
                               child: RaisedButton( 
                                 child: Text("Удалить", style: TextStyle(fontSize: 14),),  
-                                onPressed: (){},
+                                onPressed: (){deleteCar(widget.car.id);},
                                 color: AppColors.mainColor,  
                                 textColor: Colors.white,
                                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
@@ -113,4 +115,10 @@ class _CarCardState extends State<CarCard> {
       )
     );
   }
+
+  deleteCar(int id){
+    print(id);
+  }
+
+  
 }

@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -98,6 +97,7 @@ class _MyCarsPageState extends State<MyCarsPage> {
     setState(() {
       carList = list;
     });
+    print(carList.length);
   }
 }
 

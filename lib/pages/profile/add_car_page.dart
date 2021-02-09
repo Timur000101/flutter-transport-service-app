@@ -1,5 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:path/path.dart';
+import 'package:async/async.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -7,6 +10,7 @@ import 'package:sto_app/core/const.dart';
 import 'package:sto_app/widgets/app_widgets.dart';
 import 'package:http/http.dart' as http;
 import 'car_brand_page.dart';
+import 'package:dio/dio.dart';
 
 class AddCarPage extends StatefulWidget {
 
@@ -15,7 +19,7 @@ class AddCarPage extends StatefulWidget {
 }
 
 class _AddCarPageState extends State<AddCarPage> {
-  List<Image> img_array = [Image.asset('assets/images/Add_photo_placeholder.png', height: 100, width: 100,fit: BoxFit.fitHeight)];
+  List<File> img_array = [File('assets/images/Add_photo_placeholder.png')];
   final globalKey = GlobalKey<ScaffoldState>();
   var _carBrand = 'Выберите марку машины';
   var brandTextField = TextEditingController();
@@ -176,7 +180,7 @@ class _AddCarPageState extends State<AddCarPage> {
                                   onTap: (){
                                     _imgFromGallery();
                                   },
-                                  child: img_array[index],
+                                  child: Image.asset(img_array[index].path, height: 100, width: 100, fit: BoxFit.fitHeight,)
                                 )
                             );
                           }
@@ -187,7 +191,7 @@ class _AddCarPageState extends State<AddCarPage> {
                                   onTap: (){
                                     _deleteImage(index);
                                   },
-                                  child: img_array[index],
+                                  child:  Image.asset(img_array[index].path, height: 100, width: 100, fit: BoxFit.fitHeight,)
                                 )
                             );
                           }
@@ -246,7 +250,7 @@ class _AddCarPageState extends State<AddCarPage> {
         if (image==null) {
         } 
         else{
-          img_array.insert(0,Image.file(image, height: 100, width: 100, fit: BoxFit.fitHeight));
+          img_array.insert(0, image);
         }
       });
     }
@@ -266,7 +270,7 @@ class _AddCarPageState extends State<AddCarPage> {
         if (double.tryParse(volumeTextField.text) != null && (double.tryParse(volumeTextField.text) < 12.0 && double.tryParse(volumeTextField.text) > 0.5)){
           if (double.tryParse(mileageTextField.text) != null && (int.tryParse(mileageTextField.text) > 0 && int.tryParse(mileageTextField.text) < 3000000)){
             if (img_array.length > 1){
-              _sendCarInfo();
+              _sendCarInfo(context);
             }
             else{
               final snackBar = SnackBar(content: Text('Добавьте фото автомобиля.'));
@@ -304,18 +308,68 @@ class _AddCarPageState extends State<AddCarPage> {
     return sharedPreferences.getInt(AppConstants.uid);
   }
 
-  _sendCarInfo() async {
+  _sendCarInfo(context) async {
     var token = await getToken();
-    var uid = await getUID();
-    String jsonString = await addCar(uid, token, brandTextField.text, int.parse(yearTextField.text), double.parse(volumeTextField.text), double.parse(mileageTextField.text));
-    Map<String, dynamic> decodedJson = jsonDecode(jsonString);
-    if (decodedJson['status'] == 'ok'){
-      Navigator.pop(context);
-    }
+    var array = img_array;
+    array.removeLast();
+    var formData = FormData.fromMap({
+      'name' : brandTextField.text,
+      'year' : int.parse(yearTextField.text),
+      'size' : double.parse(volumeTextField.text),
+      'milage' : double.parse(mileageTextField.text),
+    });
+
+    for (File item in array)
+      formData.files.addAll([
+        MapEntry("images", await MultipartFile.fromFile(item.path, filename: basename(item.path))),
+      ]);
+
+    globalKey.currentState.showSnackBar(
+      SnackBar(duration: new Duration(seconds: 60), content:
+        Row(
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.only(right: 10.0),
+              child: CircularProgressIndicator(),
+            ),
+            Text("  Загрузка...  "),
+          ],
+        ),
+      )
+    );
+
+    var response = await Dio().post(
+      AppConstants.baseUrl + AppConstants.carsUrl, 
+      data: formData,
+      options: Options(
+        followRedirects: false,
+        validateStatus: (status) {
+          return status < 500;
+        },
+        headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        "Accept": "application/json",
+        "Authorization": "Token $token"
+        }
+      ),
+      onSendProgress: (int sent, int total) {
+        print("$sent / $total");
+      },
+    ).then((response) {
+      print(response);
+      globalKey.currentState.removeCurrentSnackBar();
+    }).catchError((error) => print(error));
+
+    // String jsonString = await addCar(uid, token, brandTextField.text, int.parse(yearTextField.text), double.parse(volumeTextField.text), double.parse(mileageTextField.text), img_array);
+    // Map<String, dynamic> decodedJson = jsonDecode(jsonString);
+    // if (decodedJson['status'] == 'ok'){
+    //   Navigator.pop(context);
+    // }
   }
+
 }
 
-Future<String> addCar(int userID, String token, String name, int year, double size, double milage) async {
+Future<String> addCar(int userID, String token, String name, int year, double size, double milage, List<File> carImg) async {
   final response = await http.post(AppConstants.baseUrl + AppConstants.carsUrl,
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
@@ -327,6 +381,7 @@ Future<String> addCar(int userID, String token, String name, int year, double si
         'year' : year,
         'size' : size,
         'milage' : milage,
+        'images' : carImg
       }));
   if (response.statusCode == 200) {
     return response.body;
