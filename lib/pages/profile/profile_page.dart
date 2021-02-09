@@ -9,6 +9,8 @@ import 'package:sto_app/pages/order/order_history_page.dart';
 import 'package:sto_app/utils/alert.dart';
 import 'package:sto_app/widgets/app_widgets.dart';
 import 'edit_profile.dart';
+import 'message_item.dart';
+import 'message_page.dart';
 import 'my_cars_page.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
@@ -167,6 +169,12 @@ class _ProfilePageState extends State<ProfilePage> {
                               context,
                               MaterialPageRoute(
                                   builder: (context) => OrderHistoryPage()));
+                        }
+                        else if (index == 2) {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => MessagePage()));
                         }
                       } else {
                         showCustomAlert();
