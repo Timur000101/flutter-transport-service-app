@@ -94,10 +94,10 @@ class _MyCarsPageState extends State<MyCarsPage> {
   getCars() async {
     var token = await getToken();
     List<Car> list = await getMyCars(token);
+    print(list);
     setState(() {
       carList = list;
     });
-    print(carList.length);
   }
 }
 

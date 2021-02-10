@@ -327,28 +327,6 @@ class _AddCarPageState extends State<AddCarPage> {
           filename: basename(item.path));
       request.files.add(multipartFile);
     }
-    
-    var response = await request.send();
-    print(response.statusCode);
-    print(response);
-
-    // var formData = FormData.fromMap({
-    //   'name' : brandTextField.text,
-    //   'year' : int.parse(yearTextField.text),
-    //   'size' : double.parse(volumeTextField.text),
-    //   'milage' : double.parse(mileageTextField.text),
-    //   'images': [
-    //     MultipartFile.fromFileSync(array[0].path, filename: basename(array[0].path)),
-    //     // await MultipartFile.fromFile(array[1].path, filename: "text2.txt"),
-    //   ]
-    // });
-
-    // for (File item in array)
-    //   formData.files.addAll([
-    //     MapEntry("images", await MultipartFile.fromFile(item.path, filename: basename(item.path))),
-    //   ]);
-    
-    // print(formData.fields);
 
     globalKey.currentState.showSnackBar(
       SnackBar(duration: new Duration(seconds: 60), content:
@@ -364,54 +342,9 @@ class _AddCarPageState extends State<AddCarPage> {
       )
     );
 
-    // var response = await Dio().post(
-    //   AppConstants.baseUrl + AppConstants.carsUrl, 
-    //   data: formData,
-    //   options: Options(
-    //     followRedirects: false,
-    //     validateStatus: (status) {
-    //       return status < 500;
-    //     },
-    //     headers: <String, String>{
-    //     'Content-Type': 'application/json; charset=UTF-8',
-    //     "Accept": "application/json",
-    //     "Authorization": "Token $token"
-    //     }
-    //   ),
-    //   onSendProgress: (int sent, int total) {
-    //     print("$sent / $total");
-    //   },
-    // ).then((response) {
-    //   print(response);
-    //   globalKey.currentState.removeCurrentSnackBar();
-    // }).catchError((error) => print(error));
+    var response = await request.send();
+    print(response.statusCode);
+    print(response);
 
-    // String jsonString = await addCar(uid, token, brandTextField.text, int.parse(yearTextField.text), double.parse(volumeTextField.text), double.parse(mileageTextField.text), img_array);
-    // Map<String, dynamic> decodedJson = jsonDecode(jsonString);
-    // if (decodedJson['status'] == 'ok'){
-    //   Navigator.pop(context);
-    // }
-  }
-
-}
-
-Future<String> addCar(int userID, String token, String name, int year, double size, double milage, List<File> carImg) async {
-  final response = await http.post(AppConstants.baseUrl + AppConstants.carsUrl,
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-        "Accept": "application/json",
-        "Authorization": "Token $token"
-      },
-      body: jsonEncode(<String, Object>{
-        'name' : name,
-        'year' : year,
-        'size' : size,
-        'milage' : milage,
-        'images' : carImg
-      }));
-  if (response.statusCode == 200) {
-    return response.body;
-  } else {
-    throw Exception("Falied to Change Profile Information.");
   }
 }
