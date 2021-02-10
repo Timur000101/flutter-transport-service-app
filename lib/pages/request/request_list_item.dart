@@ -42,12 +42,12 @@ class RequestListItem extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          request.name,
+                          request.car.name,
                           style: TextStyle(
                               fontSize: 17, fontWeight: FontWeight.bold),
                         ),
                         Text(
-                          request.year,
+                          request.car.year.toString(),
                           style: TextStyle(
                               fontSize: 16, color: AppColors.mainTextColor),
                         )
@@ -57,7 +57,7 @@ class RequestListItem extends StatelessWidget {
                   Expanded(
                       child: Padding(
                     padding: const EdgeInsets.only(left: 15, top: 3),
-                    child: cornerImageView(request.urlImage),
+                    child: cornerImageView(request.orderImg[0]['image']),
                   ))
                 ],
               ),
@@ -65,11 +65,11 @@ class RequestListItem extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  chipRedText(request.chipfirst),
-                  chipRedText(request.chipSecond),
+                  chipRedText(request.service['name']),
+                  chipRedText(request.subservice['name']),
                   Container(
                     margin: EdgeInsets.only(top: 5, bottom: 5, left: 2),
-                    child: Text(request.description + request.description,
+                    child: Text(request.about,
                         style: TextStyle(
                             fontSize: 13, color: AppColors.primaryTextColor)),
                   ),
@@ -83,7 +83,7 @@ class RequestListItem extends StatelessWidget {
                             Icon(Icons.location_on,
                                 color: AppColors.primaryTextColor),
                             Text(
-                              request.location,
+                              'Almaty',
                               style:
                                   TextStyle(color: AppColors.primaryTextColor),
                             ),

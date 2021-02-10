@@ -6,6 +6,7 @@ import 'package:sto_app/components/orderCard.dart';
 import 'package:sto_app/core/const.dart';
 import 'package:sto_app/widgets/app_widgets.dart';
 import '../../models/order.dart';
+import 'package:http/http.dart' as http;
 
 class OrdersFromExecutorPage extends StatefulWidget {
   @override
@@ -47,24 +48,18 @@ class _OrdersFromExecutorPageState extends State<OrdersFromExecutorPage> {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     return sharedPreferences.getString(AppConstants.key);
   }
-  
+
   getOrders() async {
     var token = await getToken();
-    await Dio().get(
-      "${AppConstants.baseUrl}order/request/", 
-      options: Options(
-          headers: <String, String>{
+    await http.get(
+      "${AppConstants.baseUrl}order/request/",
+        headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
           "Accept": "application/json",
           "Authorization": "Token $token"
         },
-        followRedirects: false,
-        validateStatus: (status) {
-          return status < 500;
-        },
-      ),
       ).then((response) {
-        print(response);
+        print(response.body);
       }).catchError((error) => print(error));
   }
 }
