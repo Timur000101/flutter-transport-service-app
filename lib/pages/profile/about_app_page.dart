@@ -20,7 +20,7 @@ class _AboutAppPageState extends State<AboutAppPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-          SizedBox(height: 40),
+          SizedBox(height: 20),
           Padding(
             padding: const EdgeInsets.all(20.0),
             child: Image.asset(
@@ -29,7 +29,7 @@ class _AboutAppPageState extends State<AboutAppPage> {
             ),
           ),
           Text('Мобильное приложение - Bumper.kz', style: TextStyle(color: AppColors.primaryTextColor, fontSize: 14)),
-          SizedBox(height: 40),
+          SizedBox(height: 20),
           Padding(
             padding: const EdgeInsets.all(20.0),
             child: ListView.builder(
@@ -54,6 +54,75 @@ class _AboutAppPageState extends State<AboutAppPage> {
               }
             ),
           ),
+          SizedBox(height: 20),
+          Text('Мы в социальных сетях:', style: TextStyle(color: AppColors.mainTextColor, fontSize: 15)),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(15.0),
+                child: GestureDetector(onTap: () {
+                  first();
+                },
+                child: Container(
+                  padding: EdgeInsets.all(15),
+                  decoration: BoxDecoration(
+                      color: AppColors.lightColor,
+                      borderRadius: BorderRadius.circular(30),
+                      boxShadow: [
+                        BoxShadow(
+                            color: Colors.black12.withOpacity(0.1),
+                            spreadRadius: 3,
+                            blurRadius: 7,
+                            offset: Offset(0, 1))
+                      ]),
+                    child: Icon(Icons.face)
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(15.0),
+                child: GestureDetector(onTap: () {
+                  second();
+                },
+                child: Container(
+                  padding: EdgeInsets.all(15),
+                  decoration: BoxDecoration(
+                      color: AppColors.lightColor,
+                      borderRadius: BorderRadius.circular(30),
+                      boxShadow: [
+                        BoxShadow(
+                            color: Colors.black12.withOpacity(0.1),
+                            spreadRadius: 3,
+                            blurRadius: 7,
+                            offset: Offset(0, 1))
+                      ]),
+                    child: Icon(Icons.insert_invitation)
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(15.0),
+                child: GestureDetector(onTap: () {
+                  third();
+                },
+                child: Container(
+                  padding: EdgeInsets.all(15),
+                  decoration: BoxDecoration(
+                      color: AppColors.lightColor,
+                      borderRadius: BorderRadius.circular(30),
+                      boxShadow: [
+                        BoxShadow(
+                            color: Colors.black12.withOpacity(0.1),
+                            spreadRadius: 3,
+                            blurRadius: 7,
+                            offset: Offset(0, 1))
+                      ]),
+                    child: Icon(Icons.whatshot)
+                  ),
+                ),
+              )
+          ],),
           Spacer(),
           Padding(
             padding: const EdgeInsets.all(20.0),
@@ -62,5 +131,17 @@ class _AboutAppPageState extends State<AboutAppPage> {
         ],),
       ),
     );
+  }
+
+  first(){
+    print(1);
+  }
+
+  second(){
+    print(2);
+  }
+
+  third(){
+    print(3);
   }
 }
