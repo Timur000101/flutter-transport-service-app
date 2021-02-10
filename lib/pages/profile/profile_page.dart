@@ -18,6 +18,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:sto_app/utils/internet_manager.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'dart:io' show Platform;
 
 Future<UserDetail> getUserDetail(int userId, String token) async {
   var url = "${AppConstants.baseUrl}${AppConstants.getUserDetail}$userId";
@@ -415,9 +416,15 @@ class _ProfilePageState extends State<ProfilePage> {
         negativeBtnText: 'Нет');
     showDialog(context: context, builder: (BuildContext context) => dialog);
   }
-
+  // https://play.google.com/store/apps/details?id=package_name
   _launchURL() async {
-    const url = 'https://apple.com';
+    var url = "";
+    if (Platform.isAndroid) {
+      url = "https://play.google.com/store/apps/";
+    }
+    if (Platform.isIOS) {
+      url = 'https://apple.com';
+    }
     if (await canLaunch(url)) {
       await launch(url);
     } 

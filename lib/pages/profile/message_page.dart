@@ -27,7 +27,7 @@ class _MessagePageState extends State<MessagePage> {
   Widget build(BuildContext context) {
     return  Scaffold(
       backgroundColor: AppColors.backgroundColor,
-      appBar: buildAppBar("История заказов"),
+      appBar: buildAppBar("Сообщения"),
       body: RefreshIndicator(
         key: _refreshIndicatorKey,
         onRefresh: _refresh,

@@ -1,10 +1,12 @@
-import 'package:dio/dio.dart';
+
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sto_app/core/const.dart';
 import 'package:sto_app/models/order_history.dart';
 import 'package:sto_app/pages/order/order_history_item.dart';
 import "package:sto_app/widgets/app_widgets.dart";
+import 'package:http/http.dart' as http;
+
 
 class OrderHistoryPage extends StatefulWidget {
   OrderHistoryPage({Key key}) : super(key: key);
@@ -16,6 +18,22 @@ class OrderHistoryPage extends StatefulWidget {
 class _OrderHistoryPageState extends State<OrderHistoryPage> {
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
       new GlobalKey<RefreshIndicatorState>();
+
+  gethistory() async {
+    var token = await getToken();
+     http.Response  response =  await http.get("${AppConstants.baseUrl}order/history/",
+        headers: {'Content-Type': 'application/json; charset=UTF-8',
+          "Accept": "application/json",
+          "Authorization": "Token $token"});
+
+     if (response.statusCode == 200) {
+
+     }else {
+       // If the server did not return a 200 OK response,
+       // then throw an exception.
+       throw Exception('Failed to load historyorder');
+     }
+  }
 
   final List<OrderHistory> historyList = <OrderHistory>[
     new OrderHistory(
@@ -46,7 +64,7 @@ class _OrderHistoryPageState extends State<OrderHistoryPage> {
 
   @override
   void initState() {
-    getHistory();
+    gethistory();
     super.initState();
   }
 
@@ -80,23 +98,24 @@ class _OrderHistoryPageState extends State<OrderHistoryPage> {
     return sharedPreferences.getString(AppConstants.key);
   }
 
-  getHistory() async {
-    var token = await getToken();
-    await Dio().get(
-      "${AppConstants.baseUrl}order/history/", 
-      options: Options(
-          headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-          "Accept": "application/json",
-          "Authorization": "Token $token"
-        },
-        followRedirects: false,
-        validateStatus: (status) {
-          return status < 500;
-        },
-      ),
-      ).then((response) {
-        print(response);
-      }).catchError((error) => print(error));
-  }
+
+  // getHistory() async {
+  //   var token = await getToken();
+  //   await Dio().get(
+  //     "${AppConstants.baseUrl}order/history/",
+  //     options: Options(
+  //         headers: <String, String>{
+  //         'Content-Type': 'application/json; charset=UTF-8',
+  //         "Accept": "application/json",
+  //         "Authorization": "Token $token"
+  //       },
+  //       followRedirects: false,
+  //       validateStatus: (status) {
+  //         return status < 500;
+  //       },
+  //     ),
+  //     ).then((response) {
+  //       print(response);
+  //     }).catchError((error) => print(error));
+  // }
 }

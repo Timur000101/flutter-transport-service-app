@@ -15,5 +15,4 @@ class _AboutAppPageState extends State<AboutAppPage> {
       appBar: buildAppBar("О приложении"),
     );
   }
-
 }

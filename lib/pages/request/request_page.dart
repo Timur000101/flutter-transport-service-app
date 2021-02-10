@@ -1,5 +1,5 @@
 // import 'dart:convert';
-import 'package:dio/dio.dart';
+
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sto_app/core/const.dart';
@@ -65,7 +65,7 @@ class _RequestPageState extends State<RequestPage> {
 
   @override
   void initState() {
-    getOrders();
+
     super.initState();
   }
 
@@ -87,23 +87,23 @@ class _RequestPageState extends State<RequestPage> {
     return sharedPreferences.getString(AppConstants.key);
   }
 
-  getOrders() async {
-    var token = await getToken();
-    await Dio().get(
-      "${AppConstants.baseUrl}order/", 
-      options: Options(
-          headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-          "Accept": "application/json",
-          "Authorization": "Token $token"
-        },
-        followRedirects: false,
-        validateStatus: (status) {
-          return status < 500;
-        },
-      ),
-      ).then((response) {
-        print(response);
-      }).catchError((error) => print(error));
-  }
+  // getOrders() async {
+  //   var token = await getToken();
+  //   await Dio().get(
+  //     "${AppConstants.baseUrl}order/",
+  //     options: Options(
+  //         headers: <String, String>{
+  //         'Content-Type': 'application/json; charset=UTF-8',
+  //         "Accept": "application/json",
+  //         "Authorization": "Token $token"
+  //       },
+  //       followRedirects: false,
+  //       validateStatus: (status) {
+  //         return status < 500;
+  //       },
+  //     ),
+  //     ).then((response) {
+  //       print(response);
+  //     }).catchError((error) => print(error));
+  // }
 }
