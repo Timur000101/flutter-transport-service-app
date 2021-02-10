@@ -312,17 +312,43 @@ class _AddCarPageState extends State<AddCarPage> {
     var token = await getToken();
     var array = img_array;
     array.removeLast();
-    var formData = FormData.fromMap({
-      'name' : brandTextField.text,
-      'year' : int.parse(yearTextField.text),
-      'size' : double.parse(volumeTextField.text),
-      'milage' : double.parse(mileageTextField.text),
-    });
+    var uri = Uri.parse(AppConstants.baseUrl + AppConstants.carsUrl);
+    var request = new http.MultipartRequest("POST", uri);
+    request.headers['authorization'] = "Token $token";
+    request.fields['name'] = brandTextField.text;
+    request.fields['year'] = int.parse(yearTextField.text).toString();
+    request.fields['size'] = double.parse(volumeTextField.text).toString();
+    request.fields['milage'] = double.parse(mileageTextField.text).toString();
+    for (File item in array){
+      var stream =
+        new http.ByteStream(DelegatingStream.typed(item.openRead()));
+      var length = await item.length();
+      var multipartFile = new http.MultipartFile('images', stream, length,
+          filename: basename(item.path));
+      request.files.add(multipartFile);
+    }
+    
+    var response = await request.send();
+    print(response.statusCode);
+    print(response);
 
-    for (File item in array)
-      formData.files.addAll([
-        MapEntry("images", await MultipartFile.fromFile(item.path, filename: basename(item.path))),
-      ]);
+    // var formData = FormData.fromMap({
+    //   'name' : brandTextField.text,
+    //   'year' : int.parse(yearTextField.text),
+    //   'size' : double.parse(volumeTextField.text),
+    //   'milage' : double.parse(mileageTextField.text),
+    //   'images': [
+    //     MultipartFile.fromFileSync(array[0].path, filename: basename(array[0].path)),
+    //     // await MultipartFile.fromFile(array[1].path, filename: "text2.txt"),
+    //   ]
+    // });
+
+    // for (File item in array)
+    //   formData.files.addAll([
+    //     MapEntry("images", await MultipartFile.fromFile(item.path, filename: basename(item.path))),
+    //   ]);
+    
+    // print(formData.fields);
 
     globalKey.currentState.showSnackBar(
       SnackBar(duration: new Duration(seconds: 60), content:
@@ -338,27 +364,27 @@ class _AddCarPageState extends State<AddCarPage> {
       )
     );
 
-    var response = await Dio().post(
-      AppConstants.baseUrl + AppConstants.carsUrl, 
-      data: formData,
-      options: Options(
-        followRedirects: false,
-        validateStatus: (status) {
-          return status < 500;
-        },
-        headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-        "Accept": "application/json",
-        "Authorization": "Token $token"
-        }
-      ),
-      onSendProgress: (int sent, int total) {
-        print("$sent / $total");
-      },
-    ).then((response) {
-      print(response);
-      globalKey.currentState.removeCurrentSnackBar();
-    }).catchError((error) => print(error));
+    // var response = await Dio().post(
+    //   AppConstants.baseUrl + AppConstants.carsUrl, 
+    //   data: formData,
+    //   options: Options(
+    //     followRedirects: false,
+    //     validateStatus: (status) {
+    //       return status < 500;
+    //     },
+    //     headers: <String, String>{
+    //     'Content-Type': 'application/json; charset=UTF-8',
+    //     "Accept": "application/json",
+    //     "Authorization": "Token $token"
+    //     }
+    //   ),
+    //   onSendProgress: (int sent, int total) {
+    //     print("$sent / $total");
+    //   },
+    // ).then((response) {
+    //   print(response);
+    //   globalKey.currentState.removeCurrentSnackBar();
+    // }).catchError((error) => print(error));
 
     // String jsonString = await addCar(uid, token, brandTextField.text, int.parse(yearTextField.text), double.parse(volumeTextField.text), double.parse(mileageTextField.text), img_array);
     // Map<String, dynamic> decodedJson = jsonDecode(jsonString);
