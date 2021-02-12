@@ -112,6 +112,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   void initState() {
+    super.initState();
     checkInternetConnection().then((value) => {
           if (value)
             {getuserdetail()}
@@ -121,7 +122,6 @@ class _ProfilePageState extends State<ProfilePage> {
                   "Внимание", "У вас нет соединения с интернетом!", context)
             }
         });
-    super.initState();
   }
 
   @override

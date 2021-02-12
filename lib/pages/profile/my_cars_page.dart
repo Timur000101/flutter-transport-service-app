@@ -94,7 +94,6 @@ class _MyCarsPageState extends State<MyCarsPage> {
   getCars() async {
     var token = await getToken();
     List<Car> list = await getMyCars(token);
-    print(list);
     setState(() {
       carList = list;
     });
@@ -108,14 +107,17 @@ Future<List<Car>> getMyCars(String token) async {
     "Accept": "application/json",
     "Authorization": "Token $token"
   });
+  print(response.body);
+  print(response.statusCode);
   if (response.statusCode == 200) {
     List<Car> carList = new List<Car>();
     var responseBody = jsonDecode(response.body);
+    print(responseBody);
     for (Object i in responseBody){
       carList.add(Car.fromJson(i));
     }
     return carList;
   } else {
-    throw Exception("Falied to getUserDetail");
+    print("Error");
   }
 }
