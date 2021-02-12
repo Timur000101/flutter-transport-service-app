@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:sto_app/components/service_detail_item.dart';
 import 'package:sto_app/core/const.dart';
 import 'package:sto_app/models/services.dart';
+import 'package:sto_app/pages/services/service_finish.dart';
 import 'package:sto_app/widgets/app_widgets.dart';
 
 class ServiceDetail extends StatefulWidget {
@@ -56,7 +57,11 @@ class _ServiceDetailState extends State<ServiceDetail> {
                 width: MediaQuery.of(context).size.width,
                 padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
                 child: RaisedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(context, MaterialPageRoute(
+                      builder: (context) => ServiceFinish(servicePK: widget.indx))
+                    );
+                  },
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10.0),
                       side: BorderSide(color: AppColors.primaryTextColor)),
