@@ -2,25 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sto_app/core/const.dart';
 import 'package:sto_app/models/order_history.dart';
-import 'package:sto_app/pages/order/order_history_item.dart';
-import "package:sto_app/widgets/app_widgets.dart";
+import 'package:sto_app/pages/order/order_active_item.dart';
 import 'package:http/http.dart' as http;
 
-class OrderHistoryPage extends StatefulWidget {
-  OrderHistoryPage({Key key}) : super(key: key);
+class OrderActivePage extends StatefulWidget {
+  OrderActivePage({Key key}) : super(key: key);
 
   @override
-  _OrderHistoryPageState createState() => _OrderHistoryPageState();
+  _OrderActivePageState createState() => _OrderActivePageState();
 }
 
-class _OrderHistoryPageState extends State<OrderHistoryPage> {
+class _OrderActivePageState extends State<OrderActivePage> {
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
       new GlobalKey<RefreshIndicatorState>();
 
   gethistory() async {
     var token = await getToken();
     http.Response response =
-        await http.get("${AppConstants.baseUrl}order/history/", headers: {
+        await http.get("${AppConstants.baseUrl}order/active/", headers: {
       'Content-Type': 'application/json; charset=UTF-8',
       "Accept": "application/json",
       "Authorization": "Token $token"
@@ -78,7 +77,7 @@ class _OrderHistoryPageState extends State<OrderHistoryPage> {
         child: ListView.builder(
             itemCount: historyList.length,
             itemBuilder: (BuildContext context, int index) {
-              return OrderHistoryItem(orderHistory: historyList[index]);
+              return OrderActiveItem(orderHistory: historyList[index]);
             }),
       ),
     );
@@ -96,24 +95,4 @@ class _OrderHistoryPageState extends State<OrderHistoryPage> {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     return sharedPreferences.getString(AppConstants.key);
   }
-
-  // getHistory() async {
-  //   var token = await getToken();
-  //   await Dio().get(
-  //     "${AppConstants.baseUrl}order/history/",
-  //     options: Options(
-  //         headers: <String, String>{
-  //         'Content-Type': 'application/json; charset=UTF-8',
-  //         "Accept": "application/json",
-  //         "Authorization": "Token $token"
-  //       },
-  //       followRedirects: false,
-  //       validateStatus: (status) {
-  //         return status < 500;
-  //       },
-  //     ),
-  //     ).then((response) {
-  //       print(response);
-  //     }).catchError((error) => print(error));
-  // }
 }

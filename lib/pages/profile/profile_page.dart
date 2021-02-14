@@ -6,6 +6,7 @@ import 'package:sto_app/models/user_detail.dart';
 import 'package:sto_app/pages/auth/signIn_page.dart';
 import 'package:sto_app/pages/order/order_history_item.dart';
 import 'package:sto_app/pages/order/order_history_page.dart';
+import 'package:sto_app/pages/order/order_page.dart';
 import 'package:sto_app/pages/profile/support_page.dart';
 import 'package:sto_app/utils/alert.dart';
 import 'package:sto_app/widgets/app_widgets.dart';
@@ -56,7 +57,7 @@ class _ProfilePageState extends State<ProfilePage> {
       title: "Мои автомобили",
       icon: Stoappicons.car_1,
     ),
-    MenuItem(title: "История заказов", icon: Icons.history),
+    MenuItem(title: "Заказы", icon: Icons.history),
     MenuItem(title: "Сообщения", icon: Stoappicons.conversation),
   ];
 
@@ -172,9 +173,8 @@ class _ProfilePageState extends State<ProfilePage> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => OrderHistoryPage()));
-                        }
-                        else if (index == 2) {
+                                  builder: (context) => OrderPage()));
+                        } else if (index == 2) {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -202,37 +202,35 @@ class _ProfilePageState extends State<ProfilePage> {
                 return Container(
                   margin: EdgeInsets.only(bottom: 2.5),
                   child: ListTile(
-                    title: Text(menu2[index].title,
-                        style: TextStyle(fontSize: 18)),
-                    leading: Icon(
-                      menu2[index].icon,
-                      color: AppColors.mainColor,
-                      size: 30,
-                    ),
-                    trailing: Icon(Icons.keyboard_arrow_right_outlined),
-                    tileColor: Colors.white,
-                    onTap: () {
-                      if (isReg == true) {
-                        if (index == 0) {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => SupportPage()),
-                          );
-                        } else if (index == 1) {
-                          _launchURL();
-                        }
-                        else if (index == 2) {
-                          Navigator.push(
+                      title: Text(menu2[index].title,
+                          style: TextStyle(fontSize: 18)),
+                      leading: Icon(
+                        menu2[index].icon,
+                        color: AppColors.mainColor,
+                        size: 30,
+                      ),
+                      trailing: Icon(Icons.keyboard_arrow_right_outlined),
+                      tileColor: Colors.white,
+                      onTap: () {
+                        if (isReg == true) {
+                          if (index == 0) {
+                            Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => AboutAppPage()));
+                                  builder: (context) => SupportPage()),
+                            );
+                          } else if (index == 1) {
+                            _launchURL();
+                          } else if (index == 2) {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => AboutAppPage()));
+                          }
+                        } else {
+                          showCustomAlert();
                         }
-                      } else {
-                        showCustomAlert();
-                      }
-                    }
-                  ),
+                      }),
                 );
               }),
           SizedBox(
@@ -241,7 +239,9 @@ class _ProfilePageState extends State<ProfilePage> {
           Container(
             padding: EdgeInsets.symmetric(horizontal: 20.0),
             child: RaisedButton(
-              onPressed: () {print('Exit');},
+              onPressed: () {
+                print('Exit');
+              },
               padding: const EdgeInsets.symmetric(vertical: 20.0),
               textColor: Colors.white,
               color: AppColors.mainColor,
@@ -346,12 +346,11 @@ class _ProfilePageState extends State<ProfilePage> {
                         child: Switch(
                           value: isSwitched,
                           onChanged: (value) {
-                            if (isReg == true){
+                            if (isReg == true) {
                               setState(() {
                                 isSwitched = value;
                               });
-                            }
-                            else{
+                            } else {
                               showCustomAlert();
                             }
                           },
@@ -416,6 +415,7 @@ class _ProfilePageState extends State<ProfilePage> {
         negativeBtnText: 'Нет');
     showDialog(context: context, builder: (BuildContext context) => dialog);
   }
+
   // https://play.google.com/store/apps/details?id=package_name
   _launchURL() async {
     var url = "";
@@ -427,8 +427,7 @@ class _ProfilePageState extends State<ProfilePage> {
     }
     if (await canLaunch(url)) {
       await launch(url);
-    } 
-    else {
+    } else {
       throw 'Could not launch $url';
     }
   }
