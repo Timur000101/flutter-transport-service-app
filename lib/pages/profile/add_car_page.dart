@@ -206,7 +206,7 @@ class _AddCarPageState extends State<AddCarPage> {
                       width: MediaQuery.of(context).size.width,
                       child: RaisedButton(
                         onPressed: (){
-                          _addCar();
+                          _addCar(context);
                           },
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10.0),
@@ -264,7 +264,7 @@ class _AddCarPageState extends State<AddCarPage> {
     });
   }
 
-  _addCar(){
+  _addCar(BuildContext context){
     if (_carBrand != 'Выберите марку машины'){
       if (int.tryParse(yearTextField.text) != null && (int.tryParse(yearTextField.text) < 2030 || int.tryParse(yearTextField.text) > 1980)){
         if (double.tryParse(volumeTextField.text) != null && (double.tryParse(volumeTextField.text) < 12.0 && double.tryParse(volumeTextField.text) > 0.5)){
@@ -344,7 +344,9 @@ class _AddCarPageState extends State<AddCarPage> {
 
     var response = await request.send();
     print(response.statusCode);
-    print(response);
+    if (response.statusCode == 200){
+      Navigator.pop(context);
+    }
 
   }
 }

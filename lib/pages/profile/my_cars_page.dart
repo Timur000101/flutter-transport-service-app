@@ -80,6 +80,7 @@ class _MyCarsPageState extends State<MyCarsPage> {
                   itemBuilder: (context, int index) => CarCard(
                         car: carList[index],
                         index: index,
+                        callback: getCars
                       )),
             ),
           ),
@@ -107,12 +108,9 @@ Future<List<Car>> getMyCars(String token) async {
     "Accept": "application/json",
     "Authorization": "Token $token"
   });
-  print(response.body);
-  print(response.statusCode);
   if (response.statusCode == 200) {
     List<Car> carList = new List<Car>();
     var responseBody = jsonDecode(response.body);
-    print(responseBody);
     for (Object i in responseBody){
       carList.add(Car.fromJson(i));
     }

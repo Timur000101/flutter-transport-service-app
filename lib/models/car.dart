@@ -5,7 +5,7 @@ class Car{
   double size;
   double milage;
   int user;
-  List<Map<String,String>> car_img;
+  List<dynamic> car_img;
 
   Car({this.id, this.name, this.year, this.size, this.milage, this.user, this.car_img});
 
