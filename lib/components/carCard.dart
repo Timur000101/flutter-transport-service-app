@@ -1,18 +1,23 @@
-
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sto_app/core/const.dart';
 import 'package:sto_app/models/car.dart';
+import 'package:sto_app/pages/profile/my_cars_page.dart';
 
 class CarCard extends StatefulWidget {
   const CarCard({
     Key key,
     @required this.car,
     @required this.index,
+    @required this.callback,
   }) : super(key: key);
 
   final Car car;
   final int index;
+  final Function callback;
 
   @override
   _CarCardState createState() => _CarCardState();
@@ -52,12 +57,22 @@ class _CarCardState extends State<CarCard> {
                                           padding: const EdgeInsets.symmetric(vertical: 10),
                                           child: Text("год ${widget.car.year}", style: TextStyle(fontSize: 16, color: Colors.black54),),
                                         ),
+                                        SizedBox(
+                                          width: 120,
+                                          child: RaisedButton( 
+                                            child: Text("Удалить", style: TextStyle(fontSize: 14),),  
+                                            onPressed: (){deleteCar(widget.car.id);},
+                                            color: AppColors.mainColor,  
+                                            textColor: Colors.white,
+                                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                                          ),
+                                        ),
                                       ],
                                     ),
                                   ),
                                 ),
                                 Padding(
-                                  padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                                  padding: const EdgeInsets.fromLTRB(5,10,5,5),
                                   child: Container(
                                     width: MediaQuery.of(context).size.width * 0.32,
                                     child: Column(children: [
@@ -66,10 +81,10 @@ class _CarCardState extends State<CarCard> {
                                           child: Container(
                                             color: Colors.blue,
                                             child: Image.network(
-                                              AppConstants.baseUrl + widget.car.car_img[0]['image'].substring(1,widget.car.car_img[0]['image'].length),
+                                              widget.car.car_img[0]['image'],
                                               fit: BoxFit.fitHeight,
                                               width: MediaQuery.of(context).size.width * 0.35,
-                                              height: 90,
+                                              height: 100,
                                             ),
                                           ),
                                         )
@@ -79,34 +94,6 @@ class _CarCardState extends State<CarCard> {
                                 )
                             ],
                         ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                          child: Row(children: [
-                            SizedBox(
-                              width: 120,
-                              child: Opacity(
-                                opacity: 0.0,
-                                child: RaisedButton(
-                                child: Text("Изменить", style: TextStyle(fontSize: 14),),  
-                                onPressed: (){},
-                                color: AppColors.primaryColor,  
-                                textColor: Colors.white,
-                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                              )),
-                            ),
-                            Spacer(),
-                            SizedBox(
-                              width: 120,
-                              child: RaisedButton( 
-                                child: Text("Удалить", style: TextStyle(fontSize: 14),),  
-                                onPressed: (){deleteCar(widget.car.id);},
-                                color: AppColors.mainColor,  
-                                textColor: Colors.white,
-                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                              ),
-                            ),
-                          ],),
-                        )
                     ],
                 ),
               ),
@@ -116,8 +103,30 @@ class _CarCardState extends State<CarCard> {
     );
   }
 
-  deleteCar(int id){
-    print(id);
+  Future<String> getToken() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    return sharedPreferences.getString(AppConstants.key);
+  }
+
+  deleteCar(int id) async {
+    var token = await getToken();
+    final url = Uri.parse(AppConstants.baseUrl + "cars/");
+    final request = await http.Request('DELETE', url);
+    request.headers.addAll(<String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+      "Accept": "application/json",
+      "Authorization": "Token $token"
+    });
+    request.body = jsonEncode(<String, int>{
+      'id': id,
+    });
+    final response = await request.send();
+    if (response.statusCode == 200) {
+      print(response.statusCode);
+      widget.callback();
+    } else {
+      print("Error");
+    }
   }
 
   

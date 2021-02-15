@@ -341,7 +341,6 @@ class _EditProfileState extends State<EditProfile> {
 
     request.files.add(multipartFile);
     var response = await request.send();
-    print(response.statusCode);
 
     if (response.statusCode == 200) {
       setState(() {
