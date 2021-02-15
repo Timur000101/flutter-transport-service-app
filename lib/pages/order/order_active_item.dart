@@ -7,7 +7,7 @@ import 'package:sto_app/models/order_history.dart';
 class OrderActiveItem extends StatelessWidget {
   final OrderHistory orderHistory;
 
-  const OrderActiveItem({Key key, this.orderHistory}) : super(key: key);
+  OrderActiveItem({Key key, this.orderHistory}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -117,12 +117,31 @@ class OrderActiveItem extends StatelessWidget {
     );
   }
 
+  String avaURL =
+      "https://www.sunsetlearning.com/wp-content/uploads/2019/09/User-Icon-Grey.png";
+
   void _settingModalBottomSheet(context) {
     showModalBottomSheet(
         context: context,
         builder: (BuildContext bc) {
           return Column(
-            children: [Text("asda")],
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 10),
+                child: CircleAvatar(
+                  backgroundImage: NetworkImage(avaURL),
+                  radius: 45,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 5),
+                child: Text(
+                  "Sherlock Holmes",
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+              ),
+              Text("+7781661021"),
+            ],
           );
         });
   }
