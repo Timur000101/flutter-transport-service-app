@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 // import 'package:sto_app/widgets/app_widgets.dart';
 import 'package:sto_app/core/const.dart';
+import 'package:sto_app/widgets/app_widgets.dart';
 
 class CreateIdentifier extends StatefulWidget {
   CreateIdentifier({Key key}) : super(key: key);
@@ -19,6 +20,7 @@ class _CreateIdentifierState extends State<CreateIdentifier> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: buildAppBar("Регистрация"),
       backgroundColor: AppColors.backgroundColor,
       body: SafeArea(
         child: SingleChildScrollView(

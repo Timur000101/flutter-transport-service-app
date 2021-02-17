@@ -393,6 +393,6 @@ Future<String> changeProfile(int userID, String token, String name, String addPh
   if (response.statusCode == 200) {
     return response.body;
   } else {
-    throw Exception("Falied to Change Profile Information.");
+    print("Falied to Change Profile Information.");
   }
 }

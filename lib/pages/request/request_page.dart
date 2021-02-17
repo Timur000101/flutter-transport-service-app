@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -12,7 +14,7 @@ class RequestPage extends StatefulWidget {
 }
 
 class _RequestPageState extends State<RequestPage> {
-  final List<RequestItem> name = List<RequestItem>();
+  List<RequestItem> request_array = List<RequestItem>();
 
   @override
   void initState() {
@@ -26,9 +28,9 @@ class _RequestPageState extends State<RequestPage> {
       backgroundColor: AppColors.backgroundColor,
       appBar: buildAppBar("Заявки"),
       body: ListView.builder(
-          itemCount: name.length,
+          itemCount: request_array.length,
           itemBuilder: (BuildContext context, int index) {
-            return RequestListItem(name[index]);
+            return RequestListItem(request_array[index]);
           }),
     );
   }
@@ -48,6 +50,14 @@ class _RequestPageState extends State<RequestPage> {
           "Authorization": "Token $token"
         },
       ).then((response) {
+        List<RequestItem> list = List<RequestItem>();
+        var responseBody = jsonDecode(response.body);
+        for (Object i in responseBody){
+          list.add(RequestItem.fromJson(i));
+        }
+        setState(() {
+          request_array = list;
+        });
         print(response.body);
       }).catchError((error) => print(error));
   }

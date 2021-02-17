@@ -96,7 +96,7 @@ class RequestListItem extends StatelessWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => RequestDetailPage()),
+                                  builder: (context) => RequestDetailPage(request)),
                             );
                           },
                           child: Text("Подробнее"),
@@ -133,6 +133,6 @@ Widget cornerImageView(String url) {
   return ClipRRect(
     borderRadius: BorderRadius.circular(10),
     child: Image.network(url,
-        height: 90, alignment: Alignment.topCenter, fit: BoxFit.fill),
+        height: 90, alignment: Alignment.topCenter, fit: BoxFit.fitHeight),
   );
 }

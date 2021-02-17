@@ -4,10 +4,10 @@ class RequestItem {
   int id;
   Car car;
   String about;
-  Map<String,String> service;
-  Map<String,String> subservice;
+  dynamic service;
+  dynamic subservice;
   int owner;
-  List<Map<String,String>> orderImg;
+  List<dynamic> orderImg;
 
   RequestItem({
     this.id,
@@ -20,6 +20,7 @@ class RequestItem {
 
   RequestItem.fromJson(Map<String, dynamic> json) {
     id = json['id'];
+    car = Car.fromJson(json['car']);
     about = json['about'];
     service = json['service'];
     subservice = json['subservice'];
@@ -30,6 +31,7 @@ class RequestItem {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
+    data['car'] = this.car.toJson();
     data['about'] = this.about;
     data['service'] = this.service;
     data['subservice'] = this.subservice;
