@@ -40,6 +40,7 @@ class _OrdersFromExecutorPageState extends State<OrdersFromExecutorPage> {
               itemBuilder: (context, int index) => OrderCard(
                     order: orderList[index],
                     index: index,
+                    callback: getOrders,
                   )),
         ));
   }

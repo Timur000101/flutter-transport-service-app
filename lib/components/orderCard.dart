@@ -1,17 +1,24 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sto_app/core/const.dart';
 import 'package:sto_app/models/order.dart';
+import 'package:sto_app/utils/alert.dart';
+import 'package:http/http.dart' as http;
 
 class OrderCard extends StatefulWidget {
   const OrderCard({
     Key key,
     @required this.order,
     @required this.index,
+    @required this.callback,
   }) : super(key: key);
 
   final Order order;
   final int index;
+  final Function callback;
 
   @override
   _OrderCardState createState() => _OrderCardState();
@@ -73,28 +80,6 @@ class _OrderCardState extends State<OrderCard> {
                                 ),
                               ),
                             ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(top: 10.0, left: 10),
-                              child: Row(
-                                children: <Widget>[
-                                  Icon(
-                                    Stoappicons.distance,
-                                    color: AppColors.primaryTextColor,
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 8.0),
-                                    child: Text(
-                                      widget.order.range,
-                                      style: TextStyle(
-                                          fontSize: 16,
-                                          color: AppColors.primaryTextColor),
-                                    ),
-                                  ),
-                                  Spacer(),
-                                ],
-                              ),
-                            )
                           ],
                         ),
                       ),
@@ -125,31 +110,136 @@ class _OrderCardState extends State<OrderCard> {
                                 style: new TextStyle(fontSize: 18)),
                             Padding(
                               padding:
-                                  const EdgeInsets.only(top: 45.0, right: 10.0),
-                              child: FlatButton(
-                                child: Text(
-                                  'Отклонить',
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                                color: AppColors.mainColor,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(5)),
-                                onPressed: () {
-                                  setState(() {
-                                    _isSelected = !_isSelected;
-                                  });
-                                },
+                                  const EdgeInsets.only(top: 15.0, left: 10),
+                              child: Row(
+                                children: <Widget>[
+                                  Icon(
+                                    Stoappicons.distance,
+                                    color: AppColors.primaryTextColor,
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 8.0, right: 0.0),
+                                    child: Text(
+                                      widget.order.range,
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          color: AppColors.primaryTextColor),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                           ])),
                     )
                   ],
                 ),
+                Row(children: [
+                  Padding(
+                      padding:
+                          const EdgeInsets.symmetric(horizontal: 20),
+                      child: FlatButton(
+                        minWidth: 120,
+                        child: Text(
+                          'Принять',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        color: AppColors.mainColor,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(5)),
+                        onPressed: () {
+                          setState(() {
+                            accept();
+                          });
+                        },
+                      ),
+                    ),
+                    Spacer(),
+                    Padding(
+                      padding:
+                          const EdgeInsets.symmetric(horizontal: 20),
+                      child: FlatButton(
+                        minWidth: 120,
+                        child: Text(
+                          'Отклонить',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        color: AppColors.primaryTextColor,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(5)),
+                        onPressed: () {
+                          decline();
+                        },
+                      ),
+                    ),
+                ],)
               ],
             ),
           ),
         ),
       ),
     ));
+  }
+
+  accept(){
+    print("Accept B T");
+    var dialog = CustomAlertDialog(
+        title: "Внимание",
+        message: "Вы уверены?",
+        onPostivePressed: () {
+          sendAccept();
+        },
+        positiveBtnText: 'Да',
+        negativeBtnText: 'Нет');
+    showDialog(context: context, builder: (BuildContext context) => dialog);
+  }
+
+  decline(){
+    print("Decline B T");
+    var dialog = CustomAlertDialog(
+        title: "Внимание",
+        message: "Вы уверены?",
+        onPostivePressed: () {
+          sendDecline();
+        },
+        positiveBtnText: 'Да',
+        negativeBtnText: 'Нет');
+    showDialog(context: context, builder: (BuildContext context) => dialog);
+  }
+
+  Future<String> getToken() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    return sharedPreferences.getString(AppConstants.key);
+  }
+
+  sendAccept() async{
+    var token = await getToken();
+    final response = await http.post(AppConstants.baseUrl + "order/request/accept/",
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          "Accept": "application/json",
+          "Authorization": "Token $token"
+        });
+    if (response.statusCode == 200) {
+      print(response.body);
+      widget.callback();
+    } else {
+      print("Falied");
+    }
+  }
+
+  sendDecline() async{
+    var token = await getToken();
+    final response = await http.post(AppConstants.baseUrl + "/order/request/decline/",
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          "Accept": "application/json",
+          "Authorization": "Token $token"
+        });
+    if (response.statusCode == 200) {
+      print(response.body);
+      widget.callback();
+    } else {
+      print("Falied");
+    }
   }
 }

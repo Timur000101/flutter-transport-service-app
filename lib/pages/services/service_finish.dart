@@ -24,9 +24,18 @@ class _ServiceFinishState extends State<ServiceFinish> {
       key: globalKey,
       backgroundColor: AppColors.backgroundColor,
       appBar: buildAppBar("Подробнее"),
-      body: Container(
+      body: GestureDetector(
+      onTap: () {
+        FocusScopeNode currentFocus = FocusScope.of(context);
+        if (!currentFocus.hasPrimaryFocus) {
+          currentFocus.unfocus();
+        }
+      },
+      child:SingleChildScrollView(
+        reverse: true,
+        child:Container(
         width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
+        height: 600,
         padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -176,6 +185,8 @@ class _ServiceFinishState extends State<ServiceFinish> {
           ],
         ),
       )
+      )
+    )
     );
   }
 
