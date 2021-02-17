@@ -1,32 +1,30 @@
-import 'dart:convert';
 import 'dart:ui';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:sto_app/models/request_item.dart';
 import 'package:sto_app/pages/create_identifier.dart';
 import 'package:sto_app/widgets/app_widgets.dart';
 import 'package:sto_app/core/const.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:http/http.dart' as http;
 
-class RequestDetailPage extends StatefulWidget {
-  final RequestItem request;
-
-  RequestDetailPage(this.request);
-
+class RequestCtoPage extends StatefulWidget {
   @override
-  _RequestDetailPageState createState() => _RequestDetailPageState();
+  _RequestCtoPageState createState() => _RequestCtoPageState();
 }
 
-class _RequestDetailPageState extends State<RequestDetailPage> {
+class _RequestCtoPageState extends State<RequestCtoPage> {
   CarouselSlider carouselSlider;
-  final globalKey = GlobalKey<ScaffoldState>();
   final priceController = TextEditingController();
   final timeController = TextEditingController();
 
   int _current = 0;
-  List imgList = [];
+  List imgList = [
+    'https://images.unsplash.com/photo-1502117859338-fd9daa518a9a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60',
+    'https://images.unsplash.com/photo-1554321586-92083ba0a115?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60',
+    'https://images.unsplash.com/photo-1536679545597-c2e5e1946495?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60',
+    'https://images.unsplash.com/photo-1543922596-b3bbaba80649?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60',
+    'https://images.unsplash.com/photo-1502943693086-33b5b1cfdf2f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=668&q=80'
+  ];
 
   List<T> map<T>(List list, Function handler) {
     List<T> result = [];
@@ -37,27 +35,11 @@ class _RequestDetailPageState extends State<RequestDetailPage> {
   }
 
   @override
-  void initState() {
-    super.initState();
-    for (var i in widget.request.orderImg){
-      imgList.add(i['image']);
-    }
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: globalKey,
       backgroundColor: AppColors.backgroundColor,
       appBar: buildAppBar("Заявки"),
-      body: GestureDetector(
-      onTap: () {
-        FocusScopeNode currentFocus = FocusScope.of(context);
-        if (!currentFocus.hasPrimaryFocus) {
-          currentFocus.unfocus();
-        }
-      },
-      child:SingleChildScrollView(
+      body: SingleChildScrollView(
         reverse: true,
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Column(
@@ -68,7 +50,12 @@ class _RequestDetailPageState extends State<RequestDetailPage> {
                 height: 160.0,
                 initialPage: 0,
                 enlargeCenterPage: true,
+                // autoPlay: true,
                 reverse: false,
+                // enableInfiniteScroll: true,
+                // autoPlayInterval: Duration(seconds: 2),
+                // autoPlayAnimationDuration: Duration(milliseconds: 2000),
+                // pauseAutoPlayOnTouch: Duration(seconds: 10),
                 scrollDirection: Axis.horizontal,
                 onPageChanged: (index) {
                   setState(() {
@@ -89,7 +76,7 @@ class _RequestDetailPageState extends State<RequestDetailPage> {
                           borderRadius: BorderRadius.circular(15),
                           child: Image.network(
                             imgUrl,
-                            fit: BoxFit.fitHeight,
+                            fit: BoxFit.cover,
                           ),
                         ),
                       );
@@ -125,7 +112,7 @@ class _RequestDetailPageState extends State<RequestDetailPage> {
                 child: Column(
                   children: [
                     Text(
-                      widget.request.car.name,
+                      "Mercedez-Benz C55 AMG",
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 18,
@@ -134,23 +121,19 @@ class _RequestDetailPageState extends State<RequestDetailPage> {
                   ],
                 ),
               ),
-              Center(
-                child: Text(widget.request.subservice['name'] ,
-                textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: AppColors.primaryTextColor,
-                      fontSize: 16,
-                    )),
-              ),
+              Text("Ремонт ходовой/подвески/геометрия",
+                  style: TextStyle(
+                    color: AppColors.primaryTextColor,
+                    fontSize: 16,
+                  )),
               Container(
                 margin: const EdgeInsets.all(15.0),
                 padding: const EdgeInsets.all(10.0),
-                width: MediaQuery.of(context).size.width,
                 decoration: BoxDecoration(
                     color: Colors.white,
                     border: Border.all(color: AppColors.primaryTextColor)),
                 child: Text(
-                  widget.request.about ,
+                  "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.",
                 ),
               ),
             ],
@@ -163,9 +146,9 @@ class _RequestDetailPageState extends State<RequestDetailPage> {
                 Text(
                   "Предложите свою цену:",
                   style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 14,
-                    color: AppColors.mainTextColor),
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14,
+                      color: AppColors.mainTextColor),
                 ),
                 Padding(
                     padding: const EdgeInsets.only(top: 8, bottom: 8),
@@ -173,7 +156,7 @@ class _RequestDetailPageState extends State<RequestDetailPage> {
                         priceController,
                         "Цена",
                         Icon(
-                          Icons.money,
+                          Icons.ac_unit_rounded,
                           color: AppColors.primaryTextColor,
                         ),
                         "KZT",
@@ -181,9 +164,9 @@ class _RequestDetailPageState extends State<RequestDetailPage> {
                 Text(
                   "Примерное время ремонта:",
                   style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 14,
-                    color: Colors.black87),
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14,
+                      color: Colors.black87),
                 ),
                 Padding(
                     padding: const EdgeInsets.only(top: 8, bottom: 8),
@@ -212,13 +195,15 @@ class _RequestDetailPageState extends State<RequestDetailPage> {
                       color: Colors.red[600],
                       textColor: AppColors.lightColor,
                       onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => CreateIdentifier()));
+                        print(timeController.text);
+                        // Scaffold.of(context)
+                        // .showSnackBar(SnackBar(content: Text('asdasd')));
                       },
                     ),
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(top: 20, bottom: 20),
+                  padding: const EdgeInsets.only(top: 17, bottom: 16),
                   child: SizedBox(
                     width: MediaQuery.of(context).size.width,
                     child: RaisedButton(
@@ -226,14 +211,21 @@ class _RequestDetailPageState extends State<RequestDetailPage> {
                       shape: RoundedRectangleBorder(
                           borderRadius: new BorderRadius.circular(6.0)),
                       child: Text(
-                        "Отправить",
+                        "Принять",
                         style: TextStyle(
                             fontSize: 18, fontWeight: FontWeight.bold),
                       ),
                       color: Colors.green[700],
                       textColor: AppColors.lightColor,
                       onPressed: () {
-                        sendRequest();
+                        // print(priceController.text);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => CreateIdentifier()),
+                        );
+                        // Scaffold.of(context).showSnackBar(
+                        // SnackBar(content: Text(timeController.text)));
                       },
                     ),
                   ),
@@ -243,7 +235,6 @@ class _RequestDetailPageState extends State<RequestDetailPage> {
           ),
         ]),
       ),
-    )
     );
   }
 
@@ -273,44 +264,6 @@ class _RequestDetailPageState extends State<RequestDetailPage> {
           enabledBorder: myEnabledBorder,
           focusedBorder: myFocusedBorder,
         ));
-  }
-
-  Future<String> getToken() async {
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    return sharedPreferences.getString(AppConstants.key);
-  }
-
-  sendRequest() async{
-    if (priceController.text.length > 2){
-      if (timeController.text.length > 1){
-        var token = await getToken();
-        final response = await http.post(AppConstants.baseUrl + "order/request/create",
-            headers: <String, String>{
-              'Content-Type': 'application/json; charset=UTF-8',
-              "Accept": "application/json",
-              "Authorization": "Token $token"
-            },
-            body: jsonEncode(<String, dynamic>{
-              'order': widget.request.id,
-              'price': priceController.text,
-              'time': timeController.text,
-            }));
-        if (response.statusCode == 200) {
-          print(response.body);
-          Navigator.pop(context);
-        } else {
-          print("Falied");
-        }
-      }
-      else{
-        final snackBar = SnackBar(content: Text('Введите корректное время...'));
-        globalKey.currentState.showSnackBar(snackBar);
-      }
-    }
-    else{
-      final snackBar = SnackBar(content: Text('Введите корректную цену...'));
-      globalKey.currentState.showSnackBar(snackBar);
-    }
   }
 
   // goToPrevious() {

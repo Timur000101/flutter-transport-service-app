@@ -8,6 +8,8 @@ import 'package:sto_app/pages/order/order_history_item.dart';
 import 'package:sto_app/pages/order/order_history_page.dart';
 import 'package:sto_app/pages/order/order_page.dart';
 import 'package:sto_app/pages/profile/support_page.dart';
+import 'package:sto_app/pages/request/request_cto_page.dart';
+import 'package:sto_app/pages/request/request_wash_page.dart';
 import 'package:sto_app/utils/alert.dart';
 import 'package:sto_app/widgets/app_widgets.dart';
 import 'about_app_page.dart';
@@ -178,7 +180,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => MessagePage()));
+                                  builder: (context) => RequestWashPage()));
                         }
                       } else {
                         showCustomAlert();
