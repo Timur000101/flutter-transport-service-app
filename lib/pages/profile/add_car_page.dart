@@ -10,7 +10,6 @@ import 'package:sto_app/core/const.dart';
 import 'package:sto_app/widgets/app_widgets.dart';
 import 'package:http/http.dart' as http;
 import 'car_brand_page.dart';
-import 'package:dio/dio.dart';
 
 class AddCarPage extends StatefulWidget {
 

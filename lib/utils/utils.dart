@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sto_app/core/const.dart';
 
 // Форматирование номера телефона
@@ -54,4 +55,10 @@ createAlertDialog(BuildContext context) {
                   ],
                 )));
       });
+}
+
+
+Future<String> getToken() async {
+  SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+  return sharedPreferences.getString(AppConstants.key);
 }
