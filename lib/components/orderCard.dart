@@ -57,6 +57,8 @@ class _OrderCardState extends State<OrderCard> {
                         padding: const EdgeInsets.only(
                             top: 8.0, bottom: 8, left: 10),
                         child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(widget.order.car.name,
                                 style: new TextStyle(fontSize: 18)),
@@ -73,7 +75,7 @@ class _OrderCardState extends State<OrderCard> {
                                 padding: const EdgeInsets.symmetric(
                                     vertical: 10, horizontal: 10),
                                 child: Text(
-                                  'widget.order.stoName',
+                                  widget.order.stoName,
                                   style: TextStyle(color: Colors.white),
                                 ),
                               ),
@@ -136,9 +138,9 @@ class _OrderCardState extends State<OrderCard> {
                   child: Row(children: [
                     Padding(
                         padding:
-                            const EdgeInsets.symmetric(horizontal: 20),
+                            const EdgeInsets.symmetric(horizontal: 15),
                         child: FlatButton(
-                          minWidth: 120,
+                          minWidth: 110,
                           child: Text(
                             'Принять',
                             style: TextStyle(color: Colors.white),
@@ -156,9 +158,9 @@ class _OrderCardState extends State<OrderCard> {
                       Spacer(),
                       Padding(
                         padding:
-                            const EdgeInsets.symmetric(horizontal: 20),
+                            const EdgeInsets.symmetric(horizontal: 15),
                         child: FlatButton(
-                          minWidth: 120,
+                          minWidth: 110,
                           child: Text(
                             'Отклонить',
                             style: TextStyle(color: Colors.white),

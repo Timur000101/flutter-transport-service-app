@@ -4,7 +4,7 @@ class Order{
   int id;
   Car car;
   String stoPhone;
-  Null stoName;
+  String stoName;
   int price;
   String time;
   String subservice;
