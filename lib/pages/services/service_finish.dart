@@ -273,7 +273,7 @@ class _ServiceFinishState extends State<ServiceFinish> {
             globalKey.currentState.showSnackBar(snackBar);
             await Future.delayed(Duration(seconds: 3));
             Navigator.pushReplacement(context, MaterialPageRoute(
-              builder: (context) => HomePage())
+              builder: (context) => HomePage( ))
             );
           }
           else{

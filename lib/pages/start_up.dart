@@ -9,23 +9,18 @@ import 'package:sto_app/core/const.dart';
 
 class StartUp extends StatelessWidget {
   @override
-  Widget build(BuildContext context)  {
-    return FutureBuilder<bool>(
-      future: isRegis(),
-      builder: (context, AsyncSnapshot<bool> snapshot){
-        if (snapshot.hasData) {
-            return snapshot.data ? getSplashScreen(HomePage()) : getSplashScreen(SignIn());
-        }
-        else {
-            return getSplashScreen(SignIn());
-        }
-      }
-    );
+  Widget build(BuildContext context) {
+    return FutureBuilder<void>(
+        future: isRegis(),
+        builder: (context, AsyncSnapshot<void> snapshot) {
+          return getSplashScreen(HomePage());
+        });
   }
-    Widget getSplashScreen(Widget wid) {
-      return  SplashScreen(
+
+  Widget getSplashScreen(Widget wid) {
+    return SplashScreen(
         seconds: 2,
-        navigateAfterSeconds:wid,
+        navigateAfterSeconds: wid,
         title: new Text(
           "Fast Service",
           textScaleFactor: 2,
@@ -34,13 +29,15 @@ class StartUp extends StatelessWidget {
         loadingText: Text("from R&D"),
         photoSize: 110.0,
         loaderColor: Colors.red);
-}
-  Future<bool> isRegis() async {
+  }
+
+  Future<void> isRegis() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    var r = prefs.getBool(AppConstants.isReg);
-    if (r == null) {
-      r = false;
+    // var r = prefs.getBool(AppConstants.isReg);
+    var role = prefs.get(AppConstants.isClient);
+    if (role == null) {
+      role = false;
     }
-    return r;
+    AppConstants.role = role;
   }
 }

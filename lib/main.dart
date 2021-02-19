@@ -17,7 +17,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    getRole();
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
@@ -27,16 +26,6 @@ class MyApp extends StatelessWidget {
               fontFamily: 'Montserrat Regular'),
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-        home: HomePage());
-  }
-
-
-  getRole() async {
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    var isReg = sharedPreferences.getBool(AppConstants.isReg);
-    if (isReg) {
-      var role = sharedPreferences.getBool(AppConstants.isClient);
-      AppConstants.role = role;
-    }
+        home:StartUp(),);
   }
 }

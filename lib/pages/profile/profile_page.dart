@@ -186,7 +186,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => RequestPage()));
+                                  builder: (context) =>  MessagePage()));
                         }
                       } else {
                         showCustomAlert();
@@ -462,7 +462,7 @@ class _ProfilePageState extends State<ProfilePage> {
           Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(
-              builder: (BuildContext context) => StartUp(),
+              builder: (BuildContext context) =>SignIn(),
             ),
                 (route) => false,
           );
