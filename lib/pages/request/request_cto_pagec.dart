@@ -300,6 +300,9 @@ class _RequestCtoPageState extends State<RequestCtoPage> {
         print(response.body);
         print(response.statusCode);
         if (response.statusCode == 200) {
+          final snackBar = SnackBar(content: Text('Заявка отправлена, ждите...'));
+          globalKey.currentState.showSnackBar(snackBar);
+          await Future.delayed(Duration(seconds: 3));
           Navigator.pop(context);
         } else {
           print("Falied");
