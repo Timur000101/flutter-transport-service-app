@@ -166,9 +166,9 @@ class _SignInState extends State<SignIn> {
                           child: TextFormField(
                             keyboardType: TextInputType.phone,
                             controller: phoneController,
-                            maxLength: 13,
+                            maxLength: 12,
                             inputFormatters: <TextInputFormatter>[
-                              WhitelistingTextInputFormatter.digitsOnly,
+                              FilteringTextInputFormatter.allow(RegExp("[0-9]")),
                               _mobileFormatter,
                             ],
                             decoration: InputDecoration(
@@ -194,25 +194,30 @@ class _SignInState extends State<SignIn> {
                         Container(
                             width: MediaQuery.of(context).size.width,
                             child: RichText(
+                                textAlign: TextAlign.center,
                                 text: TextSpan(children: [
-                              TextSpan(
-                                text:
-                                    'Нажимая "Продолжить", вы соглашаетесь с ',
-                              ),
-                              TextSpan(
-                                  text: "обработкой персональных данных ",
-                                  style: TextStyle(color: Colors.blue),
-                                  recognizer: TapGestureRecognizer()
-                                    ..onTap = () {}),
-                              TextSpan(
-                                text: "и ",
-                              ),
-                              TextSpan(
-                                  text: "правилами сервиса ",
-                                  style: TextStyle(color: Colors.blue),
-                                  recognizer: TapGestureRecognizer()
-                                    ..onTap = () {}),
-                            ]))),
+                                  TextSpan(
+                                    text:
+                                        'Нажимая "Продолжить", вы соглашаетесь с ',
+                                    style: TextStyle(
+                                        color: AppColors.primaryTextColor),
+                                  ),
+                                  TextSpan(
+                                      text: "обработкой персональных данных ",
+                                      style: TextStyle(color: Colors.blue),
+                                      recognizer: TapGestureRecognizer()
+                                        ..onTap = () {}),
+                                  TextSpan(
+                                    text: "и ",
+                                    style: TextStyle(
+                                        color: AppColors.primaryTextColor),
+                                  ),
+                                  TextSpan(
+                                      text: "правилами сервиса ",
+                                      style: TextStyle(color: Colors.blue),
+                                      recognizer: TapGestureRecognizer()
+                                        ..onTap = () {}),
+                                ]))),
                         Divider(
                           color: Colors.grey.withOpacity(0.5),
                           height: 30,
@@ -275,72 +280,4 @@ class _SignInState extends State<SignIn> {
           )),
     );
   }
-
-  // void registerToFb(String phoneNumber) async {
-  //   FirebaseAuth auth = FirebaseAuth.instance;
-
-  //   await auth.verifyPhoneNumber(
-  //     phoneNumber: phoneNumber,
-  //     timeout: const Duration(seconds: 60),
-  //     verificationCompleted: (PhoneAuthCredential credential) async {
-  //       await auth.signInWithCredential(credential);
-
-  //       setState(() {
-  //         isLoading = false;
-  //       });
-
-  //       Navigator.pushReplacement(
-  //         context,
-  //         MaterialPageRoute(builder: (BuildContext context) => HomePage()),
-  //       );
-  //     },
-  //     verificationFailed: (FirebaseAuthException e) {
-  //       var msg;
-  //       if (e.code == 'invalid-phone-number') {
-  //         msg = 'Invalid number. Enter again.';
-  //       } else {
-  //         msg = e.message;
-  //       }
-
-  //       setState(() {
-  //         isLoading = false;
-  //       });
-
-  //       showDialog(
-  //           context: context,
-  //           builder: (BuildContext context) {
-  //             return AlertDialog(
-  //               title: Text("Error"),
-  //               content: Text(msg.toString()),
-  //               actions: [
-  //                 FlatButton(
-  //                   child: Text("OK"),
-  //                   onPressed: () {
-  //                     Navigator.of(context).pop();
-  //                   },
-  //                 )
-  //               ],
-  //             );
-  //           });
-  //     },
-  //     codeSent: (String verificationId, int resendToken) {
-  //       setState(() {
-  //         isLoading = false;
-  //       });
-
-  //       Navigator.push(
-  //         context,
-  //         MaterialPageRoute(
-  //             builder: (context) =>
-  //                 EnterSMS(verificationId, resendToken, phoneNumber)),
-  //       );
-  //     },
-  //     codeAutoRetrievalTimeout: (String verificationId) {
-  //       setState(() {
-  //         isLoading = false;
-  //       });
-  //     },
-  //   );
-  // }
-
 }
