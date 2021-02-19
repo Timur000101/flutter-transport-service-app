@@ -30,12 +30,10 @@ class _OrderCardState extends State<OrderCard> {
   @override
   void initState() {
     super.initState();
-    print("Inite State!");
   }
 
   @override
   Widget build(BuildContext context) {
-    print("Biuld!");
     return new Container(
         child: Padding(
       padding: const EdgeInsets.all(10.0),
@@ -60,11 +58,11 @@ class _OrderCardState extends State<OrderCard> {
                             top: 8.0, bottom: 8, left: 10),
                         child: Column(
                           children: [
-                            Text(widget.order.carName,
+                            Text(widget.order.car.name,
                                 style: new TextStyle(fontSize: 18)),
                             Padding(
                               padding: const EdgeInsets.symmetric(vertical: 10),
-                              child: Text(widget.order.problemTitle),
+                              child: Text(widget.order.subservice),
                             ),
                             Container(
                               decoration: BoxDecoration(
@@ -75,7 +73,7 @@ class _OrderCardState extends State<OrderCard> {
                                 padding: const EdgeInsets.symmetric(
                                     vertical: 10, horizontal: 10),
                                 child: Text(
-                                  widget.order.stoName,
+                                  'widget.order.stoName',
                                   style: TextStyle(color: Colors.white),
                                 ),
                               ),
@@ -97,16 +95,16 @@ class _OrderCardState extends State<OrderCard> {
                                   Icons.location_on,
                                   color: AppColors.primaryTextColor,
                                 ),
-                                Text(widget.order.city),
+                                Text("Алматы"),
                               ],
                             ),
                             Padding(
                               padding:
                                   const EdgeInsets.symmetric(vertical: 10.0),
-                              child: Text(widget.order.cost,
+                              child: Text(widget.order.price.toString() + ' тг',
                                   style: new TextStyle(fontSize: 18)),
                             ),
-                            Text(widget.order.duration,
+                            Text(widget.order.time,
                                 style: new TextStyle(fontSize: 18)),
                             Padding(
                               padding:
@@ -120,7 +118,7 @@ class _OrderCardState extends State<OrderCard> {
                                   Padding(
                                     padding: const EdgeInsets.only(left: 8.0, right: 0.0),
                                     child: Text(
-                                      widget.order.range,
+                                      '4.1 км',
                                       style: TextStyle(
                                           fontSize: 16,
                                           color: AppColors.primaryTextColor),
@@ -133,45 +131,48 @@ class _OrderCardState extends State<OrderCard> {
                     )
                   ],
                 ),
-                Row(children: [
-                  Padding(
-                      padding:
-                          const EdgeInsets.symmetric(horizontal: 20),
-                      child: FlatButton(
-                        minWidth: 120,
-                        child: Text(
-                          'Принять',
-                          style: TextStyle(color: Colors.white),
-                        ),
-                        color: AppColors.mainColor,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5)),
-                        onPressed: () {
-                          setState(() {
-                            accept();
-                          });
-                        },
-                      ),
-                    ),
-                    Spacer(),
+                Padding(
+                  padding: const EdgeInsets.only(top: 10.0),
+                  child: Row(children: [
                     Padding(
-                      padding:
-                          const EdgeInsets.symmetric(horizontal: 20),
-                      child: FlatButton(
-                        minWidth: 120,
-                        child: Text(
-                          'Отклонить',
-                          style: TextStyle(color: Colors.white),
+                        padding:
+                            const EdgeInsets.symmetric(horizontal: 20),
+                        child: FlatButton(
+                          minWidth: 120,
+                          child: Text(
+                            'Принять',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          color: AppColors.mainColor,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(5)),
+                          onPressed: () {
+                            setState(() {
+                              accept();
+                            });
+                          },
                         ),
-                        color: AppColors.primaryTextColor,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5)),
-                        onPressed: () {
-                          decline();
-                        },
                       ),
-                    ),
-                ],)
+                      Spacer(),
+                      Padding(
+                        padding:
+                            const EdgeInsets.symmetric(horizontal: 20),
+                        child: FlatButton(
+                          minWidth: 120,
+                          child: Text(
+                            'Отклонить',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          color: AppColors.primaryTextColor,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(5)),
+                          onPressed: () {
+                            decline();
+                          },
+                        ),
+                      ),
+                  ],),
+                )
               ],
             ),
           ),
@@ -181,7 +182,6 @@ class _OrderCardState extends State<OrderCard> {
   }
 
   accept(){
-    print("Accept B T");
     var dialog = CustomAlertDialog(
         title: "Внимание",
         message: "Вы уверены?",
@@ -194,7 +194,6 @@ class _OrderCardState extends State<OrderCard> {
   }
 
   decline(){
-    print("Decline B T");
     var dialog = CustomAlertDialog(
         title: "Внимание",
         message: "Вы уверены?",
@@ -213,14 +212,16 @@ class _OrderCardState extends State<OrderCard> {
 
   sendAccept() async{
     var token = await getToken();
-    final response = await http.post(AppConstants.baseUrl + "order/request/accept/",
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-          "Accept": "application/json",
-          "Authorization": "Token $token"
-        });
+    final response = await http.post(AppConstants.baseUrl + "order/request/accept/${widget.order.id}",
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        "Accept": "application/json",
+        "Authorization": "Token $token"
+      });
+    print(response.body);
+    print(response.statusCode);
     if (response.statusCode == 200) {
-      print(response.body);
+      Navigator.pop(context);
       widget.callback();
     } else {
       print("Falied");
@@ -229,14 +230,16 @@ class _OrderCardState extends State<OrderCard> {
 
   sendDecline() async{
     var token = await getToken();
-    final response = await http.post(AppConstants.baseUrl + "/order/request/decline/",
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-          "Accept": "application/json",
-          "Authorization": "Token $token"
-        });
+    final response = await http.post(AppConstants.baseUrl + "order/request/decline/${widget.order.id}",
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        "Accept": "application/json",
+        "Authorization": "Token $token"
+      });
+    print(response.body);
+    print(response.statusCode);
     if (response.statusCode == 200) {
-      print(response.body);
+      Navigator.pop(context);
       widget.callback();
     } else {
       print("Falied");

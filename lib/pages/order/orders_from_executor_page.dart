@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -15,14 +17,7 @@ class OrdersFromExecutorPage extends StatefulWidget {
 class _OrdersFromExecutorPageState extends State<OrdersFromExecutorPage> {
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
       new GlobalKey<RefreshIndicatorState>();
-  final List<Order> orderList = [
-    Order('Mersedec Benz C55 AMG1', 'Ремонт двигателя и кузовные работы',
-        r'СТО "Denso Service"', '1 день', '15600 KZT', 'Алматы', '5 км'),
-    Order('Mersedec Benz C55 AMG2', 'Ремонт двигателя и кузовные работы',
-        r'СТО "Denso Service"', '1 день', '15600 KZT', 'Алматы', '5 км'),
-    Order('Mersedec Benz C55 AMG3', 'Ремонт двигателя и кузовные работы',
-        r'СТО "Denso Service"', '1 день', '15600 KZT', 'Алматы', '5 км'),
-  ];
+  List<Order> orderList = [];
 
   @override
   void initState() {
@@ -71,6 +66,14 @@ class _OrdersFromExecutorPageState extends State<OrdersFromExecutorPage> {
         },
       ).then((response) {
         print(response.body);
+        List<Order> list = List<Order>();
+        var responseBody = jsonDecode(utf8.decode(response.body.codeUnits));
+        for (Object i in responseBody){
+          list.add(Order.fromJson(i));
+        }
+        setState(() {
+          orderList = list;
+        });
       }).catchError((error) => print(error));
   }
 }

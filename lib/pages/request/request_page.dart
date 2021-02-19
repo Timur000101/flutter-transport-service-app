@@ -63,14 +63,13 @@ class _RequestPageState extends State<RequestPage> {
         },
       ).then((response) {
         List<RequestItem> list = List<RequestItem>();
-        var responseBody = jsonDecode(response.body);
+        var responseBody = jsonDecode(utf8.decode(response.body.codeUnits));
         for (Object i in responseBody){
           list.add(RequestItem.fromJson(i));
         }
         setState(() {
           request_array = list;
         });
-        print(response.body);
       }).catchError((error) => print(error));
   }
 }

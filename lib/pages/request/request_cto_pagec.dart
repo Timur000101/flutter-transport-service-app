@@ -297,8 +297,6 @@ class _RequestCtoPageState extends State<RequestCtoPage> {
             'time': timeController.text,
           }
         ));
-        print(response.body);
-        print(response.statusCode);
         if (response.statusCode == 200) {
           final snackBar = SnackBar(content: Text('Заявка отправлена, ждите...'));
           globalKey.currentState.showSnackBar(snackBar);
