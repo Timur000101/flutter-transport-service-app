@@ -52,7 +52,6 @@ class _ProfilePageState extends State<ProfilePage> {
     MenuItem(title: "Заказы", icon: Icons.history),
     MenuItem(title: "Сообщения", icon: Stoappicons.conversation),
   ];
-
   List<MenuItem> menu2 = [
     MenuItem(title: "Служба поддержки", icon: Stoappicons.customer_service),
     MenuItem(title: "Оценить приложение", icon: Stoappicons.star),
@@ -122,6 +121,7 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   void initState() {
     super.initState();
+    getRole();
     checkInternetConnection().then((value) => {
           if (value)
             {getuserdetail()}
@@ -357,6 +357,8 @@ class _ProfilePageState extends State<ProfilePage> {
                             if (isReg == true) {
                               setState(() {
                                 isSwitched = value;
+                                AppConstants.role = isSwitched;
+                                changeRole();
                               });
                             } else {
                               showCustomAlert();
@@ -383,6 +385,17 @@ class _ProfilePageState extends State<ProfilePage> {
         ));
   }
 
+  getRole() async{
+    // SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    // var isReg = sharedPreferences.getBool(AppConstants.isReg);
+    // if (isReg) {
+    //   var role = sharedPreferences.getBool(AppConstants.isClient);
+      setState(() {
+        isSwitched = AppConstants.role;
+      });
+    // }
+  }
+
   userRoleText() {
     return !isSwitched
         ? Text(
@@ -394,6 +407,18 @@ class _ProfilePageState extends State<ProfilePage> {
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           );
   }
+  
+  changeRole() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    if (!isSwitched) {
+      sharedPreferences.setBool(AppConstants.isClient, false);
+    }
+    else {
+      sharedPreferences.setBool(AppConstants.isClient, true);
+    }
+  }
+
+
 
   userRoleDescriptionText() {
     return !isSwitched
