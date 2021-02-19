@@ -200,20 +200,20 @@ class OrderActiveItem extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text(
+              child:AppConstants.role ? Text(
                 "Испонитель закончил ваш заказ, вы подтверждаете завершение?",
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
-              ),
+              ): null,
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: ElevatedButton(
+              child:AppConstants.role ? ElevatedButton(
                   onPressed: () {},
                   child: Padding(
                     padding: const EdgeInsets.symmetric(
                         vertical: 10.0, horizontal: 30),
-                    child: Text(
+                    child:  Text(
                       "Завершить заказ",
                       style: TextStyle(color: Colors.white, fontSize: 24),
                     ),
@@ -221,7 +221,7 @@ class OrderActiveItem extends StatelessWidget {
                   style: ButtonStyle(
                     backgroundColor:
                         MaterialStateProperty.resolveWith(getRedColor),
-                  )),
+                  )): null,
             )
           ],
         );

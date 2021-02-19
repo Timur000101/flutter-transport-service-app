@@ -2,14 +2,14 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sto_app/core/const.dart';
+import 'package:sto_app/models/car.dart';
 import 'package:sto_app/models/request_item.dart';
 import 'package:sto_app/widgets/app_widgets.dart';
 
 
 class RequestWashPage extends StatefulWidget {
-
-
-
+  final Car car;
+  RequestWashPage({this.car});
   @override
   _RequestWashPageState createState() => _RequestWashPageState();
 }
@@ -20,13 +20,7 @@ class _RequestWashPageState extends State<RequestWashPage> {
   final globalKey = GlobalKey<ScaffoldState>();
 
   int _current = 0;
-  List imgList = [
-    'https://images.unsplash.com/photo-1502117859338-fd9daa518a9a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60',
-    'https://images.unsplash.com/photo-1554321586-92083ba0a115?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60',
-    'https://images.unsplash.com/photo-1536679545597-c2e5e1946495?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60',
-    'https://images.unsplash.com/photo-1543922596-b3bbaba80649?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60',
-    'https://images.unsplash.com/photo-1502943693086-33b5b1cfdf2f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=668&q=80'
-  ];
+  List imgList = [];
 
   List<T> map<T>(List list, Function handler) {
     List<T> result = [];
@@ -39,9 +33,9 @@ class _RequestWashPageState extends State<RequestWashPage> {
   @override
   void initState() {
     super.initState();
-    // for (var i in widget.request.orderImg) {
-    //   imgList.add(i['image']);
-    // }
+    for (var i in widget.car.car_img) {
+      imgList.add(i['image']);
+    }
   }
 
 
@@ -88,7 +82,7 @@ class _RequestWashPageState extends State<RequestWashPage> {
                               borderRadius: BorderRadius.circular(15),
                               child: Image.network(
                                 imgUrl,
-                                fit: BoxFit.cover,
+                                fit: BoxFit.fitWidth,
                               ),
                             ),
                           );
@@ -102,13 +96,13 @@ class _RequestWashPageState extends State<RequestWashPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           getTitle("Марка машины"),
-                          getText("Toyota Camry",Stoappicons.car_model ),
+                          getText(widget.car.name, Stoappicons.car_model ),
                           getTitle("Год машины"),
-                          getText("2015",Stoappicons.calendar),
+                          getText(widget.car.year.toString(),Stoappicons.calendar),
                           getTitle("Объем двигателя (л)"),
-                          getText("3.5",Stoappicons.engine_volume),
+                          getText(widget.car.size.toString() ,Stoappicons.engine_volume),
                           getTitle("Пробег (км)"),
-                          getText("120000 км",Stoappicons.raphael_roadmap),
+                          getText("${widget.car.milage} км",Stoappicons.raphael_roadmap),
                         ],
                       ),
                     ),

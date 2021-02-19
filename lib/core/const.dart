@@ -24,6 +24,9 @@ class AppConstants {
   static final String isReg = "isReg";
   static final String email = "email";
   static final String avatar = "avatar";
+  static final String isClient =  "role";
+
+  static bool role = false;
 }
 
 class Stoappicons {

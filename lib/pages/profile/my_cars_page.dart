@@ -7,6 +7,7 @@ import 'package:sto_app/components/carCard.dart';
 import 'package:sto_app/core/const.dart';
 import 'package:sto_app/models/car.dart';
 import 'package:sto_app/utils/internet_manager.dart';
+import 'package:sto_app/utils/utils.dart';
 import 'package:sto_app/widgets/app_widgets.dart';
 import 'package:http/http.dart' as http;
 import 'add_car_page.dart';
@@ -85,11 +86,6 @@ class _MyCarsPageState extends State<MyCarsPage> {
             ),
           ),
         ]));
-  }
-
-  Future<String> getToken() async {
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    return sharedPreferences.getString(AppConstants.key);
   }
 
   getCars() async {

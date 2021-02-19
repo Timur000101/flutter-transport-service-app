@@ -15,6 +15,8 @@ class RequestPage extends StatefulWidget {
 
 class _RequestPageState extends State<RequestPage> {
   List<RequestItem> request_array = List<RequestItem>();
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
+      new GlobalKey<RefreshIndicatorState>();
 
   @override
   void initState() {
@@ -27,17 +29,27 @@ class _RequestPageState extends State<RequestPage> {
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
       appBar: buildAppBar("Заявки"),
-      body: ListView.builder(
+      body: RefreshIndicator(
+        key: _refreshIndicatorKey,
+        onRefresh: _refresh,
+        child: ListView.builder(
           itemCount: request_array.length,
           itemBuilder: (BuildContext context, int index) {
             return RequestListItem(request_array[index]);
           }),
+      )
     );
   }
 
   Future<String> getToken() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     return sharedPreferences.getString(AppConstants.key);
+  }
+
+  Future<Null> _refresh() async {
+    await Future.delayed(Duration(seconds: 2));
+    getOrders();
+    return null;
   }
 
   getOrders() async {
@@ -51,14 +63,13 @@ class _RequestPageState extends State<RequestPage> {
         },
       ).then((response) {
         List<RequestItem> list = List<RequestItem>();
-        var responseBody = jsonDecode(response.body);
+        var responseBody = jsonDecode(utf8.decode(response.body.codeUnits));
         for (Object i in responseBody){
           list.add(RequestItem.fromJson(i));
         }
         setState(() {
           request_array = list;
         });
-        print(response.body);
       }).catchError((error) => print(error));
   }
 }

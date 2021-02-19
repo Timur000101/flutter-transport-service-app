@@ -9,7 +9,9 @@ import 'package:sto_app/pages/order/order_history_page.dart';
 import 'package:sto_app/pages/order/order_page.dart';
 import 'package:sto_app/pages/profile/support_page.dart';
 import 'package:sto_app/pages/request/request_cto_page.dart';
+import 'package:sto_app/pages/request/request_page.dart';
 import 'package:sto_app/pages/request/request_wash_page.dart';
+import 'package:sto_app/pages/start_up.dart';
 import 'package:sto_app/utils/alert.dart';
 import 'package:sto_app/widgets/app_widgets.dart';
 import 'about_app_page.dart';
@@ -23,19 +25,7 @@ import 'package:sto_app/utils/internet_manager.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'dart:io' show Platform;
 
-Future<UserDetail> getUserDetail(int userId, String token) async {
-  var url = "${AppConstants.baseUrl}${AppConstants.getUserDetail}$userId";
-  final response = await http.get(url, headers: {
-    "Content-type": "application/json",
-    "Accept": "application/json",
-    "Authorization": "Token $token"
-  });
-  if (response.statusCode == 200) {
-    return UserDetail.fromJson(jsonDecode(response.body));
-  } else {
-    throw Exception("Falied to getUserDetail");
-  }
-}
+
 
 class ProfilePage extends StatefulWidget {
   @override
@@ -62,13 +52,28 @@ class _ProfilePageState extends State<ProfilePage> {
     MenuItem(title: "Заказы", icon: Icons.history),
     MenuItem(title: "Сообщения", icon: Stoappicons.conversation),
   ];
-
   List<MenuItem> menu2 = [
     MenuItem(title: "Служба поддержки", icon: Stoappicons.customer_service),
     MenuItem(title: "Оценить приложение", icon: Stoappicons.star),
     MenuItem(title: "О приложении", icon: Icons.warning_rounded)
   ];
 
+  Future<UserDetail> getUserDetail(int userId, String token) async {
+    var url = "${AppConstants.baseUrl}${AppConstants.getUserDetail}$userId";
+    final response = await http.get(url, headers: {
+      "Content-type": "application/json",
+      "Accept": "application/json",
+      "Authorization": "Token $token"
+    });
+
+    if (response.statusCode == 200) {
+
+      return UserDetail.fromJson(jsonDecode(response.body));
+    } else {
+
+      throw Exception("Falied to getUserDetail");
+    }
+  }
   void getuserdetail() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     isReg = sharedPreferences.getBool(AppConstants.isReg);
@@ -116,6 +121,7 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   void initState() {
     super.initState();
+    getRole();
     checkInternetConnection().then((value) => {
           if (value)
             {getuserdetail()}
@@ -180,7 +186,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => RequestWashPage()));
+                                  builder: (context) =>  MessagePage()));
                         }
                       } else {
                         showCustomAlert();
@@ -242,7 +248,7 @@ class _ProfilePageState extends State<ProfilePage> {
             padding: EdgeInsets.symmetric(horizontal: 20.0),
             child: RaisedButton(
               onPressed: () {
-                print('Exit');
+               showLogOutAlert();
               },
               padding: const EdgeInsets.symmetric(vertical: 20.0),
               textColor: Colors.white,
@@ -351,6 +357,8 @@ class _ProfilePageState extends State<ProfilePage> {
                             if (isReg == true) {
                               setState(() {
                                 isSwitched = value;
+                                AppConstants.role = isSwitched;
+                                changeRole();
                               });
                             } else {
                               showCustomAlert();
@@ -377,6 +385,17 @@ class _ProfilePageState extends State<ProfilePage> {
         ));
   }
 
+  getRole() async{
+    // SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    // var isReg = sharedPreferences.getBool(AppConstants.isReg);
+    // if (isReg) {
+    //   var role = sharedPreferences.getBool(AppConstants.isClient);
+      setState(() {
+        isSwitched = AppConstants.role;
+      });
+    // }
+  }
+
   userRoleText() {
     return !isSwitched
         ? Text(
@@ -388,6 +407,18 @@ class _ProfilePageState extends State<ProfilePage> {
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           );
   }
+  
+  changeRole() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    if (!isSwitched) {
+      sharedPreferences.setBool(AppConstants.isClient, false);
+    }
+    else {
+      sharedPreferences.setBool(AppConstants.isClient, true);
+    }
+  }
+
+
 
   userRoleDescriptionText() {
     return !isSwitched
@@ -403,14 +434,37 @@ class _ProfilePageState extends State<ProfilePage> {
           );
   }
 
-  showCustomAlert() {
+
+  showLogOutAlert() {
     var dialog = CustomAlertDialog(
         title: "Внимание",
-        message: "Вы не зарегистрированы, зарегистрироваться?",
-        onPostivePressed: () {
+        message:"Вы действительно хотите выйти из аккаунта?",
+        onPostivePressed: ()async {
+          SharedPreferences sharedPreferences =  await SharedPreferences.getInstance();
+          sharedPreferences.clear();
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => SignIn()),
+          );
+        },
+        positiveBtnText: 'Да',
+        negativeBtnText: 'Нет');
+    showDialog(context: context, builder: (BuildContext context) => dialog);
+  }
+
+
+  showCustomAlert()  {
+    var dialog = CustomAlertDialog(
+        title: "Внимание",
+        message:  "Вы не зарегистрированы, зарегистрироваться?",
+        onPostivePressed: ()   {
+          Navigator.pop(context);
+          Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(
+              builder: (BuildContext context) =>SignIn(),
+            ),
+                (route) => false,
           );
         },
         positiveBtnText: 'Да',
