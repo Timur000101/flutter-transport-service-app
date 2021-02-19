@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sto_app/models/request_item.dart';
 import 'package:sto_app/pages/create_identifier.dart';
+import 'package:sto_app/pages/request/request_wash_page.dart';
 import 'package:sto_app/widgets/app_widgets.dart';
 import 'package:sto_app/core/const.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -89,7 +90,7 @@ class _RequestCtoPageState extends State<RequestCtoPage> {
                           borderRadius: BorderRadius.circular(15),
                           child: Image.network(
                             imgUrl,
-                            fit: BoxFit.fitHeight,
+                            fit: BoxFit.fitWidth,
                           ),
                         ),
                       );
@@ -212,7 +213,7 @@ class _RequestCtoPageState extends State<RequestCtoPage> {
                       color: Colors.red[600],
                       textColor: AppColors.lightColor,
                       onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => CreateIdentifier()));
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => RequestWashPage(car: widget.request.car)));
                       },
                     ),
                   ),
@@ -285,18 +286,20 @@ class _RequestCtoPageState extends State<RequestCtoPage> {
       if (timeController.text.length > 1){
         var token = await getToken();
         final response = await http.post(AppConstants.baseUrl + "order/request/create",
-            headers: <String, String>{
-              'Content-Type': 'application/json; charset=UTF-8',
-              "Accept": "application/json",
-              "Authorization": "Token $token"
-            },
-            body: jsonEncode(<String, dynamic>{
-              'order': widget.request.id,
-              'price': priceController.text,
-              'time': timeController.text,
-            }));
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+            "Accept": "application/json",
+            "Authorization": "Token $token"
+          },
+          body: jsonEncode(<String, dynamic>{
+            'order': widget.request.id,
+            'price': priceController.text,
+            'time': timeController.text,
+          }
+        ));
+        print(response.body);
+        print(response.statusCode);
         if (response.statusCode == 200) {
-          print(response.body);
           Navigator.pop(context);
         } else {
           print("Falied");

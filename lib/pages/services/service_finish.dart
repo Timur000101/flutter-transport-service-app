@@ -12,9 +12,13 @@ import 'package:sto_app/utils/utils.dart';
 import 'package:sto_app/widgets/app_widgets.dart';
 import 'package:http/http.dart' as http;
 
+import '../home_page.dart';
+
 class ServiceFinish extends StatefulWidget {
   final int servicePK;
-  ServiceFinish({this.servicePK});
+  final int subservicePK;
+
+  ServiceFinish({this.servicePK, this.subservicePK});
 
   @override
   _ServiceFinishState createState() => _ServiceFinishState();
@@ -32,7 +36,6 @@ class _ServiceFinishState extends State<ServiceFinish> {
   void initState() {
     super.initState();
     getCars();
-    print(widget.servicePK);
   }
 
   @override
@@ -170,7 +173,7 @@ class _ServiceFinishState extends State<ServiceFinish> {
                 width: MediaQuery.of(context).size.width,
                 child: RaisedButton(
                   onPressed: (){
-                    _createOrder();
+                    _createOrder(context);
                     },
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10.0),
@@ -226,7 +229,7 @@ class _ServiceFinishState extends State<ServiceFinish> {
   }
 
 
-  _createOrder() async {
+  _createOrder(BuildContext context) async {
     if (carId != -1){
       if (problemTextField.text.length > 2){
         if (img_array.length > 1){
@@ -238,7 +241,7 @@ class _ServiceFinishState extends State<ServiceFinish> {
           request.headers['authorization'] = "Token $token";
           request.fields['car_id'] = carId.toString();
           request.fields['service_id'] = widget.servicePK.toString();
-          request.fields['subservice_id'] = widget.servicePK.toString();
+          request.fields['subservice_id'] = widget.subservicePK.toString();
           request.fields['about'] = problemTextField.text;
           for (File item in array){
             var stream =
@@ -250,7 +253,7 @@ class _ServiceFinishState extends State<ServiceFinish> {
           }
 
           globalKey.currentState.showSnackBar(
-            SnackBar(duration: new Duration(seconds: 60), content:
+            SnackBar(duration: new Duration(seconds: 360), content:
               Row(
                 children: <Widget>[
                   Padding(
@@ -264,10 +267,17 @@ class _ServiceFinishState extends State<ServiceFinish> {
           );
 
           var response = await request.send();
-          print(response.statusCode);
           if (response.statusCode == 200){
-            // Navigator.pop(context);
-            print("Sucess");
+            globalKey.currentState.hideCurrentSnackBar();
+            final snackBar = SnackBar(content: Text('Удачно! Ждите заявок...'));
+            globalKey.currentState.showSnackBar(snackBar);
+            await Future.delayed(Duration(seconds: 3));
+            Navigator.pushReplacement(context, MaterialPageRoute(
+              builder: (context) => HomePage())
+            );
+          }
+          else{
+            print('Error');
           }
         }
         else{

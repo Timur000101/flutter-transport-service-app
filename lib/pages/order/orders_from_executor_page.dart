@@ -13,6 +13,8 @@ class OrdersFromExecutorPage extends StatefulWidget {
 }
 
 class _OrdersFromExecutorPageState extends State<OrdersFromExecutorPage> {
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
+      new GlobalKey<RefreshIndicatorState>();
   final List<Order> orderList = [
     Order('Mersedec Benz C55 AMG1', 'Ремонт двигателя и кузовные работы',
         r'СТО "Denso Service"', '1 день', '15600 KZT', 'Алматы', '5 км'),
@@ -33,7 +35,10 @@ class _OrdersFromExecutorPageState extends State<OrdersFromExecutorPage> {
     return Scaffold(
         backgroundColor: HexColor("#EDF2F4"),
         appBar: buildAppBar("Заказы"),
-        body: Container(
+        body: RefreshIndicator(
+        key: _refreshIndicatorKey,
+        onRefresh: _refresh,
+        child: Container(
           child: ListView.builder(
               itemCount: orderList.length,
               itemBuilder: (context, int index) => OrderCard(
@@ -41,12 +46,18 @@ class _OrdersFromExecutorPageState extends State<OrdersFromExecutorPage> {
                     index: index,
                     callback: getOrders,
                   )),
-        ));
+        )));
   }
 
   Future<String> getToken() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     return sharedPreferences.getString(AppConstants.key);
+  }
+
+  Future<Null> _refresh() async {
+    await Future.delayed(Duration(seconds: 2));
+    getOrders();
+    return null;
   }
 
   getOrders() async {

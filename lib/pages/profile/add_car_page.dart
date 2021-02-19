@@ -328,7 +328,7 @@ class _AddCarPageState extends State<AddCarPage> {
     }
 
     globalKey.currentState.showSnackBar(
-      SnackBar(duration: new Duration(seconds: 60), content:
+      SnackBar(duration: new Duration(seconds: 360), content:
         Row(
           children: <Widget>[
             Padding(

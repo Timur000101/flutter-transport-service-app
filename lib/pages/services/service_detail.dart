@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sto_app/components/service_detail_item.dart';
 import 'package:sto_app/core/const.dart';
 import 'package:sto_app/models/services.dart';
@@ -53,30 +54,32 @@ class _ServiceDetailState extends State<ServiceDetail> {
                   );
                 },
               )),
-              Container(
-                width: MediaQuery.of(context).size.width,
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-                child: RaisedButton(
-                  onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(
-                      builder: (context) => ServiceFinish(servicePK: widget.indx))
-                    );
-                  },
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                      side: BorderSide(color: AppColors.primaryTextColor)),
-                  padding: const EdgeInsets.symmetric(vertical: 20.0),
-                  textColor: Colors.white,
-                  color: AppColors.primaryTextColor,
-                  elevation: 3.0,
-                  child: Text(
-                    "Продолжить",
-                    style: TextStyle(
-                      fontSize: 20,
-                    ),
-                  ),
-                ),
-              ),
+              // Container(
+              //   width: MediaQuery.of(context).size.width,
+              //   padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+              //   child: RaisedButton(
+              //     onPressed: () async {
+              //       SharedPreferences prefs = await SharedPreferences.getInstance();
+              //       var subIndex = prefs.getInt('SubservicePK');
+              //       Navigator.push(context, MaterialPageRoute(
+              //         builder: (context) => ServiceFinish(servicePK: widget.indx, subservicePK: subIndex,))
+              //       );
+              //     },
+              //     shape: RoundedRectangleBorder(
+              //         borderRadius: BorderRadius.circular(10.0),
+              //         side: BorderSide(color: AppColors.primaryTextColor)),
+              //     padding: const EdgeInsets.symmetric(vertical: 20.0),
+              //     textColor: Colors.white,
+              //     color: AppColors.primaryTextColor,
+              //     elevation: 3.0,
+              //     child: Text(
+              //       "Продолжить",
+              //       style: TextStyle(
+              //         fontSize: 20,
+              //       ),
+              //     ),
+              //   ),
+              // ),
             ],
           ),
         ),
