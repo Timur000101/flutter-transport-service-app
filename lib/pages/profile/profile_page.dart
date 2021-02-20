@@ -14,6 +14,7 @@ import 'package:sto_app/pages/request/request_wash_page.dart';
 import 'package:sto_app/pages/start_up.dart';
 import 'package:sto_app/utils/alert.dart';
 import 'package:sto_app/widgets/app_widgets.dart';
+import '../create_identifier.dart';
 import 'about_app_page.dart';
 import 'edit_profile.dart';
 import 'message_item.dart';
@@ -244,19 +245,19 @@ class _ProfilePageState extends State<ProfilePage> {
           SizedBox(
             height: 30.0,
           ),
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: 20.0),
-            child: RaisedButton(
-              onPressed: () {
-               showLogOutAlert();
-              },
-              padding: const EdgeInsets.symmetric(vertical: 20.0),
-              textColor: Colors.white,
-              color: AppColors.mainColor,
-              elevation: 3.0,
-              child: Text("Выйти из аккаунта"),
-            ),
-          ),
+          // Container(
+          //   padding: EdgeInsets.symmetric(horizontal: 20.0),
+          //   child: RaisedButton(
+          //     onPressed: () {
+          //      showLogOutAlert();
+          //     },
+          //     padding: const EdgeInsets.symmetric(vertical: 20.0),
+          //     textColor: Colors.white,
+          //     color: AppColors.mainColor,
+          //     elevation: 3.0,
+          //     child: Text("Выйти из аккаунта"),
+          //   ),
+          // ),
           SizedBox(
             height: 20.0,
           ),
@@ -355,11 +356,18 @@ class _ProfilePageState extends State<ProfilePage> {
                           value: isSwitched,
                           onChanged: (value) {
                             if (isReg == true) {
-                              setState(() {
-                                isSwitched = value;
-                                AppConstants.role = isSwitched;
-                                changeRole();
-                              });
+                              if (AppConstants.isRegAsSTO == true){
+                                setState(() {
+                                  isSwitched = value;
+                                  AppConstants.role = isSwitched;
+                                  changeRole();
+                                });
+                              }
+                              else{
+                                Navigator.push( context,
+                                  MaterialPageRoute(builder: (context) => CreateIdentifier()),
+                                );
+                              }
                             } else {
                               showCustomAlert();
                             }

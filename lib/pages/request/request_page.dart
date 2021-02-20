@@ -20,7 +20,9 @@ class _RequestPageState extends State<RequestPage> {
 
   @override
   void initState() {
-    getOrders();
+    if (isRegister() == true){
+      getOrders();
+    }
     super.initState();
   }
 
@@ -71,5 +73,11 @@ class _RequestPageState extends State<RequestPage> {
           request_array = list;
         });
       }).catchError((error) => print(error));
+  }
+
+  isRegister() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    var isReg = sharedPreferences.getBool(AppConstants.isReg);
+    return isReg;
   }
 }

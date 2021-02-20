@@ -25,7 +25,8 @@ class AppConstants {
   static final String email = "email";
   static final String avatar = "avatar";
   static final String isClient =  "role";
-
+  
+  static bool isRegAsSTO =  false;
   static bool role = false;
 }
 

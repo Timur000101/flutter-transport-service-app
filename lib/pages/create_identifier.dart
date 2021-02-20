@@ -105,10 +105,13 @@ class _CreateIdentifierState extends State<CreateIdentifier> {
         color: color,
         textColor: AppColors.lightColor,
         onPressed: () {
-          // Scaffold.of(context)
-          // .showSnackBar(SnackBar(content: Text('asdasd')));
+          sendID();
         },
       ),
     );
+  }
+
+  sendID(){
+    
   }
 }
