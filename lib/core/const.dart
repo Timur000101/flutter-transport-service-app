@@ -25,8 +25,14 @@ class AppConstants {
   static final String email = "email";
   static final String avatar = "avatar";
   static final String isClient =  "role";
-  
+
+  static final String ctoLogo = "ctoAvatar";
+  static final String ctoName = "ctoName";
+  static final String ctoAddress = "ctoAddress";
+
   static bool isRegAsSTO =  false;
+
+  // if role == false User or role == true CTO
   static bool role = false;
 }
 

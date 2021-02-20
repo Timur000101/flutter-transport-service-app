@@ -49,8 +49,8 @@ class _RequestPageState extends State<RequestPage> {
   }
 
   Future<Null> _refresh() async {
-    await Future.delayed(Duration(seconds: 2));
-    getOrders();
+    // await Future.delayed(Duration(seconds: 2));
+    await getOrders();
     return null;
   }
 

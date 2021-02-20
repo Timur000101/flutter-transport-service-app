@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sto_app/models/request_item.dart';
-import 'package:sto_app/pages/create_identifier.dart';
+import 'package:sto_app/pages/create_identifier_page.dart';
 import 'package:sto_app/pages/request/request_wash_page.dart';
 import 'package:sto_app/widgets/app_widgets.dart';
 import 'package:sto_app/core/const.dart';

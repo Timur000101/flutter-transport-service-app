@@ -3,14 +3,15 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sto_app/core/const.dart';
+import 'package:sto_app/models/active_order.dart';
 import 'package:sto_app/models/order_history.dart';
 import 'package:url_launcher/url_launcher.dart';
-// import "package:platform/platform.dart";
+
 
 class OrderActiveItem extends StatelessWidget {
-  final OrderHistory orderHistory;
+  final ActiveOrder active;
 
-  OrderActiveItem({Key key, this.orderHistory}) : super(key: key);
+  OrderActiveItem({Key key, this.active}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +55,7 @@ class OrderActiveItem extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(top: 12),
                 child: Text(
-                  "Mercedes-Benz C55 AMG",
+                  active.car.name,
                   style: TextStyle(
                     fontWeight: FontWeight.w600,
                     fontSize: 18,

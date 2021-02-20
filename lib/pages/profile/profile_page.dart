@@ -14,7 +14,7 @@ import 'package:sto_app/pages/request/request_wash_page.dart';
 import 'package:sto_app/pages/start_up.dart';
 import 'package:sto_app/utils/alert.dart';
 import 'package:sto_app/widgets/app_widgets.dart';
-import '../create_identifier.dart';
+import '../create_identifier_page.dart';
 import 'about_app_page.dart';
 import 'edit_profile.dart';
 import 'message_item.dart';
@@ -365,7 +365,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               }
                               else{
                                 Navigator.push( context,
-                                  MaterialPageRoute(builder: (context) => CreateIdentifier()),
+                                  MaterialPageRoute(builder: (context) => CreateIdentifierPage()),
                                 );
                               }
                             } else {

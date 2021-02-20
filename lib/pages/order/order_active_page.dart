@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sto_app/core/const.dart';
+import 'package:sto_app/models/active_order.dart';
 import 'package:sto_app/models/order_history.dart';
 import 'package:sto_app/pages/order/order_active_item.dart';
 import 'package:http/http.dart' as http;
@@ -16,7 +19,7 @@ class _OrderActivePageState extends State<OrderActivePage> {
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
       new GlobalKey<RefreshIndicatorState>();
 
-  gethistory() async {
+  getactive() async {
     var token = await getToken();
     http.Response response =
         await http.get("${AppConstants.baseUrl}order/active/", headers: {
@@ -26,6 +29,7 @@ class _OrderActivePageState extends State<OrderActivePage> {
     });
 
     if (response.statusCode == 200) {
+       ActiveOrder.fromJson(jsonDecode(response.body));
     } else {
       // If the server did not return a 200 OK response,
       // then throw an exception.
@@ -33,36 +37,11 @@ class _OrderActivePageState extends State<OrderActivePage> {
     }
   }
 
-  final List<OrderHistory> historyList = <OrderHistory>[
-    new OrderHistory(
-        time: "7 янв. 2021г",
-        location: "Алматы",
-        carName: "Mercedes Benz C55 AMG",
-        repairs: "Ремонт ходовой/подвески...",
-        ctoName: "СТО “Denso Service”",
-        price: "16500 KZT",
-        isPerformed: "Выполнено"),
-    new OrderHistory(
-        time: "7 янв. 2021г",
-        location: "Алматы",
-        carName: "Mercedes Benz C55 AMG",
-        repairs: "Ремонт ходовой/подвески...",
-        ctoName: "СТО “Denso Service”",
-        price: "16500 KZT",
-        isPerformed: "Выполнено"),
-    new OrderHistory(
-        time: "7 янв. 2021г",
-        location: "Алматы",
-        carName: "Mercedes Benz C55 AMG",
-        repairs: "Ремонт ходовой/подвески...",
-        ctoName: "СТО “Denso Service”",
-        price: "16500 KZT",
-        isPerformed: "Выполнено"),
-  ];
+  List<ActiveOrder> activeList;
 
   @override
   void initState() {
-    // gethistory();
+   getactive();
     super.initState();
   }
 
@@ -75,19 +54,16 @@ class _OrderActivePageState extends State<OrderActivePage> {
         key: _refreshIndicatorKey,
         onRefresh: _refresh,
         child: ListView.builder(
-            itemCount: historyList.length,
+            itemCount: activeList.length,
             itemBuilder: (BuildContext context, int index) {
-              return OrderActiveItem(orderHistory: historyList[index]);
+              return OrderActiveItem(active: activeList[index]);
             }),
       ),
     );
   }
 
   Future<Null> _refresh() async {
-    await Future.delayed(Duration(seconds: 2));
-    setState(() {
-      historyList.removeAt(0);
-    });
+    await getactive();
     return null;
   }
 

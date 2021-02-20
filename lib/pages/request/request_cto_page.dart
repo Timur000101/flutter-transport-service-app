@@ -2,7 +2,7 @@
 //
 // import 'package:flutter/cupertino.dart';
 // import 'package:flutter/material.dart';
-// import 'package:sto_app/pages/create_identifier.dart';
+// import 'package:sto_app/pages/create_identifier_page.dart';
 // import 'package:sto_app/widgets/app_widgets.dart';
 // import 'package:sto_app/core/const.dart';
 // import 'package:carousel_slider/carousel_slider.dart';
