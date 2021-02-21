@@ -122,7 +122,7 @@ class _CreateIdentifierPageState extends State<CreateIdentifierPage> {
           SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
           sharedPreferences.setString(AppConstants.ctoLogo, model.ctoLogo);
           sharedPreferences.setString(AppConstants.ctoName, model.ctoName);
-          // sharedPreferences.setString(AppConstants.ctoAddress, model.ctoAddress);
+          sharedPreferences.setString(AppConstants.ctoAddress, model.ctoAddress);
           Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
             HomePage()), (Route<dynamic> route) => false);
         },
