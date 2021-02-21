@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sto_app/models/request_item.dart';
 import 'package:sto_app/pages/create_identifier_page.dart';
-import 'package:sto_app/pages/request/request_wash_page.dart';
+import 'package:sto_app/pages/request/about_auto_page.dart';
 import 'package:sto_app/widgets/app_widgets.dart';
 import 'package:sto_app/core/const.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -213,7 +213,7 @@ class _RequestCtoPageState extends State<RequestCtoPage> {
                       color: Colors.red[600],
                       textColor: AppColors.lightColor,
                       onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => RequestWashPage(car: widget.request.car)));
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => AboutAutoPage(car: widget.request.car)));
                       },
                     ),
                   ),

@@ -10,7 +10,7 @@ import 'package:sto_app/pages/order/order_page.dart';
 import 'package:sto_app/pages/profile/support_page.dart';
 import 'package:sto_app/pages/request/request_cto_page.dart';
 import 'package:sto_app/pages/request/request_page.dart';
-import 'package:sto_app/pages/request/request_wash_page.dart';
+import 'package:sto_app/pages/request/about_auto_page.dart';
 import 'package:sto_app/pages/start_up.dart';
 import 'package:sto_app/utils/alert.dart';
 import 'package:sto_app/widgets/app_widgets.dart';
