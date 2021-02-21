@@ -44,7 +44,8 @@ class _ProfilePageState extends State<ProfilePage> {
 
   bool isReg = false;
 
-  bool isSwitched = false;
+  bool isSwitched =  false;
+
   List<MenuItem> menu1 = [
     MenuItem(
       title: "Мои автомобили",
@@ -353,13 +354,12 @@ class _ProfilePageState extends State<ProfilePage> {
                       scale: 1.2,
                       child: SizedBox(
                         child: Switch(
-                          value: isSwitched,
+                          value: AppConstants.role,
                           onChanged: (value) {
                             if (isReg == true) {
                               if (AppConstants.isRegAsSTO == true){
-                                setState(() {
-                                  isSwitched = value;
-                                  AppConstants.role = isSwitched;
+                                setState(()  {
+                                  AppConstants.role = value;
                                   changeRole();
                                 });
                               }
@@ -418,11 +418,13 @@ class _ProfilePageState extends State<ProfilePage> {
   
   changeRole() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    if (!isSwitched) {
+    if (!AppConstants.role) {
       sharedPreferences.setBool(AppConstants.isClient, false);
     }
     else {
       sharedPreferences.setBool(AppConstants.isClient, true);
+      avaURL = sharedPreferences.getString(AppConstants.ctoLogo);
+      name = sharedPreferences.getString(AppConstants.ctoName);
     }
   }
 

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -117,14 +118,8 @@ class _CreateIdentifierPageState extends State<CreateIdentifierPage> {
         color: color,
         textColor: AppColors.lightColor,
         onPressed: () async {
-          var model = await sendID(identifierFieldController.text, context);
-          AppConstants.isRegAsSTO = true;
-          SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-          sharedPreferences.setString(AppConstants.ctoLogo, model.ctoLogo);
-          sharedPreferences.setString(AppConstants.ctoName, model.ctoName);
-          sharedPreferences.setString(AppConstants.ctoAddress, model.ctoAddress);
-          Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
-            HomePage()), (Route<dynamic> route) => false);
+          sendID(identifierFieldController.text, context);
+
         },
       ),
     );
@@ -157,8 +152,7 @@ class _CreateIdentifierPageState extends State<CreateIdentifierPage> {
   // setState(() {
   // identifierFieldController.text = "f42980bcb6";
   // });
-  Future<CreateIdentifier> sendID(String id, context) async {
-    Navigator.pop(context);
+  sendID(String id, context) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     var token = sharedPreferences.getString(AppConstants.key);
     final response = await http.post(AppConstants.baseUrl + "users/login/cto/",
@@ -172,8 +166,16 @@ class _CreateIdentifierPageState extends State<CreateIdentifierPage> {
         }));
     if (response.statusCode == 200) {
       print(response.body);
-      return CreateIdentifier.fromJson(jsonDecode(response.body));
-
+      var model = CreateIdentifier.fromJson(jsonDecode(response.body));
+      AppConstants.isRegAsSTO = true;
+      AppConstants.role = true;
+      SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+      sharedPreferences.setBool(AppConstants.isRegAsCto, true);
+      sharedPreferences.setString(AppConstants.ctoLogo, model.ctoLogo);
+      sharedPreferences.setString(AppConstants.ctoName, model.ctoName);
+      sharedPreferences.setString(AppConstants.ctoAddress, model.ctoAddress);
+      Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
+          HomePage()), (Route<dynamic> route) => false);
     } else {
       // Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
       //     HomePage()), (Route<dynamic> route) => false);

@@ -33,11 +33,14 @@ class StartUp extends StatelessWidget {
 
   Future<void> isRegis() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    // var r = prefs.getBool(AppConstants.isReg);
+    var isReg = prefs.getBool(AppConstants.isReg);
+    var isRegAsCto = prefs.getBool(AppConstants.isRegAsCto);
     var role = prefs.get(AppConstants.isClient);
     if (role == null) {
       role = false;
     }
+    AppConstants.isreg = isReg;
+    AppConstants.isRegAsSTO = isRegAsCto;
     AppConstants.role = role;
   }
 }
