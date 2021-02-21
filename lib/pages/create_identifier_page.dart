@@ -25,7 +25,7 @@ class _CreateIdentifierPageState extends State<CreateIdentifierPage> {
       borderRadius: BorderRadius.all(Radius.circular(10.0)),
       borderSide: BorderSide(color: Colors.grey[300]));
 
-  TextEditingController identifierFieldController;
+  TextEditingController identifierFieldController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -33,6 +33,7 @@ class _CreateIdentifierPageState extends State<CreateIdentifierPage> {
     return Scaffold(
       appBar: buildAppBar("Регистрация"),
       backgroundColor: AppColors.backgroundColor,
+      key: globalKey,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
@@ -120,10 +121,10 @@ class _CreateIdentifierPageState extends State<CreateIdentifierPage> {
           AppConstants.isRegAsSTO = true;
           SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
           sharedPreferences.setString(AppConstants.ctoLogo, model.ctoLogo);
-          sharedPreferences.setString(AppConstants.ctoAddress, model.ctoAddress);
-          sharedPreferences.setString(AppConstants.ctoAddress, model.ctoAddress);
+          sharedPreferences.setString(AppConstants.ctoName, model.ctoName);
+          // sharedPreferences.setString(AppConstants.ctoAddress, model.ctoAddress);
           Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
-              HomePage()), (Route<dynamic> route) => false);
+            HomePage()), (Route<dynamic> route) => false);
         },
       ),
     );
@@ -170,6 +171,7 @@ class _CreateIdentifierPageState extends State<CreateIdentifierPage> {
           'id': id,
         }));
     if (response.statusCode == 200) {
+      print(response.body);
       return CreateIdentifier.fromJson(jsonDecode(response.body));
 
     } else {
