@@ -21,7 +21,7 @@ class NumberTextInputFormatter extends TextInputFormatter {
       newText.write(newValue.text.substring(usedSubstringIndex));
     return new TextEditingValue(
       text: newText.toString(),
-      selection: new TextSelection.collapsed(offset: selectionIndex),
+      // selection: new TextSelection.collapsed(offset: selectionIndex),
     );
   }
 }

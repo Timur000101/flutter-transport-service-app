@@ -29,13 +29,14 @@ class _ServicesPageState extends State<ServicesPage> {
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 2),
                         itemBuilder: (BuildContext context, int index) {
-                          return showData[index]['model'] == "services.service"
+                          return showData[index]['model'] == "service.Service"
                               ? _buildCard(
                                   'assets/images/categories/cat_icon${index + 1}.png',
                                   showData[index]['fields']['name'],
                                   showData[index]['pk'])
                               : SizedBox();
-                        });
+                        }
+                      );
                   }
                   return SizedBox();
                 },

@@ -1,62 +1,62 @@
 [
     {
-        "model": "services.service",
+        "model": "service.Service",
         "pk": 1,
         "fields": {
             "name": "СТО"
         }
     },
     {
-        "model": "services.service",
+        "model": "service.Service",
         "pk": 2,
         "fields": {
             "name": "Кузовные работы"
         }
     },
     {
-        "model": "services.service",
+        "model": "service.Service",
         "pk": 3,
         "fields": {
             "name": "Замена масла и жидкостей"
         }
     },
     {
-        "model": "services.service",
+        "model": "service.Service",
         "pk": 4,
         "fields": {
             "name": "Автозапчасти"
         }
     },
     {
-        "model": "services.service",
+        "model": "service.Service",
         "pk": 5,
         "fields": {
             "name": "Доп оборудования и тюнинг"
         }
     },
     {
-        "model": "services.service",
+        "model": "service.Service",
         "pk": 6,
         "fields": {
-            "name": "Установка газа на авто"
+            "name": "Мойка"
         }
     },
     {
-        "model": "services.service",
+        "model": "service.Service",
         "pk": 7,
         "fields": {
             "name": "Эвакуатор и другая помощь"
         }
     },
     {
-        "model": "services.service",
+        "model": "service.Service",
         "pk": 8,
         "fields": {
             "name": "Шиномонтаж/выездной шиномонтаж"
         }
     },
     {
-        "model": "services.subservice",
+        "model": "service.SubService",
         "pk": 1,
         "fields": {
             "name": "Ремонт двигателя и навесного",
@@ -64,7 +64,7 @@
         }
     },
     {
-        "model": "services.subservice",
+        "model": "service.SubService",
         "pk": 2,
         "fields": {
             "name": "Ремонт ходовой/подвески/геометрия",
@@ -72,7 +72,7 @@
         }
     },
     {
-        "model": "services.subservice",
+        "model": "service.SubService",
         "pk": 3,
         "fields": {
             "name": "Ремонт топливной системы",
@@ -80,7 +80,7 @@
         }
     },
     {
-        "model": "services.subservice",
+        "model": "service.SubService",
         "pk": 4,
         "fields": {
             "name": "Услуги автоэлектрика",
@@ -88,7 +88,7 @@
         }
     },
     {
-        "model": "services.subservice",
+        "model": "service.SubService",
         "pk": 5,
         "fields": {
             "name": "Компьютерная диагностика",
@@ -96,7 +96,7 @@
         }
     },
     {
-        "model": "services.subservice",
+        "model": "service.SubService",
         "pk": 6,
         "fields": {
             "name": "Трансмиссия (АКПП/МКПП)",
@@ -104,7 +104,7 @@
         }
     },
     {
-        "model": "services.subservice",
+        "model": "service.SubService",
         "pk": 7,
         "fields": {
             "name": "Ремонт печка/кондиционер/радиатор",
@@ -112,7 +112,7 @@
         }
     },
     {
-        "model": "services.subservice",
+        "model": "service.SubService",
         "pk": 8,
         "fields": {
             "name": "Рулевой механизм",
@@ -120,7 +120,7 @@
         }
     },
     {
-        "model": "services.subservice",
+        "model": "service.SubService",
         "pk": 9,
         "fields": {
             "name": "Ремонт стекол",
@@ -128,7 +128,7 @@
         }
     },
     {
-        "model": "services.subservice",
+        "model": "service.SubService",
         "pk": 10,
         "fields": {
             "name": "Ремонт турбин",
@@ -136,7 +136,7 @@
         }
     },
     {
-        "model": "services.subservice",
+        "model": "service.SubService",
         "pk": 11,
         "fields": {
             "name": "Сварочные/токарные работы",
@@ -144,7 +144,7 @@
         }
     },
     {
-        "model": "services.subservice",
+        "model": "service.SubService",
         "pk": 12,
         "fields": {
             "name": "Тормозная система",
@@ -152,7 +152,7 @@
         }
     },
     {
-        "model": "services.subservice",
+        "model": "service.SubService",
         "pk": 13,
         "fields": {
             "name": "Другое",
@@ -160,7 +160,16 @@
         }
     },
     {
-        "model": "services.subservice",
+        "model": "service.SubService",
+        "pk": 58,
+        "fields": {
+            "name": "Установка газа на авто",
+            "service": "1"
+        }
+    },
+    
+    {
+        "model": "service.SubService",
         "pk": 14,
         "fields": {
             "name": "Ремонт деталей по кузову",
@@ -168,7 +177,7 @@
         }
     },
     {
-        "model": "services.subservice",
+        "model": "service.SubService",
         "pk": 15,
         "fields": {
             "name": "Покраска",
@@ -176,7 +185,7 @@
         }
     },
     {
-        "model": "services.subservice",
+        "model": "service.SubService",
         "pk": 16,
         "fields": {
             "name": "Полировка",
@@ -184,7 +193,7 @@
         }
     },
     {
-        "model": "services.subservice",
+        "model": "service.SubService",
         "pk": 17,
         "fields": {
             "name": "Удаление вмятин без покраски",
@@ -192,23 +201,23 @@
         }
     },
     {
-        "model": "services.subservice",
+        "model": "service.SubService",
         "pk": 18,
         "fields": {
-            "name": "Замена масло в двигателе",
+            "name": "Замена масла в двигателе",
             "service": "3"
         }
     },
     {
-        "model": "services.subservice",
+        "model": "service.SubService",
         "pk": 19,
         "fields": {
-            "name": "Замена масло в коробке АКПП/МКПП",
+            "name": "Замена масла в коробке АКПП/МКПП",
             "service": "3"
         }
     },
     {
-        "model": "services.subservice",
+        "model": "service.SubService",
         "pk": 20,
         "fields": {
             "name": "Замена антифриза",
@@ -216,7 +225,7 @@
         }
     },
     {
-        "model": "services.subservice",
+        "model": "service.SubService",
         "pk": 21,
         "fields": {
             "name": "Замена/заправка фреона",
@@ -224,7 +233,7 @@
         }
     },
     {
-        "model": "services.subservice",
+        "model": "service.SubService",
         "pk": 22,
         "fields": {
             "name": "Замена тормозной жидкости",
@@ -232,7 +241,7 @@
         }
     },
     {
-        "model": "services.subservice",
+        "model": "service.SubService",
         "pk": 23,
         "fields": {
             "name": "Кузовные детали",
@@ -240,7 +249,7 @@
         }
     },
     {
-        "model": "services.subservice",
+        "model": "service.SubService",
         "pk": 24,
         "fields": {
             "name": "Запчасти по ходовке",
@@ -248,7 +257,7 @@
         }
     },
     {
-        "model": "services.subservice",
+        "model": "service.SubService",
         "pk": 25,
         "fields": {
             "name": "Оптика/свет",
@@ -256,7 +265,7 @@
         }
     },
     {
-        "model": "services.subservice",
+        "model": "service.SubService",
         "pk": 26,
         "fields": {
             "name": "Стекла",
@@ -264,7 +273,7 @@
         }
     },
     {
-        "model": "services.subservice",
+        "model": "service.SubService",
         "pk": 27,
         "fields": {
             "name": "Шины",
@@ -272,7 +281,7 @@
         }
     },
     {
-        "model": "services.subservice",
+        "model": "service.SubService",
         "pk": 28,
         "fields": {
             "name": "Диски",
@@ -280,7 +289,7 @@
         }
     },
     {
-        "model": "services.subservice",
+        "model": "service.SubService",
         "pk": 29,
         "fields": {
             "name": "Двигатели и детали",
@@ -288,7 +297,7 @@
         }
     },
     {
-        "model": "services.subservice",
+        "model": "service.SubService",
         "pk": 30,
         "fields": {
             "name": "Трансмиссия (АКПП/МКПП)",
@@ -296,7 +305,7 @@
         }
     },
     {
-        "model": "services.subservice",
+        "model": "service.SubService",
         "pk": 31,
         "fields": {
             "name": "Расходники/жидкости",
@@ -304,7 +313,7 @@
         }
     },
     {
-        "model": "services.subservice",
+        "model": "service.SubService",
         "pk": 32,
         "fields": {
             "name": "Мультимедия/акустика/камеры",
@@ -312,7 +321,7 @@
         }
     },
     {
-        "model": "services.subservice",
+        "model": "service.SubService",
         "pk": 33,
         "fields": {
             "name": "Аксессуары",
@@ -320,7 +329,7 @@
         }
     },
     {
-        "model": "services.subservice",
+        "model": "service.SubService",
         "pk": 34,
         "fields": {
             "name": "Аккумуляторы",
@@ -328,7 +337,7 @@
         }
     },
     {
-        "model": "services.subservice",
+        "model": "service.SubService",
         "pk": 35,
         "fields": {
             "name": "Другое",
@@ -336,7 +345,7 @@
         }
     },
     {
-        "model": "services.subservice",
+        "model": "service.SubService",
         "pk": 36,
         "fields": {
             "name": "Запчасти для ГБО",
@@ -344,7 +353,7 @@
         }
     },
     {
-        "model": "services.subservice",
+        "model": "service.SubService",
         "pk": 37,
         "fields": {
             "name": "Сигнализация",
@@ -352,7 +361,7 @@
         }
     },
     {
-        "model": "services.subservice",
+        "model": "service.SubService",
         "pk": 38,
         "fields": {
             "name": "Тонировка",
@@ -360,7 +369,7 @@
         }
     },
     {
-        "model": "services.subservice",
+        "model": "service.SubService",
         "pk": 39,
         "fields": {
             "name": "Перетяжка салона/ Пошив чехлов",
@@ -368,7 +377,7 @@
         }
     },
     {
-        "model": "services.subservice",
+        "model": "service.SubService",
         "pk": 40,
         "fields": {
             "name": "Шумоизоляция",
@@ -376,7 +385,7 @@
         }
     },
     {
-        "model": "services.subservice",
+        "model": "service.SubService",
         "pk": 41,
         "fields": {
             "name": "Химчистка салона",
@@ -384,7 +393,7 @@
         }
     },
     {
-        "model": "services.subservice",
+        "model": "service.SubService",
         "pk": 42,
         "fields": {
             "name": "Перетяжка панели",
@@ -392,7 +401,7 @@
         }
     },
     {
-        "model": "services.subservice",
+        "model": "service.SubService",
         "pk": 43,
         "fields": {
             "name": "Автозвук",
@@ -400,7 +409,7 @@
         }
     },
     {
-        "model": "services.subservice",
+        "model": "service.SubService",
         "pk": 44,
         "fields": {
             "name": "Жидкое стекло",
@@ -408,7 +417,7 @@
         }
     },
     {
-        "model": "services.subservice",
+        "model": "service.SubService",
         "pk": 45,
         "fields": {
             "name": "Бронирование/плёнка",
@@ -416,7 +425,7 @@
         }
     },
     {
-        "model": "services.subservice",
+        "model": "service.SubService",
         "pk": 46,
         "fields": {
             "name": "Тюнинг для кузова",
@@ -424,7 +433,7 @@
         }
     },
     {
-        "model": "services.subservice",
+        "model": "service.SubService",
         "pk": 47,
         "fields": {
             "name": "Ксенон",
@@ -432,7 +441,7 @@
         }
     },
     {
-        "model": "services.subservice",
+        "model": "service.SubService",
         "pk": 48,
         "fields": {
             "name": "Двигатель, чип тюнинг",
@@ -440,7 +449,7 @@
         }
     },
     {
-        "model": "services.subservice",
+        "model": "service.SubService",
         "pk": 49,
         "fields": {
             "name": "Установка парктроников",
@@ -448,7 +457,7 @@
         }
     },
     {
-        "model": "services.subservice",
+        "model": "service.SubService",
         "pk": 50,
         "fields": {
             "name": "Другое",
@@ -456,7 +465,7 @@
         }
     },
     {
-        "model": "services.subservice",
+        "model": "service.SubService",
         "pk": 51,
         "fields": {
             "name": "Эвакуатор",
@@ -464,7 +473,7 @@
         }
     },
     {
-        "model": "services.subservice",
+        "model": "service.SubService",
         "pk": 52,
         "fields": {
             "name": "Отогрев",
@@ -472,7 +481,7 @@
         }
     },
     {
-        "model": "services.subservice",
+        "model": "service.SubService",
         "pk": 53,
         "fields": {
             "name": "Вскрытие замков",
@@ -480,7 +489,7 @@
         }
     },
     {
-        "model": "services.subservice",
+        "model": "service.SubService",
         "pk": 54,
         "fields": {
             "name": "Изготовление ключей",
@@ -488,7 +497,7 @@
         }
     },
     {
-        "model": "services.subservice",
+        "model": "service.SubService",
         "pk": 55,
         "fields": {
             "name": "Другое",
@@ -496,7 +505,7 @@
         }
     },
     {
-        "model": "services.subservice",
+        "model": "service.SubService",
         "pk": 56,
         "fields": {
             "name": "Шиномонтаж",
@@ -504,7 +513,7 @@
         }
     },
     {
-        "model": "services.subservice",
+        "model": "service.SubService",
         "pk": 57,
         "fields": {
             "name": "Выездной шиномонтаж",

@@ -44,9 +44,9 @@ class _LocationPageState extends State<LocationPage> {
     if (_permissionGranted == PermissionStatus.denied) {
       _permissionGranted = await location.requestPermission();
       if (_permissionGranted != PermissionStatus.granted) {
-        final AndroidIntent intent = new AndroidIntent(
-          action: 'android.settings.LOCATION_SOURCE_SETTINGS',);
-        intent.launch();
+        // final AndroidIntent intent = new AndroidIntent(
+        //   action: 'android.settings.LOCATION_SOURCE_SETTINGS',);
+        // intent.launch();
       }
         return;
       }
