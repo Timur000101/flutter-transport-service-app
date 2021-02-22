@@ -85,7 +85,7 @@ class _OrderCardState extends State<OrderCard> {
                                 padding: const EdgeInsets.symmetric(
                                     vertical: 10, horizontal: 10),
                                 child: Text(
-                                  widget.order.stoName,
+                                  widget.order.stoName.toUpperCase(),
                                   style: TextStyle(color: Colors.white),
                                 ),
                               ),
