@@ -117,16 +117,21 @@ class RequestListItem extends StatelessWidget {
 }
 
 Widget chipRedText(String text) {
-  return Container(
-    margin: EdgeInsets.only(top: 5, bottom: 5),
-    padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-    decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20), color: AppColors.redColor),
-    child: Text(
-      text,
-      style: TextStyle(color: AppColors.lightColor),
-    ),
-  );
+  if (text == null){
+    return SizedBox(height:10);
+  }
+  else{
+    return Container(
+      margin: EdgeInsets.only(top: 5, bottom: 5),
+      padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20), color: AppColors.redColor),
+      child: Text(
+        text,
+        style: TextStyle(color: AppColors.lightColor),
+      ),
+    );
+  }
 }
 
 Widget cornerImageView(String url) {
