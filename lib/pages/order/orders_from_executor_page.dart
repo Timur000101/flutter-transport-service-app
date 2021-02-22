@@ -29,7 +29,7 @@ class _OrdersFromExecutorPageState extends State<OrdersFromExecutorPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: HexColor("#EDF2F4"),
-        appBar: buildAppBar("Заказы"),
+        appBar: buildAppBar("Заявки"),
         body: RefreshIndicator(
         key: _refreshIndicatorKey,
         onRefresh: _refresh,

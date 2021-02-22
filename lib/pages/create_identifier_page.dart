@@ -30,7 +30,6 @@ class _CreateIdentifierPageState extends State<CreateIdentifierPage> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: buildAppBar("Регистрация"),
       backgroundColor: AppColors.backgroundColor,
@@ -145,8 +144,21 @@ class _CreateIdentifierPageState extends State<CreateIdentifierPage> {
     );
   }
 
-  sendRequestForId() {
-
+  sendRequestForId() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    var token = sharedPreferences.getString(AppConstants.key);
+    final response = await http.post(AppConstants.baseUrl + "users/autoservice/request/",
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          "Accept": "application/json",
+          "Authorization": "Token $token"
+        });
+    if (response.statusCode == 200) {
+      final snackBar = SnackBar(content: Text('Заявка отправлена! Ждите, с Вами свяжутся...'));
+      globalKey.currentState.showSnackBar(snackBar);
+      await Future.delayed(Duration(seconds: 3));
+      Navigator.pop(context);
+    }
   }
 
   // setState(() {
