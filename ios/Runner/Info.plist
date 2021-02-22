@@ -49,5 +49,11 @@
 
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Allow access to microphone</string>
+
+	<key>NSLocationAlwaysUsageDescription</key>
+    <string>Allow access to location</string>
+
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>Allow access to location</string>
 </dict>
 </plist>
