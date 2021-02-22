@@ -1,7 +1,9 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:sto_app/core/const.dart';
+import 'package:sto_app/pages/request/request_wash_page.dart';
 import 'package:sto_app/pages/services/service_detail.dart';
+import 'package:sto_app/pages/services/service_finish_wash.dart';
 import 'package:sto_app/widgets/app_widgets.dart';
 
 class ServicesPage extends StatefulWidget {
@@ -83,12 +85,13 @@ class _ServicesPageState extends State<ServicesPage> {
           ),
         ),
         onTap: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => ServiceDetail(
-                        indx: path,
-                      )));
+          if (path != 6){
+            Navigator.push( context, MaterialPageRoute(builder: (context) => ServiceDetail(indx: path,)));
+          }
+          else{
+            Navigator.push( context, MaterialPageRoute(builder: (context) => ServiceFinishWash(servicePK: path)));
+          }
+          
         });
   }
 }
