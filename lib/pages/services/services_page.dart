@@ -1,9 +1,12 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sto_app/core/const.dart';
+import 'package:sto_app/pages/auth/signIn_page.dart';
 import 'package:sto_app/pages/request/request_wash_page.dart';
 import 'package:sto_app/pages/services/service_detail.dart';
 import 'package:sto_app/pages/services/service_finish_wash.dart';
+import 'package:sto_app/utils/alert.dart';
 import 'package:sto_app/widgets/app_widgets.dart';
 
 class ServicesPage extends StatefulWidget {
@@ -84,14 +87,38 @@ class _ServicesPageState extends State<ServicesPage> {
             ),
           ),
         ),
-        onTap: () {
-          if (path != 6){
-            Navigator.push( context, MaterialPageRoute(builder: (context) => ServiceDetail(indx: path,)));
+        onTap: () async {
+          SharedPreferences prefs = await SharedPreferences.getInstance();
+          if (prefs.getBool(AppConstants.isReg)){
+            if (path != 6){
+              Navigator.push( context, MaterialPageRoute(builder: (context) => ServiceDetail(indx: path,)));
+            }
+            else{
+              Navigator.push( context, MaterialPageRoute(builder: (context) => ServiceFinishWash(servicePK: path)));
+            }
           }
           else{
-            Navigator.push( context, MaterialPageRoute(builder: (context) => ServiceFinishWash(servicePK: path)));
+            showCustomAlert();
           }
-          
         });
+  }
+
+  showCustomAlert()  {
+    var dialog = CustomAlertDialog(
+        title: "Внимание",
+        message:  "Вы не зарегистрированы, зарегистрироваться?",
+        onPostivePressed: ()   {
+          Navigator.pop(context);
+          Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(
+              builder: (BuildContext context) =>SignIn(),
+            ),
+                (route) => false,
+          );
+        },
+        positiveBtnText: 'Да',
+        negativeBtnText: 'Нет');
+    showDialog(context: context, builder: (BuildContext context) => dialog);
   }
 }
