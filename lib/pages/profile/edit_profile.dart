@@ -181,7 +181,7 @@ class _EditProfileState extends State<EditProfile> {
                         Padding(
                           padding: const EdgeInsets.fromLTRB(15, 10, 15, 5),
                           child: TextFormField(
-                            maxLength: 13,
+                            maxLength: 12,
                             keyboardType: TextInputType.phone,
                             controller: additionalPhone1TextField,
                             inputFormatters: <TextInputFormatter>[
@@ -210,7 +210,7 @@ class _EditProfileState extends State<EditProfile> {
                               ),
                             ),
                             validator: (value) {
-                              if (value.length < 13 && value.length > 1) {
+                              if (value.length < 12 && value.length > 1) {
                                 return 'Введите корректный номер телефона';
                               }
                               return null;
@@ -220,7 +220,7 @@ class _EditProfileState extends State<EditProfile> {
                         Padding(
                           padding: const EdgeInsets.fromLTRB(15, 10, 15, 5),
                           child: TextFormField(
-                            maxLength: 13,
+                            maxLength: 12,
                             keyboardType: TextInputType.phone,
                             controller: additionalPhone2TextField,
                             inputFormatters: <TextInputFormatter>[
@@ -249,7 +249,7 @@ class _EditProfileState extends State<EditProfile> {
                               ),
                             ),
                             validator: (value) {
-                              if (value.length < 13 && value.length > 1) {
+                              if (value.length < 12 && value.length > 1) {
                                 return 'Введите корректный номер телефона';
                               }
                               return null;

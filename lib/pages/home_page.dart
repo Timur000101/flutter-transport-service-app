@@ -18,7 +18,7 @@ class _HomePageState extends State<HomePage> {
   int _currentIndex = 0;
 
     // final List<Widget> _children = [LocationPage(), ServicesPage(), ProfilePage()];
-    final List<Widget> _children = [RequestPage(), ServicesPage(), ProfilePage()];
+    final List<Widget> _children = [OrdersFromExecutorPage(), ServicesPage(), ProfilePage()];
   final List<Widget> _childrenExecutor = [RequestPage(), ServicesPage(), ProfilePage()];
   // OrdersFromExecutorPage()
   @override

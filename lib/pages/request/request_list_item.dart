@@ -3,22 +3,29 @@ import 'package:flutter/material.dart';
 import 'package:sto_app/core/const.dart';
 import 'package:sto_app/models/request_item.dart';
 import 'package:sto_app/pages/request/request_cto_pagec.dart';
+import 'package:sto_app/pages/request/request_wash_page.dart';
 
 class RequestListItem extends StatelessWidget {
   final RequestItem request;
   String serviceText;
   String subserviceText;
+  String orderImage;
+  String orderAbout;
 
   RequestListItem(this.request);
 
   @override
   Widget build(BuildContext context) {
     serviceText = request.service['name'];
-    if (request.subservice['name'] != null){
+    if (request.subservice != null){
       subserviceText = request.subservice['name'];
+      orderImage = request.orderImg[0]['image'];
+      orderAbout = request.about;
     }
     else{
       subserviceText = '';
+      orderImage = request.car.car_img[0]['image'];
+      orderAbout = '';
     }
     return Column(
       children: [
@@ -66,7 +73,7 @@ class RequestListItem extends StatelessWidget {
                   Expanded(
                       child: Padding(
                     padding: const EdgeInsets.only(left: 15, top: 3),
-                    child: cornerImageView(request.orderImg[0]['image']),
+                    child: cornerImageView(orderImage),
                   ))
                 ],
               ),
@@ -78,7 +85,7 @@ class RequestListItem extends StatelessWidget {
                   chipRedText(subserviceText),
                   Container(
                     margin: EdgeInsets.only(top: 5, bottom: 5, left: 2),
-                    child: Text(request.about,
+                    child: Text(orderAbout,
                         style: TextStyle(
                             fontSize: 13, color: AppColors.primaryTextColor)),
                   ),
@@ -102,11 +109,21 @@ class RequestListItem extends StatelessWidget {
                           shape: RoundedRectangleBorder(
                               borderRadius: new BorderRadius.circular(6.0)),
                           onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => RequestCtoPage(request)),
-                            );
+                            if (subserviceText == ''){
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => RequestWashPage(request)),
+                              );
+                            }
+                            else{
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => RequestCtoPage(request)),
+                              );
+                            }
+                            
                           },
                           child: Text("Подробнее"),
                           color: Colors.green[700],

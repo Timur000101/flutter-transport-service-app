@@ -13,7 +13,7 @@ import 'about_auto_page.dart';
 
 class RequestWashPage extends StatefulWidget {
   final RequestItem request;
-  RequestWashPage({this.request});
+  RequestWashPage(this.request);
   @override
   _RequestWashPageState createState() => _RequestWashPageState();
 }
@@ -67,7 +67,7 @@ class _RequestWashPageState extends State<RequestWashPage> {
                 ),
               ),
               Center(
-                child: Text(widget.request.subservice['name'] ,
+                child: Text('Мойка',
                 textAlign: TextAlign.center,
                     style: TextStyle(
                       color: AppColors.primaryTextColor,
@@ -76,6 +76,7 @@ class _RequestWashPageState extends State<RequestWashPage> {
               ),
             ],
           ),
+          SizedBox(height: 20),
           Container(
             margin: EdgeInsets.symmetric(horizontal: 15),
             child: Column(
@@ -110,7 +111,7 @@ class _RequestWashPageState extends State<RequestWashPage> {
                     padding: const EdgeInsets.only(top: 8, bottom: 8),
                     child: myTextField(
                         timeController,
-                        "Время",
+                        "Время записи",
                         Icon(
                           Icons.access_time_outlined,
                           color: AppColors.primaryTextColor,
