@@ -26,10 +26,20 @@ class OrderCard extends StatefulWidget {
 
 class _OrderCardState extends State<OrderCard> {
   bool _isSelected = true;
+  String subserviceText;
+  String timeText;
 
   @override
   void initState() {
     super.initState();
+    if (widget.order.subservice != null){
+      subserviceText = widget.order.subservice['name'];
+      timeText = 'В течении: ';
+    }
+    else{
+      subserviceText = 'Мойка';
+      timeText = 'Запись: ';
+    }
   }
 
   @override
@@ -64,7 +74,7 @@ class _OrderCardState extends State<OrderCard> {
                                 style: new TextStyle(fontSize: 18)),
                             Padding(
                               padding: const EdgeInsets.symmetric(vertical: 10),
-                              child: Text(widget.order.subservice),
+                              child: Text(subserviceText),
                             ),
                             Container(
                               decoration: BoxDecoration(
@@ -106,8 +116,10 @@ class _OrderCardState extends State<OrderCard> {
                               child: Text(widget.order.price.toString() + ' тг',
                                   style: new TextStyle(fontSize: 18)),
                             ),
-                            Text(widget.order.time,
-                                style: new TextStyle(fontSize: 18)),
+                            Text(timeText,
+                                  style: new TextStyle(fontSize: 16)),
+                            Text(widget.order.time + '  ',
+                                  style: new TextStyle(fontSize: 16)),
                             Padding(
                               padding:
                                   const EdgeInsets.only(top: 15.0, left: 10),

@@ -23,8 +23,8 @@ class _RequestPageState extends State<RequestPage> {
     // if (isRegister() == true){
     //   getOrders();
     // }
-    getOrders();
     super.initState();
+    getOrders();
   }
 
   @override

@@ -48,11 +48,8 @@ class _ServiceFinishWashState extends State<ServiceFinishWash> {
           currentFocus.unfocus();
         }
       },
-      child:SingleChildScrollView(
-        reverse: true,
-        child:Container(
+      child:Container(
         width: MediaQuery.of(context).size.width,
-        height: 600,
         padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -116,7 +113,6 @@ class _ServiceFinishWashState extends State<ServiceFinishWash> {
             ),
           ],
         ),
-      )
       )
     )
     );

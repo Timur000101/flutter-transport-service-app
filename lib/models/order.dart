@@ -7,7 +7,7 @@ class Order{
   String stoName;
   int price;
   String time;
-  String subservice;
+  dynamic subservice;
 
   Order({
     this.id,
@@ -26,7 +26,7 @@ class Order{
     stoPhone = json['cto']['phone'];
     price = json['price'];
     time = json['time'];
-    subservice = json['order']['subservice']['name'];
+    subservice = json['order']['subservice'];
   }
 
   Map<String, dynamic> toJson() {
