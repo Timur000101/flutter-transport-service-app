@@ -92,12 +92,15 @@ class _ProfilePageState extends State<ProfilePage> {
         if (AppConstants.role) {
           if (userDetail.ctoName != null) {
             name = userDetail.ctoName;
-          }
-          if (userDetail.ctoLogo != null) {
-            if (userDetail.ctoLogo !=
+            if (userDetail.avatar !=
                 "${AppConstants.baseUrl}media/default/default.png")
-              avaURL = userDetail.ctoLogo;
+              avaURL = userDetail.avatar;
           }
+          // if (userDetail.ctoLogo != null) {
+          //   if (userDetail.ctoLogo !=
+          //       "${AppConstants.baseUrl}media/default/default.png")
+          //     avaURL = userDetail.ctoLogo;
+          // }
 
         }
         else {
