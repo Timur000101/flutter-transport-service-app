@@ -6,11 +6,20 @@ import 'package:sto_app/pages/request/request_cto_pagec.dart';
 
 class RequestListItem extends StatelessWidget {
   final RequestItem request;
+  String serviceText;
+  String subserviceText;
 
   RequestListItem(this.request);
 
   @override
   Widget build(BuildContext context) {
+    serviceText = request.service['name'];
+    if (request.subservice['name'] != null){
+      subserviceText = request.subservice['name'];
+    }
+    else{
+      subserviceText = '';
+    }
     return Column(
       children: [
         Container(
@@ -65,8 +74,8 @@ class RequestListItem extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  chipRedText(request.service['name']),
-                  chipRedText(request.subservice['name']),
+                  chipRedText(serviceText),
+                  chipRedText(subserviceText),
                   Container(
                     margin: EdgeInsets.only(top: 5, bottom: 5, left: 2),
                     child: Text(request.about,
@@ -117,7 +126,7 @@ class RequestListItem extends StatelessWidget {
 }
 
 Widget chipRedText(String text) {
-  if (text == null){
+  if (text == ''){
     return SizedBox(height:10);
   }
   else{
