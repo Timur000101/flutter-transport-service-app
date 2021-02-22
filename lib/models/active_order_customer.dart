@@ -1,4 +1,4 @@
-class ActiveOrder {
+class ActiveOrderCustomer {
   int id;
   Car car;
   String about;
@@ -9,7 +9,7 @@ class ActiveOrder {
   bool inWork;
   bool isFinished;
 
-  ActiveOrder(
+  ActiveOrderCustomer(
       {this.id,
         this.car,
         this.about,
@@ -20,7 +20,7 @@ class ActiveOrder {
         this.inWork,
         this.isFinished});
 
-  ActiveOrder.fromJson(Map<String, dynamic> json) {
+  ActiveOrderCustomer.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     car = json['car'] != null ? new Car.fromJson(json['car']) : null;
     about = json['about'];
@@ -69,7 +69,7 @@ class Car {
   String name;
   int year;
   double size;
-  int milage;
+  double milage;
   int user;
 
   Car(

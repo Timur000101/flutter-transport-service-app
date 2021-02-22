@@ -80,20 +80,32 @@ class _ProfilePageState extends State<ProfilePage> {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     isReg = sharedPreferences.getBool(AppConstants.isReg);
     if (isReg == true) {
-      var userId = sharedPreferences.getInt(AppConstants.uid);
 
+      var userId = sharedPreferences.getInt(AppConstants.uid);
       var token = sharedPreferences.getString(AppConstants.key);
       UserDetail userDetail = await getUserDetail(userId, token);
 
       setState(() {
-        name = userDetail.nickname;
         String number = userDetail.phone.substring(1, userDetail.phone.length);
-
         phone =
-            "+7 (${number.substring(1, 4)}) ${number.substring(4, 7)}-${number.substring(7, 9)}-${number.substring(9, 11)}";
-        if (userDetail.avatar !=
-            "${AppConstants.baseUrl}media/default/default.png")
-          avaURL = userDetail.avatar;
+        "+7 (${number.substring(1, 4)}) ${number.substring(4, 7)}-${number.substring(7, 9)}-${number.substring(9, 11)}";
+        if (AppConstants.role) {
+          if (userDetail.ctoName != null) {
+            name = userDetail.ctoName;
+          }
+          if (userDetail.ctoLogo != null) {
+            if (userDetail.ctoLogo !=
+                "${AppConstants.baseUrl}media/default/default.png")
+              avaURL = userDetail.ctoLogo;
+          }
+
+        }
+        else {
+          name = userDetail.nickname;
+          if (userDetail.avatar !=
+              "${AppConstants.baseUrl}media/default/default.png")
+            avaURL = userDetail.avatar;
+        }
       });
 
       if (userDetail.secondPhone != null) {
@@ -117,6 +129,9 @@ class _ProfilePageState extends State<ProfilePage> {
       sharedPreferences.setString(AppConstants.avatar, userDetail.avatar);
       sharedPreferences.setString(AppConstants.phone,
           userDetail.phone.substring(1, userDetail.phone.length));
+      sharedPreferences.setString(AppConstants.ctoName, userDetail.ctoName);
+      sharedPreferences.setString(AppConstants.ctoLogo, userDetail.ctoLogo);
+      sharedPreferences.setString(AppConstants.ctoAddress, userDetail.ctoAddress);
     }
   }
 
@@ -420,6 +435,8 @@ class _ProfilePageState extends State<ProfilePage> {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     if (!AppConstants.role) {
       sharedPreferences.setBool(AppConstants.isClient, false);
+      avaURL = sharedPreferences.getString(AppConstants.avatar);
+      name = sharedPreferences.getString(AppConstants.name);
     }
     else {
       sharedPreferences.setBool(AppConstants.isClient, true);

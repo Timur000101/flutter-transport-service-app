@@ -3,13 +3,13 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sto_app/core/const.dart';
-import 'package:sto_app/models/active_order.dart';
+import 'package:sto_app/models/active_order_customer.dart';
 import 'package:sto_app/models/order_history.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 
 class OrderActiveItem extends StatelessWidget {
-  final ActiveOrder active;
+  final ActiveOrderCustomer active;
 
   OrderActiveItem({Key key, this.active}) : super(key: key);
 
@@ -55,7 +55,7 @@ class OrderActiveItem extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(top: 12),
                 child: Text(
-                  active.car.name,
+                 active.car.name,
                   style: TextStyle(
                     fontWeight: FontWeight.w600,
                     fontSize: 18,
@@ -65,7 +65,7 @@ class OrderActiveItem extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(top: 4),
                 child: Text(
-                  "Ремонт ходовой/подвески ...",
+                  active.subservice.name,
                   style: TextStyle(color: AppColors.primaryTextColor),
                 ),
               ),
@@ -76,7 +76,7 @@ class OrderActiveItem extends StatelessWidget {
                     padding:
                         const EdgeInsets.symmetric(vertical: 4, horizontal: 6),
                     child: Text(
-                      "СТО “Denso Service”",
+                     active.service.name,
                       style: TextStyle(fontSize: 12, color: Colors.white),
                     ),
                   ),

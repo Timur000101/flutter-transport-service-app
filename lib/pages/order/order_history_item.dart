@@ -2,10 +2,11 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sto_app/core/const.dart';
+import 'package:sto_app/models/active_order_customer.dart';
 import 'package:sto_app/models/order_history.dart';
 
 class OrderHistoryItem extends StatelessWidget {
-  final OrderHistory orderHistory;
+  final ActiveOrderCustomer orderHistory;
 
   const OrderHistoryItem({Key key, this.orderHistory}) : super(key: key);
 
@@ -51,7 +52,7 @@ class OrderHistoryItem extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(top: 12),
                 child: Text(
-                  "Mercedes-Benz C55 AMG",
+                 orderHistory.car.name,
                   style: TextStyle(
                     fontWeight: FontWeight.w600,
                     fontSize: 18,
@@ -61,7 +62,7 @@ class OrderHistoryItem extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(top: 4),
                 child: Text(
-                  "Ремонт ходовой/подвески ...",
+                  orderHistory.subservice.name,
                   style: TextStyle(color: AppColors.primaryTextColor),
                 ),
               ),
@@ -72,7 +73,7 @@ class OrderHistoryItem extends StatelessWidget {
                     padding:
                         const EdgeInsets.symmetric(vertical: 4, horizontal: 6),
                     child: Text(
-                      "СТО “Denso Service”",
+                      orderHistory.service.name,
                       style: TextStyle(fontSize: 12, color: Colors.white),
                     ),
                   ),
@@ -92,9 +93,9 @@ class OrderHistoryItem extends StatelessWidget {
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                     ),
                     Text(
-                      "Выполнено",
+                      orderHistory.isFinished ? "Выполнено" : "Прервано",
                       style: TextStyle(
-                          color: false ? Colors.red : AppColors.greenColor,
+                          color:  orderHistory.isFinished ? AppColors.greenColor : Colors.red,
                           fontSize: 16,
                           fontWeight: FontWeight.w600),
                     ),
