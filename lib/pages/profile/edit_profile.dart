@@ -39,6 +39,13 @@ class _EditProfileState extends State<EditProfile> {
     getAvatar(widget.imageurl);
     nameTextField.text = widget.name;
     super.initState();
+    if (widget.secondPhone != ''){
+      additionalPhone1TextField.text = widget.secondPhone;
+    }
+    if (widget.thirdPhone != ''){
+      additionalPhone2TextField.text = widget.thirdPhone;
+    }
+
   }
 
   @override
@@ -372,28 +379,41 @@ class _EditProfileState extends State<EditProfile> {
   }
 }
 
+bool isNumeric(String s) {
+    if (s == null) {
+      return false;
+    }
+    return double.tryParse(s) != null;
+  }
+
+String cleanPhone(String phone) {
+  var ph = "";
+  for (int i = 0; i < phone.length; i++) {
+    if (isNumeric(phone[i])) {
+      ph += phone[i];
+    }
+  }
+  return ph.substring(0, ph.length);
+}
+
 Future<String> changeProfile(int userID, String token, String name, String addPhone1, String addPhone2) async {
-  String secondP = "";
-  String thirdP = "";
+  var uri = Uri.parse(AppConstants.baseUrl + 'users/detail/$userID');
+  var request = new http.MultipartRequest("POST", uri);
+  request.headers['authorization'] = "Token $token";
+  request.fields['nickname'] = name;
   if (addPhone1 != null){
-    secondP = addPhone1;
+    request.fields['second_phone'] = cleanPhone(addPhone1);
   }
   if (addPhone2 != null){
-    thirdP = addPhone2;
+    request.fields['third_phone'] = cleanPhone(addPhone2);
   }
-  final response = await http.post(AppConstants.baseUrl + "users/detail/$userID",
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-        "Accept": "application/json",
-        "Authorization": "Token $token"
-      },
-      body: jsonEncode(<String, String>{
-        'nickname': name,
-      }));
-  if (response.statusCode == 200) {
-
-    return response.body;
-  } else {
+  
+  var response = await request.send();
+  print(response.statusCode);
+  if (response.statusCode == 200){
+    return response.stream.bytesToString();
+  }
+  else {
     print("Falied to Change Profile Information.");
   }
 }
