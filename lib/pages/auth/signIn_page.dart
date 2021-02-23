@@ -64,7 +64,7 @@ class _SignInState extends State<SignIn> {
       nickname,
     );
     Map<String, dynamic> status = jsonDecode(jsonString);
-    print(status['status']);
+    // print(status['status']);
 
     if (status['status'] == "ok") {
       // print("status ok");

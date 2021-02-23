@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'dart:ui';
 import 'package:flutter/cupertino.dart';
@@ -5,7 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:sto_app/core/const.dart';
 import 'package:sto_app/models/active_order_customer.dart';
 import 'package:sto_app/models/order_history.dart';
+import 'package:sto_app/utils/utils.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:http/http.dart' as http;
+
 
 
 class OrderActiveItem extends StatelessWidget {
@@ -65,6 +69,7 @@ class OrderActiveItem extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(top: 4),
                 child: Text(
+                  active.service.name == "Мойка" ? "":
                   active.subservice.name,
                   style: TextStyle(color: AppColors.primaryTextColor),
                 ),
@@ -119,6 +124,33 @@ class OrderActiveItem extends StatelessWidget {
         ),
       ],
     );
+  }
+  void whatsAppOpen(String phone,message) async {
+    String url = "whatsapp://send?phone=$phone%text=$message";
+    await  launch(url);
+
+  }
+
+  void finishOrder(context) async{
+    var token = await getToken();
+    http.Response response =
+    await http.post("${AppConstants.baseUrl}order/finish/${active.id}", headers: {
+      'Content-Type': 'application/json; charset=UTF-8',
+      "Accept": "application/json",
+      "Authorization": "Token $token"
+    });
+
+    if (response.statusCode == 200) {
+      Map<String, dynamic> status = jsonDecode(response.body);
+      if (status['status'] == "ok") {
+        Navigator.pop(context);
+        Scaffold.of(context).showSnackBar(SnackBar(content: Text("Заказ завершен")));
+      }
+    } else {
+      // If the server did not return a 200 OK response,
+      // then throw an exception.
+      throw Exception('Failed to load active order');
+    }
   }
 
   String avaURL =
@@ -177,10 +209,11 @@ class OrderActiveItem extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   ElevatedButton.icon(
-                      onPressed: () {
-                        var phone = "87781661021";
-                        var message = "hi";
-                        urlMessage(message, phone);
+                      onPressed: () async {
+                        var phone = "77781661021";
+                        whatsAppOpen(phone, "");
+                        // var message = "hi";
+                        // urlMessage(message, phone);
                       },
                       icon: Icon(Icons.message),
                       label: Text("Написать"),
@@ -210,7 +243,9 @@ class OrderActiveItem extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child:AppConstants.role ? ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    finishOrder(context);
+                  },
                   child: Padding(
                     padding: const EdgeInsets.symmetric(
                         vertical: 10.0, horizontal: 30),
@@ -233,13 +268,15 @@ class OrderActiveItem extends StatelessWidget {
     );
   }
 
-  String urlMessage(String message, String phone) {
-    if (Platform.isAndroid) {
-      // add the [https]
-      return "https://wa.me/$phone/?text=${Uri.parse(message)}"; // new line
-    } else {
-      // add the [https]
-      return "https://api.whatsapp.com/send?phone=$phone=${Uri.parse(message)}"; // new line
-    }
-  }
+
+
+  // String urlMessage(String message, String phone) {
+  //   if (Platform.isAndroid) {
+  //     // add the [https]
+  //     return "https://wa.me/$phone/?text=${Uri.parse(message)}"; // new line
+  //   } else {
+  //     // add the [https]
+  //     return "https://api.whatsapp.com/send?phone=$phone=${Uri.parse(message)}"; // new line
+  //   }
+  // }
 }

@@ -1,7 +1,8 @@
+import 'dart:io';
+import 'package:sto_app/utils/alert.dart';
 import 'package:flutter/material.dart';
-import 'dart:async';
 import 'package:location/location.dart';
-
+import 'package:app_settings/app_settings.dart';
 
 class LocationPage extends StatefulWidget {
   @override
@@ -11,16 +12,23 @@ class LocationPage extends StatefulWidget {
 class _LocationPageState extends State<LocationPage> {
   @override
   Widget build(BuildContext context) {
-    return SafeArea(child: Column(
+    return SafeArea(
+        child: Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text("Geo position", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 16),),
-        FlatButton(onPressed: () async {
-         await _getCurrentlocation();
-        }, child:
-        Text("get location"),
-        color: Colors.red,)
+        Text(
+          "Geo position",
+          style: TextStyle(
+              color: Colors.black, fontWeight: FontWeight.bold, fontSize: 16),
+        ),
+        FlatButton(
+          onPressed: () async {
+            await _getCurrentlocation();
+          },
+          child: Text("get location"),
+          color: Colors.red,
+        )
       ],
     ));
   }
@@ -44,18 +52,27 @@ class _LocationPageState extends State<LocationPage> {
     if (_permissionGranted == PermissionStatus.denied) {
       _permissionGranted = await location.requestPermission();
       if (_permissionGranted != PermissionStatus.granted) {
-        // final AndroidIntent intent = new AndroidIntent(
-        //   action: 'android.settings.LOCATION_SOURCE_SETTINGS',);
-        // intent.launch();
+        if (Platform.isAndroid) {
+          showCustomAlert();
+        }
       }
-        return;
-      }
-      else {
+      return;
+    } else {
+      _locationData = await location.getLocation();
+      print(_locationData.latitude);
     }
-
-    _locationData = await location.getLocation();
-    print(_locationData.latitude);
   }
 
-
+  showCustomAlert() {
+    var dialog = CustomAlertDialog(
+        title: "Внимание",
+        message: "Чтобы приложение работала корректно нужно дать разрешения ",
+        onPostivePressed: () {
+          Navigator.pop(context);
+          AppSettings.openAppSettings();
+        },
+        positiveBtnText: 'Ок',
+        negativeBtnText: 'Нет');
+    showDialog(context: context, builder: (BuildContext context) => dialog);
+  }
 }

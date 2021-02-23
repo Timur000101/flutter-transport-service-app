@@ -85,22 +85,17 @@ class _ProfilePageState extends State<ProfilePage> {
       var token = sharedPreferences.getString(AppConstants.key);
       UserDetail userDetail = await getUserDetail(userId, token);
 
-
-
-
-
-
       setState(() {
         String number = userDetail.phone.substring(1, userDetail.phone.length);
         phone =
         "+7 (${number.substring(1, 4)}) ${number.substring(4, 7)}-${number.substring(7, 9)}-${number.substring(9, 11)}";
         if (AppConstants.role) {
-          if (userDetail.ctoName != null) {
+          // if (userDetail.ctoName != null) {
             name = userDetail.ctoName;
-            if (userDetail.avatar !=
-                "${AppConstants.baseUrl}media/default/default.png")
-              avaURL = userDetail.avatar;
-          }
+            // if (userDetail.avatar !=
+            //     "${AppConstants.baseUrl}media/default/default.png")
+            avaURL = userDetail.avatar;
+          // }
           // if (userDetail.ctoLogo != null) {
           //   if (userDetail.ctoLogo !=
           //       "${AppConstants.baseUrl}media/default/default.png")
@@ -110,9 +105,9 @@ class _ProfilePageState extends State<ProfilePage> {
         }
         else {
           name = userDetail.nickname;
-          if (userDetail.avatar !=
-              "${AppConstants.baseUrl}media/default/default.png")
-            avaURL = userDetail.avatar;
+          // if (userDetail.avatar !=
+          //     "${AppConstants.baseUrl}media/default/default.png")
+          avaURL = userDetail.avatar;
         }
       });
 
@@ -142,6 +137,15 @@ class _ProfilePageState extends State<ProfilePage> {
       //   thirdPhone =
       //       "+7 (${number.substring(1, 4)}) ${number.substring(4, 7)}-${number.substring(7, 9)}-${number.substring(9, 11)}";
       // }
+      // if (userDetail.ctoName != "") {
+      //   AppConstants.isRegAsSTO = true;
+      // }
+      // setState(() {
+      //   name = userDetail.ctoName;
+      // });
+
+      // print("${userDetail.ctoName} 123456789");
+      // print("hello");
 
       sharedPreferences.setString(AppConstants.email, userDetail.email);
       sharedPreferences.setString(AppConstants.name, userDetail.nickname);

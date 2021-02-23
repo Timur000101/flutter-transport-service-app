@@ -41,7 +41,6 @@ class _OrderActivePageState extends State<OrderActivePage> {
           list.add(ActiveOrderCustomer.fromJson(i));
         }
 
-
         activeListCustomer= list;
       });
     } else {
