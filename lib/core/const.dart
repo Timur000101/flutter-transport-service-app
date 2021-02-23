@@ -12,7 +12,7 @@ class AppColors {
 }
 
 class AppConstants {
-  static final String baseUrl = "http://134.122.11.57/";
+  static final String baseUrl = "https://back.bumper-app.kz/";
   static final String getUserDetail = "users/detail/";
   static final String changeAvatar = "users/change/avatar/";
   static final String carsUrl = "cars/";
@@ -26,6 +26,8 @@ class AppConstants {
   static final String avatar = "avatar";
   static final String isClient =  "role";
   static final String isRegAsCto = "isregascto";
+  static final String secondPhone = "secondPhone";
+  static final String thirdPhone = "thirdPhone";
 
   static final String ctoLogo = "ctoAvatar";
   static final String ctoName = "ctoName";

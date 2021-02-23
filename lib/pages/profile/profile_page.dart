@@ -85,6 +85,11 @@ class _ProfilePageState extends State<ProfilePage> {
       var token = sharedPreferences.getString(AppConstants.key);
       UserDetail userDetail = await getUserDetail(userId, token);
 
+
+
+
+
+
       setState(() {
         String number = userDetail.phone.substring(1, userDetail.phone.length);
         phone =
@@ -111,21 +116,32 @@ class _ProfilePageState extends State<ProfilePage> {
         }
       });
 
-      if (userDetail.secondPhone != null) {
-        String number = userDetail.secondPhone
-            .toString()
-            .substring(1, userDetail.secondPhone.toString().length);
-        secondPhone =
-            "+7 (${number.substring(1, 4)}) ${number.substring(4, 7)}-${number.substring(7, 9)}-${number.substring(9, 11)}";
+
+      secondPhone = userDetail.secondPhone;
+      thirdPhone = userDetail.thirdPhone;
+
+      if (secondPhone.isNotEmpty) {
+        secondPhone = "+${secondPhone}";
+      }
+      if (thirdPhone.isNotEmpty) {
+        thirdPhone = "+${thirdPhone}";
       }
 
-      if (userDetail.thirdPhone != null) {
-        String number = userDetail.thirdPhone
-            .toString()
-            .substring(1, userDetail.thirdPhone.toString().length);
-        thirdPhone =
-            "+7 (${number.substring(1, 4)}) ${number.substring(4, 7)}-${number.substring(7, 9)}-${number.substring(9, 11)}";
-      }
+      // if (userDetail.secondPhone.isNotEmpty) {
+      //   String number = userDetail.secondPhone
+      //       .toString()
+      //       .substring(1, userDetail.secondPhone.toString().length);
+      //   secondPhone =
+      //       "+7 (${number.substring(1, 4)}) ${number.substring(4, 7)}-${number.substring(7, 9)}-${number.substring(9, 11)}";
+      // }
+      //
+      // if (userDetail.thirdPhone != null) {
+      //   String number = userDetail.thirdPhone
+      //       .toString()
+      //       .substring(1, userDetail.thirdPhone.toString().length);
+      //   thirdPhone =
+      //       "+7 (${number.substring(1, 4)}) ${number.substring(4, 7)}-${number.substring(7, 9)}-${number.substring(9, 11)}";
+      // }
 
       sharedPreferences.setString(AppConstants.email, userDetail.email);
       sharedPreferences.setString(AppConstants.name, userDetail.nickname);
@@ -135,6 +151,8 @@ class _ProfilePageState extends State<ProfilePage> {
       sharedPreferences.setString(AppConstants.ctoName, userDetail.ctoName);
       sharedPreferences.setString(AppConstants.ctoLogo, userDetail.ctoLogo);
       sharedPreferences.setString(AppConstants.ctoAddress, userDetail.ctoAddress);
+      sharedPreferences.setString(AppConstants.secondPhone, userDetail.secondPhone);
+      sharedPreferences.setString(AppConstants.thirdPhone, userDetail.thirdPhone);
     }
   }
 

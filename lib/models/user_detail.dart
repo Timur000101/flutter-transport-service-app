@@ -4,8 +4,8 @@ class UserDetail {
   String avatar;
   Null email;
   String nickname;
-  dynamic secondPhone;
-  dynamic thirdPhone;
+  String secondPhone;
+  String thirdPhone;
   String ctoName;
   String ctoLogo;
   Null ctoAddress;
