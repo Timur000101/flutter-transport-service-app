@@ -13,19 +13,21 @@ class StartUp extends StatelessWidget {
     return FutureBuilder<void>(
         future: isRegis(),
         builder: (context, AsyncSnapshot<void> snapshot) {
-          return getSplashScreen(HomePage());
+          return getSplashScreen(HomePage(), context);
         });
   }
 
-  Widget getSplashScreen(Widget wid) {
+  Widget getSplashScreen(Widget wid, context) {
     return SplashScreen(
         seconds: 2,
         navigateAfterSeconds: wid,
         title: new Text(
-          "Fast Service",
+          "Bumper.kz",
           textScaleFactor: 2,
         ),
-        image: new Image.asset('assets/images/logo_FS_color.jpg'),
+        image: new Image.asset('assets/images/logo_title.png',
+            width: MediaQuery.of(context).size.width - 100,
+            height: MediaQuery.of(context).size.width - 300),
         loadingText: Text("from R&D"),
         photoSize: 110.0,
         loaderColor: Colors.red);

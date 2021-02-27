@@ -1,12 +1,9 @@
 import 'dart:convert';
-
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:sto_app/core/const.dart';
 import 'package:sto_app/pages/auth/sms_page.dart';
-// import 'package:sto_app/pages/home_page.dart';
-// import 'package:sto_app/pages/sms_page.dart';
 import 'package:sto_app/utils/utils.dart';
 import 'package:http/http.dart' as http;
 import 'package:sto_app/utils/internet_manager.dart';
@@ -126,15 +123,16 @@ class _SignInState extends State<SignIn> {
                           margin: EdgeInsets.only(bottom: 20.0),
                           alignment: Alignment.center,
                           child: Image.asset(
-                            "assets/images/logo_FS_color.jpg",
+                            "assets/images/Logo.png",
                             width: MediaQuery.of(context).size.width - 100,
+                            height: MediaQuery.of(context).size.width- 200,
                           ),
                         ),
                         Container(
                           margin: EdgeInsets.only(bottom: 5.0),
                           alignment: Alignment.center,
                           child: Text(
-                            "Вход/Регистрация",
+                             "Вход/Регистрация",
                             style: TextStyle(
                                 color: AppColors.primaryTextColor,
                                 fontSize: 18),
