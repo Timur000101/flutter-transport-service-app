@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sto_app/models/sms_response.dart';
@@ -8,7 +7,6 @@ import 'package:sto_app/core/const.dart';
 import 'package:sto_app/pages/home_page.dart';
 import 'package:sto_app/utils/utils.dart';
 import 'package:sto_app/utils/internet_manager.dart';
-
 import 'package:http/http.dart' as http;
 
 Future<SmsResponse> verification(String phone, String code) async {
@@ -68,7 +66,6 @@ class _EnterSMSState extends State<EnterSMS> {
 
   @override
   void dispose() {
-    _timer = null;
     _timer.cancel();
     super.dispose();
   }

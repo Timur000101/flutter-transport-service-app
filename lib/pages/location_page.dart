@@ -50,7 +50,7 @@ class _LocationPageState extends State<LocationPage> {
 
     _permissionGranted = await location.hasPermission();
     if (_permissionGranted == PermissionStatus.denied) {
-      _permissionGranted = await location.requestPermission();
+       _permissionGranted = await location.requestPermission();
       if (_permissionGranted != PermissionStatus.granted) {
         if (Platform.isAndroid) {
           showCustomAlert();

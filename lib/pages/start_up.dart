@@ -36,11 +36,19 @@ class StartUp extends StatelessWidget {
     var isReg = prefs.getBool(AppConstants.isReg);
     var isRegAsCto = prefs.getBool(AppConstants.isRegAsCto);
     var role = prefs.get(AppConstants.isClient);
+
     if (role == null) {
       role = false;
     }
-    AppConstants.isreg = isReg;
-    AppConstants.isRegAsSTO = isRegAsCto;
-    AppConstants.role = role;
+
+    if (isReg != null) {
+      AppConstants.isreg = isReg;
+    }
+    if (isRegAsCto != null) {
+      AppConstants.isRegAsSTO = isRegAsCto;
+    }
+    if (role != null) {
+      AppConstants.role = role;
+    }
   }
 }

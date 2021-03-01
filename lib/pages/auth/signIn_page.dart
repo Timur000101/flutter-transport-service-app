@@ -12,8 +12,8 @@ import 'package:http/http.dart' as http;
 import 'package:sto_app/utils/internet_manager.dart';
 
 Future<String> registration(String phone, String name) async {
-  print(phone);
-  print(name);
+  // print(phone);
+  // print(name);
   final response = await http.post(AppConstants.baseUrl + "users/phone/",
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',

@@ -1,4 +1,4 @@
-package com.example.sto_app
+package com.bumper.sto_app
 
 import io.flutter.embedding.android.FlutterActivity
 

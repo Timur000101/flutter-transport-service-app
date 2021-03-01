@@ -3,6 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sto_app/core/const.dart';
 import 'package:sto_app/pages/home_page.dart';
 import 'package:sto_app/pages/start_up.dart';
+import 'package:sto_app/push_notification_service.dart';
 
 void main() async {
   runApp(MyApp());

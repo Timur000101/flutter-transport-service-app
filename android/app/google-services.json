@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "725445091207",
-    "project_id": "sto-app-7c0d3",
-    "storage_bucket": "sto-app-7c0d3.appspot.com"
+    "project_number": "749161694603",
+    "project_id": "bumper-ed6ea",
+    "storage_bucket": "bumper-ed6ea.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:725445091207:android:d9feda21312192f4f03d22",
+        "mobilesdk_app_id": "1:749161694603:android:e2de58c57b97b77e685b8e",
         "android_client_info": {
-          "package_name": "com.example.sto_app"
+          "package_name": "com.bumper.sto_app"
         }
       },
       "oauth_client": [
         {
-          "client_id": "725445091207-6nfu3utoe6bj86f8lfd2o4ut7ab7ne13.apps.googleusercontent.com",
+          "client_id": "749161694603-jqj8cqts30tua83pjutppa12gunk3nem.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyD8ZSeGpuRGAJWhcpPeaTzp-XJS6JUi2sY"
+          "current_key": "AIzaSyA04L6ezn-aXY9Kbl3x8PHx32TB7hjao30"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "725445091207-6nfu3utoe6bj86f8lfd2o4ut7ab7ne13.apps.googleusercontent.com",
+              "client_id": "749161694603-jqj8cqts30tua83pjutppa12gunk3nem.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

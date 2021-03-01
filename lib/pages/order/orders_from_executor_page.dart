@@ -1,13 +1,16 @@
 import 'dart:convert';
-
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sto_app/components/orderCard.dart';
 import 'package:sto_app/core/const.dart';
+import 'package:sto_app/utils/alert.dart';
 import 'package:sto_app/widgets/app_widgets.dart';
 import '../../models/order.dart';
 import 'package:http/http.dart' as http;
+import 'package:location/location.dart';
+import 'package:app_settings/app_settings.dart';
 
 class OrdersFromExecutorPage extends StatefulWidget {
   @override
@@ -21,8 +24,8 @@ class _OrdersFromExecutorPageState extends State<OrdersFromExecutorPage> {
 
   @override
   void initState() {
-    getOrders();
     super.initState();
+    _getCurrentlocation();
   }
 
   @override
@@ -31,17 +34,17 @@ class _OrdersFromExecutorPageState extends State<OrdersFromExecutorPage> {
         backgroundColor: HexColor("#EDF2F4"),
         appBar: buildAppBar("Заявки"),
         body: RefreshIndicator(
-        key: _refreshIndicatorKey,
-        onRefresh: _refresh,
-        child: Container(
-          child: ListView.builder(
-              itemCount: orderList.length,
-              itemBuilder: (context, int index) => OrderCard(
-                    order: orderList[index],
-                    index: index,
-                    callback: getOrders,
-                  )),
-        )));
+            key: _refreshIndicatorKey,
+            onRefresh: _refresh,
+            child: Container(
+              child: ListView.builder(
+                  itemCount: orderList.length,
+                  itemBuilder: (context, int index) => OrderCard(
+                        order: orderList[index],
+                        index: index,
+                        callback: getOrders,
+                      )),
+            )));
   }
 
   Future<String> getToken() async {
@@ -51,29 +54,82 @@ class _OrdersFromExecutorPageState extends State<OrdersFromExecutorPage> {
 
   Future<Null> _refresh() async {
     await Future.delayed(Duration(seconds: 2));
-    getOrders();
+    _getCurrentlocation();
     return null;
   }
 
-  getOrders() async {
+  getOrders(String lat, String lng) async {
+    // print("lat : $lat");
+    // print("lng : $lng");
     var token = await getToken();
-    await http.get(
-      "${AppConstants.baseUrl}order/request/",
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-          "Accept": "application/json",
-          "Authorization": "Token $token"
-        },
-      ).then((response) {
-        print(response.body);
-        List<Order> list = List<Order>();
-        var responseBody = jsonDecode(utf8.decode(response.body.codeUnits));
-        for (Object i in responseBody){
-          list.add(Order.fromJson(i));
+
+    var queryParams = {'lat': lat, 'lng': lng};
+
+    var uri = Uri.https("back.bumper-app.kz", "order/request/", queryParams);
+    var headers = {
+      'Content-Type': 'application/json; charset=UTF-8',
+      "Accept": "application/json",
+      "Authorization": "Token $token"
+    };
+
+    await http.get(uri, headers: headers).then((response) {
+      // print(response.body);
+      // print("asdkalsdjalkdjaksdjkaksdjaksd");
+      List<Order> list = List<Order>();
+      var responseBody = jsonDecode(utf8.decode(response.body.codeUnits));
+      for (Object i in responseBody) {
+        list.add(Order.fromJson(i));
+      }
+      setState(() {
+        orderList = list;
+      });
+    }).catchError((error) => print(error));
+  }
+
+  _getCurrentlocation() async {
+    Location location = new Location();
+    // location.changeSettings(accuracy: LocationAccuracy.high,interval: 1000, distanceFilter: 0 );
+
+    bool _serviceEnabled = false;
+    PermissionStatus _permissionGranted;
+    LocationData _locationData;
+
+    if (!_serviceEnabled) {
+      _serviceEnabled = await location.requestService();
+      if (!_serviceEnabled) {
+        return;
+      }
+    }
+
+    _permissionGranted = await location.hasPermission();
+    if (_permissionGranted == PermissionStatus.denied) {
+      _permissionGranted = await location.requestPermission();
+      if (_permissionGranted != PermissionStatus.granted) {
+        if (Platform.isAndroid) {
+          showCustomAlert();
         }
-        setState(() {
-          orderList = list;
-        });
-      }).catchError((error) => print(error));
+      }
+      return;
+    } else {
+      _locationData = await location.getLocation();
+      if (AppConstants.isreg) {
+        getOrders(_locationData.latitude.toString(),
+            _locationData.longitude.toString());
+      }
+      return;
+    }
+  }
+
+  showCustomAlert() {
+    var dialog = CustomAlertDialog(
+        title: "Внимание",
+        message: "Чтобы приложение работала корректно нужно дать разрешения ",
+        onPostivePressed: () {
+          Navigator.pop(context);
+          AppSettings.openAppSettings();
+        },
+        positiveBtnText: 'Ок',
+        negativeBtnText: 'Нет');
+    showDialog(context: context, builder: (BuildContext context) => dialog);
   }
 }
