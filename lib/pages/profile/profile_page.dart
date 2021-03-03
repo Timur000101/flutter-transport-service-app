@@ -26,8 +26,6 @@ import 'package:sto_app/utils/internet_manager.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'dart:io' show Platform;
 
-
-
 class ProfilePage extends StatefulWidget {
   @override
   _ProfilePageState createState() => _ProfilePageState();
@@ -44,7 +42,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
   bool isReg = false;
 
-  bool isSwitched =  false;
+  bool isSwitched = false;
 
   List<MenuItem> menu1 = [
     MenuItem(
@@ -60,6 +58,34 @@ class _ProfilePageState extends State<ProfilePage> {
     MenuItem(title: "О приложении", icon: Icons.warning_rounded)
   ];
 
+  sendDeviceToken() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    var isSended = sharedPreferences.getBool(AppConstants.isSendedDeviceToken);
+
+    if (isSended == null || isSended == false) {
+      var token = sharedPreferences.getString(AppConstants.key);
+      var deviceToken = sharedPreferences.getString(AppConstants.deviceToken);
+
+      var url = "${AppConstants.baseUrl}users/push/register/";
+      var headers = {
+        "Content-type": "application/json",
+        "Accept": "application/json",
+        "Authorization": "Token $token"
+      };
+      final response = await http.post(url, headers: headers, body: {
+        "reg_id": deviceToken,
+        "cmt": Platform.isAndroid ? "fcm" : "apn"
+      });
+
+      if (response.statusCode == 200) {
+        Map<String, dynamic> status = jsonDecode(response.body);
+        if (status['status'] == "ok") {
+          sharedPreferences.setBool(AppConstants.isSendedDeviceToken, true);
+        }
+      }
+    }
+  }
+
   Future<UserDetail> getUserDetail(int userId, String token) async {
     var url = "${AppConstants.baseUrl}${AppConstants.getUserDetail}$userId";
     final response = await http.get(url, headers: {
@@ -69,18 +95,16 @@ class _ProfilePageState extends State<ProfilePage> {
     });
 
     if (response.statusCode == 200) {
-
       return UserDetail.fromJson(jsonDecode(response.body));
     } else {
-
       throw Exception("Falied to getUserDetail");
     }
   }
+
   void getuserdetail() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     isReg = sharedPreferences.getBool(AppConstants.isReg);
     if (isReg == true) {
-
       var userId = sharedPreferences.getInt(AppConstants.uid);
       var token = sharedPreferences.getString(AppConstants.key);
       UserDetail userDetail = await getUserDetail(userId, token);
@@ -88,13 +112,13 @@ class _ProfilePageState extends State<ProfilePage> {
       setState(() {
         String number = userDetail.phone.substring(1, userDetail.phone.length);
         phone =
-        "+7 (${number.substring(1, 4)}) ${number.substring(4, 7)}-${number.substring(7, 9)}-${number.substring(9, 11)}";
+            "+7 (${number.substring(1, 4)}) ${number.substring(4, 7)}-${number.substring(7, 9)}-${number.substring(9, 11)}";
         if (AppConstants.role) {
           // if (userDetail.ctoName != null) {
-            name = userDetail.ctoName;
-            // if (userDetail.avatar !=
-            //     "${AppConstants.baseUrl}media/default/default.png")
-            avaURL = userDetail.avatar;
+          name = userDetail.ctoName;
+          // if (userDetail.avatar !=
+          //     "${AppConstants.baseUrl}media/default/default.png")
+          avaURL = userDetail.avatar;
           // }
           // if (userDetail.ctoLogo != null) {
           //   if (userDetail.ctoLogo !=
@@ -102,15 +126,13 @@ class _ProfilePageState extends State<ProfilePage> {
           //     avaURL = userDetail.ctoLogo;
           // }
 
-        }
-        else {
+        } else {
           name = userDetail.nickname;
           // if (userDetail.avatar !=
           //     "${AppConstants.baseUrl}media/default/default.png")
           avaURL = userDetail.avatar;
         }
       });
-
 
       secondPhone = userDetail.secondPhone;
       thirdPhone = userDetail.thirdPhone;
@@ -154,9 +176,12 @@ class _ProfilePageState extends State<ProfilePage> {
           userDetail.phone.substring(1, userDetail.phone.length));
       sharedPreferences.setString(AppConstants.ctoName, userDetail.ctoName);
       sharedPreferences.setString(AppConstants.ctoLogo, userDetail.ctoLogo);
-      sharedPreferences.setString(AppConstants.ctoAddress, userDetail.ctoAddress);
-      sharedPreferences.setString(AppConstants.secondPhone, userDetail.secondPhone);
-      sharedPreferences.setString(AppConstants.thirdPhone, userDetail.thirdPhone);
+      sharedPreferences.setString(
+          AppConstants.ctoAddress, userDetail.ctoAddress);
+      sharedPreferences.setString(
+          AppConstants.secondPhone, userDetail.secondPhone);
+      sharedPreferences.setString(
+          AppConstants.thirdPhone, userDetail.thirdPhone);
     }
   }
 
@@ -173,6 +198,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   "Внимание", "У вас нет соединения с интернетом!", context)
             }
         });
+    sendDeviceToken();
   }
 
   @override
@@ -228,7 +254,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) =>  MessagePage()));
+                                  builder: (context) => MessagePage()));
                         }
                       } else {
                         showCustomAlert();
@@ -397,15 +423,17 @@ class _ProfilePageState extends State<ProfilePage> {
                           value: AppConstants.role,
                           onChanged: (value) {
                             if (isReg == true) {
-                              if (AppConstants.isRegAsSTO == true){
-                                setState(()  {
+                              if (AppConstants.isRegAsSTO == true) {
+                                setState(() {
                                   AppConstants.role = value;
                                   changeRole();
                                 });
-                              }
-                              else{
-                                Navigator.push( context,
-                                  MaterialPageRoute(builder: (context) => CreateIdentifierPage()),
+                              } else {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          CreateIdentifierPage()),
                                 );
                               }
                             } else {
@@ -433,14 +461,14 @@ class _ProfilePageState extends State<ProfilePage> {
         ));
   }
 
-  getRole() async{
+  getRole() async {
     // SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     // var isReg = sharedPreferences.getBool(AppConstants.isReg);
     // if (isReg) {
     //   var role = sharedPreferences.getBool(AppConstants.isClient);
-      setState(() {
-        isSwitched = AppConstants.role;
-      });
+    setState(() {
+      isSwitched = AppConstants.role;
+    });
     // }
   }
 
@@ -455,22 +483,19 @@ class _ProfilePageState extends State<ProfilePage> {
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           );
   }
-  
+
   changeRole() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     if (!AppConstants.role) {
       sharedPreferences.setBool(AppConstants.isClient, false);
       avaURL = sharedPreferences.getString(AppConstants.avatar);
       name = sharedPreferences.getString(AppConstants.name);
-    }
-    else {
+    } else {
       sharedPreferences.setBool(AppConstants.isClient, true);
       avaURL = sharedPreferences.getString(AppConstants.ctoLogo);
       name = sharedPreferences.getString(AppConstants.ctoName);
     }
   }
-
-
 
   userRoleDescriptionText() {
     return !isSwitched
@@ -486,13 +511,13 @@ class _ProfilePageState extends State<ProfilePage> {
           );
   }
 
-
   showLogOutAlert() {
     var dialog = CustomAlertDialog(
         title: "Внимание",
-        message:"Вы действительно хотите выйти из аккаунта?",
-        onPostivePressed: ()async {
-          SharedPreferences sharedPreferences =  await SharedPreferences.getInstance();
+        message: "Вы действительно хотите выйти из аккаунта?",
+        onPostivePressed: () async {
+          SharedPreferences sharedPreferences =
+              await SharedPreferences.getInstance();
           sharedPreferences.clear();
           Navigator.push(
             context,
@@ -504,19 +529,18 @@ class _ProfilePageState extends State<ProfilePage> {
     showDialog(context: context, builder: (BuildContext context) => dialog);
   }
 
-
-  showCustomAlert()  {
+  showCustomAlert() {
     var dialog = CustomAlertDialog(
         title: "Внимание",
-        message:  "Вы не зарегистрированы, зарегистрироваться?",
-        onPostivePressed: ()   {
+        message: "Вы не зарегистрированы, зарегистрироваться?",
+        onPostivePressed: () {
           Navigator.pop(context);
           Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(
-              builder: (BuildContext context) =>SignIn(),
+              builder: (BuildContext context) => SignIn(),
             ),
-                (route) => false,
+            (route) => false,
           );
         },
         positiveBtnText: 'Да',

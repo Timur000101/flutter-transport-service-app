@@ -22,6 +22,7 @@ class _PushNotificationServiceState extends State<PushNotificationService> {
   String tkn = "";
   @override
   Widget build(BuildContext context) {
+    print(tkn);
     return Scaffold(
       appBar: AppBar(),
       body: Center(
@@ -45,6 +46,7 @@ class _PushNotificationServiceState extends State<PushNotificationService> {
     setState(() {
       tkn = tkn;
     });
+
   }
 
   _configureFirebaseListeners() {

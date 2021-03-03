@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sto_app/models/message.dart';
 import 'package:sto_app/pages/profile/message_item.dart';
 import "package:sto_app/widgets/app_widgets.dart";
 import 'package:sto_app/core/const.dart';
-
+import 'package:http/http.dart' as http;
 
 class MessagePage extends StatefulWidget {
   @override
@@ -21,7 +22,24 @@ class _MessagePageState extends State<MessagePage> {
     Message( word: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quaerat, ratione ...")
   ];
 
+  getMessage() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    var token = sharedPreferences.getString(AppConstants.key);
 
+    var url = "${AppConstants.baseUrl}users/my/message/";
+    final response = await http.get(url, headers: {
+      "Content-type": "application/json",
+      "Accept": "application/json",
+      "Authorization": "Token $token"
+    });
+
+    if  (response.statusCode == 200) {
+
+    }
+    else {
+
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,9 +61,10 @@ class _MessagePageState extends State<MessagePage> {
 
   Future<Null> _refresh() async {
     await Future.delayed(Duration(seconds: 2));
-    setState(() {
+    // getMessage();
+    // setState(() {
 
-    });
+    // });
     return null;
   }
 }

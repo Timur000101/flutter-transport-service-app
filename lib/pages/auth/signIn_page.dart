@@ -29,6 +29,7 @@ Future<String> registration(String phone, String name) async {
   }
 }
 
+
 class SignIn extends StatefulWidget {
   @override
   _SignInState createState() => _SignInState();
@@ -64,10 +65,7 @@ class _SignInState extends State<SignIn> {
       nickname,
     );
     Map<String, dynamic> status = jsonDecode(jsonString);
-    // print(status['status']);
-
     if (status['status'] == "ok") {
-      // print("status ok");
       Navigator.pop(context);
       Navigator.push(
         context,

@@ -33,6 +33,9 @@ class AppConstants {
   static final String ctoName = "ctoName";
   static final String ctoAddress = "ctoAddress";
 
+  static final String deviceToken = "deviceToken";
+  static final String isSendedDeviceToken = "isSendedDeviceToken";
+
   /////////////////////////////////
   static bool isRegAsSTO =  false;
   static bool isreg = false;
