@@ -197,11 +197,11 @@ class OrderActiveItem extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 5),
               child: Text(
-                "Sherlock Holmes",
+                active.service.name,
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
             ),
-            Text("+7781661021",
+            Text("Sherlock Holems",
                 style: TextStyle(color: AppColors.primaryTextColor)),
             Padding(
               padding: const EdgeInsets.all(8.0),

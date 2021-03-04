@@ -8,7 +8,7 @@ class UserDetail {
   String thirdPhone;
   String ctoName;
   String ctoLogo;
-  Null ctoAddress;
+  String ctoAddress;
 
   UserDetail(
       {this.id,

@@ -76,7 +76,7 @@ class _EnterSMSState extends State<EnterSMS> {
     if (smsResponse.status == "ok") {
       saveToLocal(
           phone, smsResponse.key, smsResponse.nickname, smsResponse.uid);
-
+      AppConstants.isreg = true;
       Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(

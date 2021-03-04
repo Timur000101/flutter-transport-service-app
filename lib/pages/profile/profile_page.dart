@@ -59,28 +59,33 @@ class _ProfilePageState extends State<ProfilePage> {
   ];
 
   sendDeviceToken() async {
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    var isSended = sharedPreferences.getBool(AppConstants.isSendedDeviceToken);
+    // print(AppConstants.isreg);
+    if (AppConstants.isreg) {
+      SharedPreferences sharedPreferences =
+          await SharedPreferences.getInstance();
+      var isSended =
+          sharedPreferences.getBool(AppConstants.isSendedDeviceToken);
+      // print(isSended);
+      if (isSended == null || isSended == false) {
+        var token = sharedPreferences.getString(AppConstants.key);
+        var deviceToken = sharedPreferences.getString(AppConstants.deviceToken);
+        // print(deviceToken);
+        var url = "${AppConstants.baseUrl}users/push/register/";
+        var headers = {
+          "Accept": "application/json",
+          "Authorization": "Token $token"
+        };
+        final response = await http.post(url, headers: headers, body: {
+          "reg_id": deviceToken,
+          "cmt": Platform.isAndroid ? "fcm" : "apn"
+        });
 
-    if (isSended == null || isSended == false) {
-      var token = sharedPreferences.getString(AppConstants.key);
-      var deviceToken = sharedPreferences.getString(AppConstants.deviceToken);
-
-      var url = "${AppConstants.baseUrl}users/push/register/";
-      var headers = {
-        "Content-type": "application/json",
-        "Accept": "application/json",
-        "Authorization": "Token $token"
-      };
-      final response = await http.post(url, headers: headers, body: {
-        "reg_id": deviceToken,
-        "cmt": Platform.isAndroid ? "fcm" : "apn"
-      });
-
-      if (response.statusCode == 200) {
-        Map<String, dynamic> status = jsonDecode(response.body);
-        if (status['status'] == "ok") {
-          sharedPreferences.setBool(AppConstants.isSendedDeviceToken, true);
+        if (response.statusCode == 200) {
+          Map<String, dynamic> status = jsonDecode(response.body);
+          if (status['status'] == "ok") {
+            sharedPreferences.setBool(AppConstants.isSendedDeviceToken, true);
+            print("sended device token");
+          }
         }
       }
     }
@@ -137,10 +142,10 @@ class _ProfilePageState extends State<ProfilePage> {
       secondPhone = userDetail.secondPhone;
       thirdPhone = userDetail.thirdPhone;
 
-      if (secondPhone.isNotEmpty) {
+      if (secondPhone != null) {
         secondPhone = "+${secondPhone}";
       }
-      if (thirdPhone.isNotEmpty) {
+      if (thirdPhone != null) {
         thirdPhone = "+${thirdPhone}";
       }
 
@@ -191,6 +196,7 @@ class _ProfilePageState extends State<ProfilePage> {
     getRole();
     checkInternetConnection().then((value) => {
           if (value)
+
             {getuserdetail()}
           else
             {
