@@ -30,15 +30,15 @@ class MessageItem extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Container(
-              width: 10,
-              height: 10,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(20),
-                  ),
-                  color: Colors.red),
-            ),
+            // Container(
+            //   width: 10,
+            //   height: 10,
+            //   decoration: BoxDecoration(
+            //       borderRadius: BorderRadius.all(
+            //         Radius.circular(20),
+            //       ),
+            //       color:    message.isReaded ? Colors.transparent:  Colors.red),
+            // ),
             Flexible(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -47,28 +47,28 @@ class MessageItem extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(
                         vertical: 6, horizontal: 10),
                     child: Text(
-                        'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quaerat, ratione ...',
+                        message.text,
                         style: TextStyle(color: AppColors.primaryTextColor,)),
                   ),
                 ],
               ),
             ),
-            GestureDetector(
-              child: Container(
-                  padding: EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                      color: AppColors.lightColor,
-                      borderRadius: BorderRadius.circular(30),
-                      boxShadow: [
-                        BoxShadow(
-                            color: Colors.black12.withOpacity(0.1),
-                            spreadRadius: 3,
-                            blurRadius: 7,
-                            offset: Offset(0, 1))
-                      ]),
-                  child: Icon(Icons.arrow_forward_ios_rounded)
-              ),
-            )
+            // GestureDetector(
+            //   child: Container(
+            //       padding: EdgeInsets.all(10),
+            //       decoration: BoxDecoration(
+            //           color: AppColors.lightColor,
+            //           borderRadius: BorderRadius.circular(30),
+            //           boxShadow: [
+            //             BoxShadow(
+            //                 color: Colors.black12.withOpacity(0.1),
+            //                 spreadRadius: 3,
+            //                 blurRadius: 7,
+            //                 offset: Offset(0, 1))
+            //           ]),
+            //       child: Icon(Icons.arrow_forward_ios_rounded)
+            //   ),
+            // )
           ],
         ),
       )

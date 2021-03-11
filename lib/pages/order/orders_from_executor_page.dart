@@ -10,7 +10,7 @@ import 'package:sto_app/widgets/app_widgets.dart';
 import '../../models/order.dart';
 import 'package:http/http.dart' as http;
 import 'package:location/location.dart';
-import 'package:app_settings/app_settings.dart';
+// import 'package:app_settings/app_settings.dart';
 
 class OrdersFromExecutorPage extends StatefulWidget {
   @override
@@ -62,7 +62,6 @@ class _OrdersFromExecutorPageState extends State<OrdersFromExecutorPage> {
     // print("lat : $lat");
     // print("lng : $lng");
     var token = await getToken();
-
     var queryParams = {'lat': lat, 'lng': lng};
 
     var uri = Uri.https("back.bumper-app.kz", "order/request/", queryParams);
@@ -112,10 +111,10 @@ class _OrdersFromExecutorPageState extends State<OrdersFromExecutorPage> {
       return;
     } else {
       _locationData = await location.getLocation();
-      if (AppConstants.isreg) {
+      // if (AppConstants.isreg) {
         getOrders(_locationData.latitude.toString(),
             _locationData.longitude.toString());
-      }
+      // }
       return;
     }
   }
@@ -126,7 +125,7 @@ class _OrdersFromExecutorPageState extends State<OrdersFromExecutorPage> {
         message: "Чтобы приложение работала корректно нужно дать разрешения ",
         onPostivePressed: () {
           Navigator.pop(context);
-          AppSettings.openAppSettings();
+          // AppSettings.openAppSettings();
         },
         positiveBtnText: 'Ок',
         negativeBtnText: 'Нет');

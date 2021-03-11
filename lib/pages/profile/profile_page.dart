@@ -58,17 +58,16 @@ class _ProfilePageState extends State<ProfilePage> {
   ];
 
   sendDeviceToken() async {
-    // print(AppConstants.isreg);
-    if (AppConstants.isreg) {
-      SharedPreferences sharedPreferences =
-          await SharedPreferences.getInstance();
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+
+    var isReg = sharedPreferences.getBool(AppConstants.isReg);
+    if (isReg == true) {
       var isSended =
           sharedPreferences.getBool(AppConstants.isSendedDeviceToken);
-      // print(isSended);
       if (isSended == null || isSended == false) {
         var token = sharedPreferences.getString(AppConstants.key);
         var deviceToken = sharedPreferences.getString(AppConstants.deviceToken);
-        // print(deviceToken);
+        print(deviceToken);
         var url = "${AppConstants.baseUrl}users/push/register/";
         var headers = {
           "Accept": "application/json",
@@ -119,6 +118,7 @@ class _ProfilePageState extends State<ProfilePage> {
             "+7 (${number.substring(1, 4)}) ${number.substring(4, 7)}-${number.substring(7, 9)}-${number.substring(9, 11)}";
         if (AppConstants.role) {
           // if (userDetail.ctoName != null) {
+          print(userDetail.ctoName);
           name = userDetail.ctoName;
           // if (userDetail.avatar !=
           //     "${AppConstants.baseUrl}media/default/default.png")

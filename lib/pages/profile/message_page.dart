@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sto_app/models/message.dart';
@@ -16,11 +18,7 @@ class _MessagePageState extends State<MessagePage> {
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
   new GlobalKey<RefreshIndicatorState>();
 
-  final List<Message> messages = [
-    Message( word: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quaerat, ratione ..."),
-    Message( word: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quaerat, ratione ..."),
-    Message( word: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quaerat, ratione ...")
-  ];
+  List<Message> messages = [];
 
   getMessage() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
@@ -32,13 +30,26 @@ class _MessagePageState extends State<MessagePage> {
       "Accept": "application/json",
       "Authorization": "Token $token"
     });
-
     if  (response.statusCode == 200) {
-
+      List<Message> list = List<Message>();
+      var responseBody = jsonDecode(utf8.decode(response.body.codeUnits));
+      for (Object i in responseBody) {
+        list.add(Message.fromJson(i));
+      }
+      setState(() {
+        messages = list;
+      });
     }
     else {
-
+       throw ("failed get message");
     }
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _refresh();
   }
 
   @override
@@ -60,11 +71,8 @@ class _MessagePageState extends State<MessagePage> {
   }
 
   Future<Null> _refresh() async {
-    await Future.delayed(Duration(seconds: 2));
-    // getMessage();
-    // setState(() {
-
-    // });
+    // await Future.delayed(Duration(seconds: 2));
+    getMessage();
     return null;
   }
 }

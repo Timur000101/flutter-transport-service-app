@@ -167,6 +167,8 @@ class _CreateIdentifierPageState extends State<CreateIdentifierPage> {
   sendID(String id, context) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     var token = sharedPreferences.getString(AppConstants.key);
+    print(id);
+    print(token);
     final response = await http.post(AppConstants.baseUrl + "users/login/cto/",
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
@@ -177,7 +179,7 @@ class _CreateIdentifierPageState extends State<CreateIdentifierPage> {
           'id': id,
         }));
     if (response.statusCode == 200) {
-      print(response.body);
+      // print(response.body);
       var model = CreateIdentifier.fromJson(jsonDecode(response.body));
       AppConstants.isRegAsSTO = true;
       AppConstants.role = true;

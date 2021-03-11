@@ -2,7 +2,7 @@ class UserDetail {
   int id;
   String phone;
   String avatar;
-  Null email;
+  String email;
   String nickname;
   String secondPhone;
   String thirdPhone;

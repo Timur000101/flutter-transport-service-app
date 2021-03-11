@@ -230,6 +230,13 @@ class _SignInState extends State<SignIn> {
                           child: RaisedButton(
                             onPressed: () {
                               if (_formKey.currentState.validate()) {
+                                if (phoneController.text.length < 12)
+                                {
+                                  Scaffold.of(context).showSnackBar(SnackBar(
+                                      content: Text(
+                                          'Введите корректный номер телефона')));
+                                }
+                                else {
                                 setState(() {
                                   isLoading = true;
                                 });
@@ -256,7 +263,7 @@ class _SignInState extends State<SignIn> {
                                 if (!currentFocus.hasPrimaryFocus) {
                                   currentFocus.unfocus();
                                 }
-                              }
+                              }}
                             },
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10.0),

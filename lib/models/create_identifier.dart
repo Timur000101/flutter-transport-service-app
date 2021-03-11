@@ -2,7 +2,7 @@ class CreateIdentifier {
   String ctoName;
   String key;
   String ctoLogo;
-  Null ctoAddress;
+  String ctoAddress;
 
   CreateIdentifier({this.ctoName, this.key, this.ctoLogo, this.ctoAddress});
 
