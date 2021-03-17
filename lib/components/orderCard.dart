@@ -226,7 +226,7 @@ class _OrderCardState extends State<OrderCard> {
 
   sendAccept() async{
     var token = await getToken();
-    final response = await http.post(AppConstants.baseUrl + "order/request/accept/${widget.order.id}",
+    final response = await http.post(AppConstants.baseUrl + "order/accept/${widget.order.id}",
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
         "Accept": "application/json",
@@ -244,7 +244,7 @@ class _OrderCardState extends State<OrderCard> {
 
   sendDecline() async{
     var token = await getToken();
-    final response = await http.post(AppConstants.baseUrl + "order/request/decline/${widget.order.id}",
+    final response = await http.post(AppConstants.baseUrl + "order/decline/${widget.order.id}",
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
         "Accept": "application/json",

@@ -1,11 +1,13 @@
+import 'package:sto_app/models/car.dart';
+
 class ActiveOrderCustomer {
   int id;
   Car car;
   String about;
   Service service;
-  Service subservice;
-  int owner;
-  List<OrderImg> orderImg;
+  String subservice;
+  Owner owner;
+  List<dynamic> orderImg;
   bool inWork;
   bool isFinished;
 
@@ -26,14 +28,12 @@ class ActiveOrderCustomer {
     about = json['about'];
     service =
     json['service'] != null ? new Service.fromJson(json['service']) : null;
-    subservice = json['subservice'] != null
-        ? new Service.fromJson(json['subservice'])
-        : null;
-    owner = json['owner'];
+    subservice = json['subservice'];
+    owner = json['owner'] != null ? new Owner.fromJson(json['owner']) : null;
     if (json['order_img'] != null) {
-      orderImg = new List<OrderImg>();
+      orderImg = new List<dynamic>();
       json['order_img'].forEach((v) {
-        orderImg.add(new OrderImg.fromJson(v));
+        orderImg.add(v);
       });
     }
     inWork = json['in_work'];
@@ -50,10 +50,10 @@ class ActiveOrderCustomer {
     if (this.service != null) {
       data['service'] = this.service.toJson();
     }
-    if (this.subservice != null) {
-      data['subservice'] = this.subservice.toJson();
+    data['subservice'] = this.subservice;
+    if (this.owner != null) {
+      data['owner'] = this.owner.toJson();
     }
-    data['owner'] = this.owner;
     if (this.orderImg != null) {
       data['order_img'] = this.orderImg.map((v) => v.toJson()).toList();
     }
@@ -63,69 +63,69 @@ class ActiveOrderCustomer {
   }
 }
 
-class Car {
-  int id;
-  List<CarImg> carImg;
-  String name;
-  int year;
-  double size;
-  double milage;
-  int user;
+// class Car {
+//   int id;
+//   List<CarImg> carImg;
+//   String name;
+//   int year;
+//   int size;
+//   int milage;
+//   int user;
+//
+//   Car(
+//       {this.id,
+//         this.carImg,
+//         this.name,
+//         this.year,
+//         this.size,
+//         this.milage,
+//         this.user});
+//
+//   Car.fromJson(Map<String, dynamic> json) {
+//     id = json['id'];
+//     if (json['car_img'] != null) {
+//       carImg = new List<CarImg>();
+//       json['car_img'].forEach((v) {
+//         carImg.add(new CarImg.fromJson(v));
+//       });
+//     }
+//     name = json['name'];
+//     year = json['year'];
+//     size = json['size'];
+//     milage = json['milage'];
+//     user = json['user'];
+//   }
+//
+//   Map<String, dynamic> toJson() {
+//     final Map<String, dynamic> data = new Map<String, dynamic>();
+//     data['id'] = this.id;
+//     if (this.carImg != null) {
+//       data['car_img'] = this.carImg.map((v) => v.toJson()).toList();
+//     }
+//     data['name'] = this.name;
+//     data['year'] = this.year;
+//     data['size'] = this.size;
+//     data['milage'] = this.milage;
+//     data['user'] = this.user;
+//     return data;
+//   }
+// }
 
-  Car(
-      {this.id,
-        this.carImg,
-        this.name,
-        this.year,
-        this.size,
-        this.milage,
-        this.user});
-
-  Car.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    if (json['car_img'] != null) {
-      carImg = new List<CarImg>();
-      json['car_img'].forEach((v) {
-        carImg.add(new CarImg.fromJson(v));
-      });
-    }
-    name = json['name'];
-    year = json['year'];
-    size = json['size'];
-    milage = json['milage'];
-    user = json['user'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    if (this.carImg != null) {
-      data['car_img'] = this.carImg.map((v) => v.toJson()).toList();
-    }
-    data['name'] = this.name;
-    data['year'] = this.year;
-    data['size'] = this.size;
-    data['milage'] = this.milage;
-    data['user'] = this.user;
-    return data;
-  }
-}
-
-class CarImg {
-  String image;
-
-  CarImg({this.image});
-
-  CarImg.fromJson(Map<String, dynamic> json) {
-    image = json['image'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['image'] = this.image;
-    return data;
-  }
-}
+// class CarImg {
+//   String image;
+//
+//   CarImg({this.image});
+//
+//   CarImg.fromJson(Map<String, dynamic> json) {
+//     image = json['image'];
+//   }
+//
+//   Map<String, dynamic> toJson() {
+//     final Map<String, dynamic> data = new Map<String, dynamic>();
+//     data['image'] = this.image;
+//     return data;
+//   }
+// }
 
 class Service {
   String name;
@@ -143,21 +143,43 @@ class Service {
   }
 }
 
-class OrderImg {
+class Owner {
   int id;
-  String image;
+  String phone;
+  String avatar;
+  Null email;
+  String nickname;
+  Null secondPhone;
+  Null thirdPhone;
 
-  OrderImg({this.id, this.image});
+  Owner(
+      {this.id,
+        this.phone,
+        this.avatar,
+        this.email,
+        this.nickname,
+        this.secondPhone,
+        this.thirdPhone});
 
-  OrderImg.fromJson(Map<String, dynamic> json) {
+  Owner.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    image = json['image'];
+    phone = json['phone'];
+    avatar = json['avatar'];
+    email = json['email'];
+    nickname = json['nickname'];
+    secondPhone = json['second_phone'];
+    thirdPhone = json['third_phone'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
-    data['image'] = this.image;
+    data['phone'] = this.phone;
+    data['avatar'] = this.avatar;
+    data['email'] = this.email;
+    data['nickname'] = this.nickname;
+    data['second_phone'] = this.secondPhone;
+    data['third_phone'] = this.thirdPhone;
     return data;
   }
 }
