@@ -70,7 +70,7 @@ class OrderActiveItem extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 4),
                 child: Text(
                   active.service.name == "Мойка" ? "":
-                  active.subservice,
+                  active.subservice.name,
                   style: TextStyle(color: AppColors.primaryTextColor),
                 ),
               ),

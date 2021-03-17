@@ -4,9 +4,9 @@ class ActiveOrderCustomer {
   int id;
   Car car;
   String about;
-  Service service;
-  String subservice;
-  Owner  owner;
+  dynamic service;
+  dynamic subservice;
+  Owner owner;
   List<dynamic> orderImg;
   bool inWork;
   bool isFinished;
@@ -28,7 +28,9 @@ class ActiveOrderCustomer {
     about = json['about'];
     service =
     json['service'] != null ? new Service.fromJson(json['service']) : null;
-    subservice = json['subservice'];
+    subservice = json['subservice'] != null
+        ? new Service.fromJson(json['subservice'])
+        : null;
     owner = json['owner'] != null ? new Owner.fromJson(json['owner']) : null;
     if (json['order_img'] != null) {
       orderImg = new List<dynamic>();
@@ -50,7 +52,9 @@ class ActiveOrderCustomer {
     if (this.service != null) {
       data['service'] = this.service.toJson();
     }
-    data['subservice'] = this.subservice;
+    if (this.subservice != null) {
+      data['subservice'] = this.subservice.toJson();
+    }
     if (this.owner != null) {
       data['owner'] = this.owner.toJson();
     }
@@ -110,7 +114,7 @@ class ActiveOrderCustomer {
 //     return data;
 //   }
 // }
-
+//
 // class CarImg {
 //   String image;
 //
@@ -147,10 +151,10 @@ class Owner {
   int id;
   String phone;
   String avatar;
-  Null email;
+  String email;
   String nickname;
-  Null secondPhone;
-  Null thirdPhone;
+  String secondPhone;
+  String thirdPhone;
 
   Owner(
       {this.id,

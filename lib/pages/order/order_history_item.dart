@@ -62,7 +62,7 @@ class OrderHistoryItem extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(top: 4),
                 child: Text(
-                  orderHistory.subservice,
+                  orderHistory.subservice.name,
                   style: TextStyle(color: AppColors.primaryTextColor),
                 ),
               ),
