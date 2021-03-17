@@ -24,7 +24,8 @@ class _AboutAppPageState extends State<AboutAppPage> {
           Padding(
             padding: const EdgeInsets.all(20.0),
             child: Image.asset(
-              "assets/images/logo_FS_color.jpg",
+              "assets/images/Logo.png",
+              height: MediaQuery.of(context).size.width/2,
               width: MediaQuery.of(context).size.width - 100,
             ),
           ),

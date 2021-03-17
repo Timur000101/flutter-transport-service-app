@@ -118,7 +118,7 @@ class _ProfilePageState extends State<ProfilePage> {
             "+7 (${number.substring(1, 4)}) ${number.substring(4, 7)}-${number.substring(7, 9)}-${number.substring(9, 11)}";
         if (AppConstants.role) {
           // if (userDetail.ctoName != null) {
-          print(userDetail.ctoName);
+          // print(userDetail.ctoName);
           name = userDetail.ctoName;
           // if (userDetail.avatar !=
           //     "${AppConstants.baseUrl}media/default/default.png")

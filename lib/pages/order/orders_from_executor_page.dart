@@ -65,58 +65,30 @@ class _OrdersFromExecutorPageState extends State<OrdersFromExecutorPage> {
     var token = await getToken();
     // var queryParams = {'lat':  lat, 'lng': lng};
 
+    Map<String, dynamic> queryParameters = {
+      'lat':  lat, 'lng': lng
+    };
 
-    final request = Request('GET', Uri.https( "back.bumper-app.kz" , "order/request/"));
-
-    request.body = "{'lat':  $lat, 'lng': $lng}";
-
-    final sresponse = request.send();
-    // var response = await http.Response.fromStream(sresponse);
-
-    // var temp = jsonEncode(response);
-    // print(temp);
-    // print(response.toString());
-    final respStr = await sresponse..statusCode;
-    // print(respStr.stream.bytesToString());
-    respStr.stream.bytesToString().then((value) => () {
-          print(value);
-    });
-    // response.whenComplete(() => (value) {
-    //   print("asd");
-    //   print(value);
-    // });
-    // response.then((value) => () {
-    //   print("asdasd");
-    //   print(value);
-    // });
+    var uri = Uri.https("back.bumper-app.kz", "order/request/", queryParameters);
+    var headers = {
+      'Content-Type': 'application/json; charset=UTF-8',
+      "Accept": "application/json",
+      "Authorization": "Token $token"
+    };
 
 
-
-    // await get('http://example.com/api/v1?id=1', headers: headers, body: json).whenComplete(() => ())
-    // Map<String, String> queryParameters = {
-    //   'lat':  lat, 'lng': lng
-    // };
-    //
-    // var uri = Uri.https("back.bumper-app.kz", "order/request/", queryParameters);
-    // var headers = {
-    //   // 'Content-Type': 'application/json; charset=UTF-8',
-    //   // "Accept": "application/json",
-    //   "Authorization": "Token $token"
-    // };
-    //
-    //
-    // await http.get(uri, headers: headers,  ).then((response) {
-    //   print("asdkalsdjalkdjaksdjkaksdjaksd");
-    //   print(response.body);
-    //   List<Order> list = List<Order>();
-    //   var responseBody = jsonDecode(utf8.decode(response.body.codeUnits));
-    //   for (Object i in responseBody) {
-    //     list.add(Order.fromJson(i));
-    //   }
-    //   setState(() {
-    //     orderList = list;
-    //   });
-    // }).catchError((error) => print(error));
+    await http.get(uri, headers: headers,  ).then((response) {
+      print("asdkalsdjalkdjaksdjkaksdjaksd");
+      print(response.body);
+      List<Order> list = List<Order>();
+      var responseBody = jsonDecode(utf8.decode(response.body.codeUnits));
+      for (Object i in responseBody) {
+        list.add(Order.fromJson(i));
+      }
+      setState(() {
+        orderList = list;
+      });
+    }).catchError((error) => print(error));
   }
 
   _getCurrentlocation() async {
