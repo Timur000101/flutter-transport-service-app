@@ -125,11 +125,11 @@ class OrderActiveItem extends StatelessWidget {
       ],
     );
   }
-  void whatsAppOpen(String phone,message) async {
-    String url = "whatsapp://send?phone=$phone%text=$message";
-    await  launch(url);
+  // void whatsAppOpen(String phone,message) async {
+  //   String url = "whatsapp://send?phone=$phone%text=$message";
+  //   await  launch(url);
 
-  }
+  // }
 
   void finishOrder(context) async{
     var token = await getToken();
@@ -211,7 +211,8 @@ class OrderActiveItem extends StatelessWidget {
                   ElevatedButton.icon(
                       onPressed: () async {
                         var phone = "77781661021";
-                        whatsAppOpen(phone, "");
+                        _launchURL(phone);
+                        // whatsAppOpen(phone, "");
                         // var message = "hi";
                         // urlMessage(message, phone);
                       },
@@ -267,7 +268,22 @@ class OrderActiveItem extends StatelessWidget {
       ),
     );
   }
+  _launchURL(phone) async {
+    var url = "https://wa.me/$phone";
 
+    // if (Platform.isAndroid) {
+    //   url = "https://play.google.com/store/apps/";
+    // }
+    // if (Platform.isIOS) {
+    //   url = 'https://apple.com';
+    // }
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+}
 
 
   // String urlMessage(String message, String phone) {
@@ -279,4 +295,4 @@ class OrderActiveItem extends StatelessWidget {
   //     return "https://api.whatsapp.com/send?phone=$phone=${Uri.parse(message)}"; // new line
   //   }
   // }
-}
+
