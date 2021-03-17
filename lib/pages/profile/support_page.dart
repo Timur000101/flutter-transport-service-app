@@ -23,8 +23,9 @@ class _SupportPageState extends State<SupportPage> {
           Padding(
             padding: const EdgeInsets.all(20.0),
             child: Image.asset(
-              "assets/images/logo_FS_color.jpg",
+              "assets/images/Logo.png",
               width: MediaQuery.of(context).size.width - 100,
+              height: MediaQuery.of(context).size.width/2,
             ),
           ),
           Padding(
@@ -69,7 +70,7 @@ class _SupportPageState extends State<SupportPage> {
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 5),
                         child: Text(
-                          '+7(778)357-92-79',
+                          '+7(777)312-10-39',
                           style: TextStyle(color: AppColors.mainTextColor,fontSize: 14),
                         ),
                       ),
@@ -133,7 +134,7 @@ class _SupportPageState extends State<SupportPage> {
                         padding: const EdgeInsets.symmetric(horizontal: 5),
                         child: SizedBox(
                           child: Text(
-                            'support@bumper.kz',
+                            'bumperala@gmail.com',
                             style: TextStyle(color: AppColors.mainTextColor,fontSize: 14),
                           ),
                         ),
@@ -198,7 +199,7 @@ class _SupportPageState extends State<SupportPage> {
                         padding: const EdgeInsets.symmetric(horizontal: 5),
                         child: SizedBox(
                           child: Text(
-                            'Bumper.kz',
+                            'bumper-app.kz',
                             style: TextStyle(color: AppColors.mainTextColor,fontSize: 14),
                           ),
                         ),

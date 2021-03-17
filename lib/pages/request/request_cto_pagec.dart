@@ -298,6 +298,8 @@ class _RequestCtoPageState extends State<RequestCtoPage> {
           }
         ));
         if (response.statusCode == 200) {
+          print("reqs=ues");
+          print(response.body);
           final snackBar = SnackBar(content: Text('Заявка отправлена, ждите...'));
           globalKey.currentState.showSnackBar(snackBar);
           await Future.delayed(Duration(seconds: 3));

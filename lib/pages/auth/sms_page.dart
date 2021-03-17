@@ -133,6 +133,7 @@ class _EnterSMSState extends State<EnterSMS> {
         appBar: AppBar(
           backgroundColor: Colors.white,
           elevation: 0,
+          brightness: Brightness.light,
         ),
         body: Form(
             key: _formKey,

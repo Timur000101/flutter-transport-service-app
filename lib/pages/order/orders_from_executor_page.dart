@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sto_app/components/orderCard.dart';
 import 'package:sto_app/core/const.dart';
@@ -59,30 +60,63 @@ class _OrdersFromExecutorPageState extends State<OrdersFromExecutorPage> {
   }
 
   getOrders(String lat, String lng) async {
-    // print("lat : $lat");
-    // print("lng : $lng");
+    print("lat : $lat");
+    print("lng : $lng");
     var token = await getToken();
-    var queryParams = {'lat': lat, 'lng': lng};
+    // var queryParams = {'lat':  lat, 'lng': lng};
 
-    var uri = Uri.https("back.bumper-app.kz", "order/request/", queryParams);
-    var headers = {
-      'Content-Type': 'application/json; charset=UTF-8',
-      "Accept": "application/json",
-      "Authorization": "Token $token"
-    };
 
-    await http.get(uri, headers: headers).then((response) {
-      // print(response.body);
-      // print("asdkalsdjalkdjaksdjkaksdjaksd");
-      List<Order> list = List<Order>();
-      var responseBody = jsonDecode(utf8.decode(response.body.codeUnits));
-      for (Object i in responseBody) {
-        list.add(Order.fromJson(i));
-      }
-      setState(() {
-        orderList = list;
-      });
-    }).catchError((error) => print(error));
+    final request = Request('GET', Uri.https( "back.bumper-app.kz" , "order/request/"));
+
+    request.body = "{'lat':  $lat, 'lng': $lng}";
+
+    final sresponse = request.send();
+    // var response = await http.Response.fromStream(sresponse);
+
+    // var temp = jsonEncode(response);
+    // print(temp);
+    // print(response.toString());
+    final respStr = await sresponse..statusCode;
+    // print(respStr.stream.bytesToString());
+    respStr.stream.bytesToString().then((value) => () {
+          print(value);
+    });
+    // response.whenComplete(() => (value) {
+    //   print("asd");
+    //   print(value);
+    // });
+    // response.then((value) => () {
+    //   print("asdasd");
+    //   print(value);
+    // });
+
+
+
+    // await get('http://example.com/api/v1?id=1', headers: headers, body: json).whenComplete(() => ())
+    // Map<String, String> queryParameters = {
+    //   'lat':  lat, 'lng': lng
+    // };
+    //
+    // var uri = Uri.https("back.bumper-app.kz", "order/request/", queryParameters);
+    // var headers = {
+    //   // 'Content-Type': 'application/json; charset=UTF-8',
+    //   // "Accept": "application/json",
+    //   "Authorization": "Token $token"
+    // };
+    //
+    //
+    // await http.get(uri, headers: headers,  ).then((response) {
+    //   print("asdkalsdjalkdjaksdjkaksdjaksd");
+    //   print(response.body);
+    //   List<Order> list = List<Order>();
+    //   var responseBody = jsonDecode(utf8.decode(response.body.codeUnits));
+    //   for (Object i in responseBody) {
+    //     list.add(Order.fromJson(i));
+    //   }
+    //   setState(() {
+    //     orderList = list;
+    //   });
+    // }).catchError((error) => print(error));
   }
 
   _getCurrentlocation() async {

@@ -67,7 +67,7 @@ class _ProfilePageState extends State<ProfilePage> {
       if (isSended == null || isSended == false) {
         var token = sharedPreferences.getString(AppConstants.key);
         var deviceToken = sharedPreferences.getString(AppConstants.deviceToken);
-        print(deviceToken);
+        // print(deviceToken);
         var url = "${AppConstants.baseUrl}users/push/register/";
         var headers = {
           "Accept": "application/json",
@@ -195,15 +195,13 @@ class _ProfilePageState extends State<ProfilePage> {
     getRole();
     checkInternetConnection().then((value) => {
           if (value)
-
-            {getuserdetail()}
+            {getuserdetail(), sendDeviceToken()}
           else
             {
               showAlert(
                   "Внимание", "У вас нет соединения с интернетом!", context)
             }
         });
-    sendDeviceToken();
   }
 
   @override
