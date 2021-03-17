@@ -60,16 +60,16 @@ class _OrdersFromExecutorPageState extends State<OrdersFromExecutorPage> {
   }
 
   getOrders(String lat, String lng) async {
-    print("lat : $lat");
-    print("lng : $lng");
+    // print("lat : $lat");
+    // print("lng : $lng");
     var token = await getToken();
     // var queryParams = {'lat':  lat, 'lng': lng};
 
-    Map<String, dynamic> queryParameters = {
-      'lat':  lat, 'lng': lng
-    };
-
-    var uri = Uri.https("back.bumper-app.kz", "order/request/", queryParameters);
+    // Map<String, dynamic> queryParameters = {
+    //   'lat':  lat, 'lng': lng
+    // };
+    //
+    // var uri = Uri.https("back.bumper-app.kz", "order/request/", queryParameters);
     var headers = {
       'Content-Type': 'application/json; charset=UTF-8',
       "Accept": "application/json",
@@ -77,17 +77,19 @@ class _OrdersFromExecutorPageState extends State<OrdersFromExecutorPage> {
     };
 
 
-    await http.get(uri, headers: headers,  ).then((response) {
-      print("asdkalsdjalkdjaksdjkaksdjaksd");
-      print(response.body);
+    await http.get(AppConstants.baseUrl+"order/request/$lat/$lng", headers: headers,  ).then((response) {
+      // print("asdkalsdjalkdjaksdjkaksdjaksd");
+      // print(response.body);
       List<Order> list = List<Order>();
       var responseBody = jsonDecode(utf8.decode(response.body.codeUnits));
       for (Object i in responseBody) {
         list.add(Order.fromJson(i));
       }
-      setState(() {
-        orderList = list;
-      });
+      if (mounted) {
+        setState(() {
+          orderList = list;
+        });
+      }
     }).catchError((error) => print(error));
   }
 
