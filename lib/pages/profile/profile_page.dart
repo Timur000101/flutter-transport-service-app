@@ -111,7 +111,7 @@ class _ProfilePageState extends State<ProfilePage> {
       var userId = sharedPreferences.getInt(AppConstants.uid);
       var token = sharedPreferences.getString(AppConstants.key);
       UserDetail userDetail = await getUserDetail(userId, token);
-
+      if (mounted) {
       setState(() {
         String number = userDetail.phone.substring(1, userDetail.phone.length);
         phone =
@@ -147,6 +147,7 @@ class _ProfilePageState extends State<ProfilePage> {
       if (thirdPhone != null) {
         thirdPhone = "+${thirdPhone}";
       }
+
 
       // if (userDetail.secondPhone.isNotEmpty) {
       //   String number = userDetail.secondPhone
@@ -187,6 +188,7 @@ class _ProfilePageState extends State<ProfilePage> {
       sharedPreferences.setString(
           AppConstants.thirdPhone, userDetail.thirdPhone);
     }
+    }
   }
 
   @override
@@ -204,6 +206,12 @@ class _ProfilePageState extends State<ProfilePage> {
                   "Внимание", "У вас нет соединения с интернетом!", context)
             }
         });
+  }
+  @override
+  void dispose() {
+
+    super.dispose();
+
   }
 
   @override
