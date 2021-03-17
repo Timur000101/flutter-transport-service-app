@@ -439,9 +439,11 @@ class _ProfilePageState extends State<ProfilePage> {
                               if (AppConstants.isRegAsSTO == true) {
                                 setState(() {
                                   AppConstants.role = value;
+                                  isSwitched = AppConstants.role;
                                   changeRole();
                                 });
                               } else {
+                                isSwitched = AppConstants.role;
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
