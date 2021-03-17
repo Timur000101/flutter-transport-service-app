@@ -195,7 +195,9 @@ class _ProfilePageState extends State<ProfilePage> {
     getRole();
     checkInternetConnection().then((value) => {
           if (value)
-            {getuserdetail(), sendDeviceToken()}
+            {getuserdetail(),
+              // sendDeviceToken()
+            }
           else
             {
               showAlert(
