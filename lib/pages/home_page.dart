@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:sto_app/core/const.dart';
-import 'package:sto_app/pages/location_page.dart';
-import 'package:sto_app/pages/order/order_page.dart';
 import 'package:sto_app/pages/order/orders_from_executor_page.dart';
 import 'package:sto_app/pages/profile/profile_page.dart';
 import 'package:sto_app/pages/request/request_page.dart';
 import 'package:sto_app/pages/services/services_page.dart';
-// import 'order/orders_from_executor_page.dart';
 
 class HomePage extends StatefulWidget {
 
