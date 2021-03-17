@@ -6,7 +6,7 @@ class ActiveOrderCustomer {
   String about;
   Service service;
   String subservice;
-  Owner owner;
+  Owner  owner;
   List<dynamic> orderImg;
   bool inWork;
   bool isFinished;
