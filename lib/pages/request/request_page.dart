@@ -67,6 +67,7 @@ class _RequestPageState extends State<RequestPage> {
       ).then((response) {
         List<RequestItem> list = List<RequestItem>();
         var responseBody = jsonDecode(utf8.decode(response.body.codeUnits));
+
         for (Object i in responseBody){
           list.add(RequestItem.fromJson(i));
         }

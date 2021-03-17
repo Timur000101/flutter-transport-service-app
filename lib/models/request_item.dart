@@ -6,7 +6,7 @@ class RequestItem {
   String about;
   dynamic service;
   dynamic subservice;
-  int owner;
+  dynamic owner;
   List<dynamic> orderImg;
 
   RequestItem({
