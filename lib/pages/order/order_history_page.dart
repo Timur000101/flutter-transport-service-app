@@ -32,7 +32,7 @@ class _OrderHistoryPageState extends State<OrderHistoryPage> {
     });
 
     if (response.statusCode == 200) {
-
+      if (mounted) {
       setState(() {
         List<ActiveOrderCustomer> list = new List<ActiveOrderCustomer>();
         var responseBody = jsonDecode(utf8.decode(response.body.codeUnits));
@@ -41,6 +41,7 @@ class _OrderHistoryPageState extends State<OrderHistoryPage> {
         }
         historyList = list;
       });
+      }
       } else {
       // If the server did not return a 200 OK response,
       // then throw an exception.

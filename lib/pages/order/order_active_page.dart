@@ -34,16 +34,18 @@ class _OrderActivePageState extends State<OrderActivePage> {
       "Authorization": "Token $token"
     });
     if (response.statusCode == 200) {
+    if (mounted) {
       setState(() {
         List<ActiveOrderCustomer> list = new List<ActiveOrderCustomer>();
         var responseBody = jsonDecode(utf8.decode(response.body.codeUnits));
+        print(responseBody);
         // print(responseBody);
-        for (Object i in responseBody){
+        for (Object i in responseBody) {
           list.add(ActiveOrderCustomer.fromJson(i));
         }
-
-        activeListCustomer= list;
+        activeListCustomer = list;
       });
+    }
     } else {
 
       // If the server did not return a 200 OK response,
@@ -52,23 +54,23 @@ class _OrderActivePageState extends State<OrderActivePage> {
     }
   }
 
-  getActiveCto() async {
-    // var token = await getToken();
-    // http.Response response =
-    // await http.get("${AppConstants.baseUrl}order/active/", headers: {
-    //   'Content-Type': 'application/json; charset=UTF-8',
-    //   "Accept": "application/json",
-    //   "Authorization": "Token $token"
-    // });
-    //
-    // if (response.statusCode == 200) {
-    //   ActiveOrder.fromJson(jsonDecode(response.body));
-    // } else {
-    //   // If the server did not return a 200 OK response,
-    //   // then throw an exception.
-    //   throw Exception('Failed to load historyorder');
-    // }
-  }
+  // getActiveCto() async {
+  //   // var token = await getToken();
+  //   // http.Response response =
+  //   // await http.get("${AppConstants.baseUrl}order/active/", headers: {
+  //   //   'Content-Type': 'application/json; charset=UTF-8',
+  //   //   "Accept": "application/json",
+  //   //   "Authorization": "Token $token"
+  //   // });
+  //   //
+  //   // if (response.statusCode == 200) {
+  //   //   ActiveOrder.fromJson(jsonDecode(response.body));
+  //   // } else {
+  //   //   // If the server did not return a 200 OK response,
+  //   //   // then throw an exception.
+  //   //   throw Exception('Failed to load historyorder');
+  //   // }
+  // }
 
   @override
   void initState(){

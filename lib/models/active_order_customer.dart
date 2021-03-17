@@ -10,6 +10,7 @@ class ActiveOrderCustomer {
   List<dynamic> orderImg;
   bool inWork;
   bool isFinished;
+  dynamic cto;
 
   ActiveOrderCustomer(
       {this.id,
@@ -20,7 +21,8 @@ class ActiveOrderCustomer {
         this.owner,
         this.orderImg,
         this.inWork,
-        this.isFinished});
+        this.isFinished,
+        this.cto});
 
   ActiveOrderCustomer.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -40,6 +42,7 @@ class ActiveOrderCustomer {
     }
     inWork = json['in_work'];
     isFinished = json['is_finished'];
+    cto = json["cto"];
   }
 
   Map<String, dynamic> toJson() {

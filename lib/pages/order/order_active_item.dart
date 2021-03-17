@@ -153,8 +153,8 @@ class OrderActiveItem extends StatelessWidget {
     }
   }
 
-  String avaURL =
-      "https://www.sunsetlearning.com/wp-content/uploads/2019/09/User-Icon-Grey.png";
+  // String avaURL =
+  //     "https://www.sunsetlearning.com/wp-content/uploads/2019/09/User-Icon-Grey.png";
 
   Color getGreenColor(Set<MaterialState> states) {
     const Set<MaterialState> interactiveStates = <MaterialState>{
@@ -190,18 +190,19 @@ class OrderActiveItem extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(top: 15),
               child: CircleAvatar(
-                backgroundImage: NetworkImage(avaURL),
+                backgroundImage: NetworkImage(
+                    AppConstants.role ? active.owner.avatar: active.cto["cto_logo"]   ),
                 radius: 40,
               ),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 5),
               child: Text(
-                active.service.name,
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                AppConstants.role ? active.owner.nickname.toString().toUpperCase(): active.cto["cto_name"].toString().toUpperCase(),
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, ),
               ),
             ),
-            Text(active.owner.phone,
+            Text( AppConstants.role ? active.owner.phone: active.cto["phone"],
                 style: TextStyle(color: AppColors.primaryTextColor)),
             Padding(
               padding: const EdgeInsets.all(8.0),
@@ -210,7 +211,7 @@ class OrderActiveItem extends StatelessWidget {
                 children: [
                   ElevatedButton.icon(
                       onPressed: () async {
-                        var phone = "77781661021";
+                        var phone =  AppConstants.role ? active.owner.phone: active.cto["phone"];
                         _launchURL(phone);
                         // whatsAppOpen(phone, "");
                         // var message = "hi";
@@ -223,7 +224,7 @@ class OrderActiveItem extends StatelessWidget {
                               getGreenColor))),
                   ElevatedButton.icon(
                       onPressed: () {
-                        launch("tel://214324234");
+                        launch(AppConstants.role ? "tel://"+active.owner.phone: "tel://"+active.cto["phone"] );
                       },
                       icon: Icon(Icons.call),
                       label: Text("Позвонить"),
