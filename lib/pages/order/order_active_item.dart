@@ -235,7 +235,7 @@ class OrderActiveItem extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child:AppConstants.role ? Text(
-                "Испонитель закончил ваш заказ, вы подтверждаете завершение?",
+                "Вы подтверждаете завершение?",
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
               ): null,
