@@ -148,8 +148,8 @@ class _ServiceFinishWashState extends State<ServiceFinishWash> {
         final snackBar = SnackBar(content: Text('Удачно! Ждите заявок...'));
         globalKey.currentState.showSnackBar(snackBar);
         await Future.delayed(Duration(seconds: 3));
-        Navigator.pushReplacement(context, MaterialPageRoute(
-          builder: (context) => HomePage( ))
+        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
+          builder: (context) => HomePage( )), (Route<dynamic> route) => false
         );
       }
       else{

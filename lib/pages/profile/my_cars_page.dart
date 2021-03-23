@@ -91,9 +91,11 @@ class _MyCarsPageState extends State<MyCarsPage> {
   getCars() async {
     var token = await getToken();
     List<Car> list = await getMyCars(token);
-    setState(() {
-      carList = list;
-    });
+    if(mounted){
+      setState(() {
+        carList = list;
+      });
+    }
   }
 }
 

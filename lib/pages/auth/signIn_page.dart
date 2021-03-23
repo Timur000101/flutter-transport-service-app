@@ -124,8 +124,8 @@ class _SignInState extends State<SignIn> {
                           margin: EdgeInsets.only(bottom: 20.0),
                           alignment: Alignment.center,
                           child: Image.asset(
-                            "assets/images/logo_FS_color.jpg",
-                            width: MediaQuery.of(context).size.width - 100,
+                            "assets/images/Logo.png",
+                            width: MediaQuery.of(context).size.width/2,
                           ),
                         ),
                         Container(
