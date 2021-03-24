@@ -13,7 +13,6 @@ import Firebase
     if #available(iOS 10.0, *) {
       UNUserNotificationCenter.current().delegate = self
     }
-    FirebaseApp.configure()
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
   }
 }
