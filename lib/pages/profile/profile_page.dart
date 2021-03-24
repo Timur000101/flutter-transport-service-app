@@ -64,8 +64,6 @@ class _ProfilePageState extends State<ProfilePage> {
     if (isReg == true) {
       var isSended =
           sharedPreferences.getBool(AppConstants.isSendedDeviceToken);
-      print(sharedPreferences.getString(AppConstants.deviceToken));
-      // print(isSended);
       if (isSended == null || isSended == false) {
         var token = sharedPreferences.getString(AppConstants.key);
         var deviceToken = sharedPreferences.getString(AppConstants.deviceToken);
@@ -354,7 +352,6 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget _buildProfileHeader(BuildContext context) {
     return Container(
         width: MediaQuery.of(context).size.width,
-        height: 240,
         padding: EdgeInsets.symmetric(horizontal: 5.0, vertical: 10.0),
         decoration: BoxDecoration(
             // borderRadius: BorderRadius.circular(20),

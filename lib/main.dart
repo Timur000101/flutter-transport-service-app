@@ -4,7 +4,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sto_app/core/const.dart';
 import 'package:sto_app/pages/home_page.dart';
 import 'package:sto_app/pages/start_up.dart';
-import 'package:sto_app/push_notification_service.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 
 void main() async {
@@ -24,6 +23,7 @@ class MyApp extends StatelessWidget {
         android:  androidInitializationSettings, iOS:  iosInitializationSettings );
     localNotificationsPlugin = FlutterLocalNotificationsPlugin();
     localNotificationsPlugin.initialize(initializationSettings);
+    _firebaseMessaging.requestNotificationPermissions();
     _getToken();
     _configureFirebaseListeners();
     return MaterialApp(
@@ -51,6 +51,8 @@ class MyApp extends StatelessWidget {
   _getToken() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     _firebaseMessaging.getToken().then((deviceToke) {
+      print(deviceToke);
+      print('asd');
       sharedPreferences.setString(AppConstants.deviceToken, deviceToke);
     });
   }
