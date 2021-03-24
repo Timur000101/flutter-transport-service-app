@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -23,9 +25,9 @@ class MyApp extends StatelessWidget {
         android:  androidInitializationSettings, iOS:  iosInitializationSettings );
     localNotificationsPlugin = FlutterLocalNotificationsPlugin();
     localNotificationsPlugin.initialize(initializationSettings);
-    _firebaseMessaging.requestNotificationPermissions();
-    _getToken();
+    if (Platform.isIOS) iOS_Permission();
     _configureFirebaseListeners();
+    _getToken();
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -47,44 +49,85 @@ class MyApp extends StatelessWidget {
     await localNotificationsPlugin.show(0, title, body, generalNotificationsDetails);
   }
 
-
-
-  _getToken() async {
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    _firebaseMessaging.getToken().then((deviceToke) {
-      print(deviceToke);
-      print('asd');
-      sharedPreferences.setString(AppConstants.deviceToken, deviceToke);
+  void iOS_Permission() {
+    _firebaseMessaging.requestNotificationPermissions(
+        IosNotificationSettings(sound: true, badge: true, alert: true)
+    );
+    _firebaseMessaging.onIosSettingsRegistered
+        .listen((IosNotificationSettings settings)
+    {
+      print("Settings registered: $settings");
     });
   }
 
-  _configureFirebaseListeners() {
+  _getToken() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    // getting registration id
+    _firebaseMessaging.getToken().then((String token) async {
+      assert(token != null);
+      print('Registration Id: $token');
+      sharedPreferences.setString(AppConstants.deviceToken, token);
+    });
+    // _firebaseMessaging.getToken().then((deviceToken) {
+    //   print(deviceToken);
+    //   // print('asd');
+    //   // sharedPreferences.setString(AppConstants.deviceToken, deviceToken);
+    // });
+  }
 
+  _configureFirebaseListeners() {
     _firebaseMessaging.configure(
       onMessage: (Map<String, dynamic> message) async {
-        print("onMessage: $message");
-        _showNotification(message["notification"]["title"], message["notification"]["body"]);
-        // Scaffold.of(context).showSnackBar(SnackBar(content: Text(message["body"])));
-
-        // setState(() {+
-        //   this.msg = message.toString();
-        // });
-        // _showItemDialog(message);
+        Map<String, dynamic> convertedMessage = _convertMessage(message);
+                if(convertedMessage != null) {
+                  print("onMessage: $message");
+                  _showNotification(message["title"], message["body"]);
+                }
       },
       onLaunch: (Map<String, dynamic> message) async {
-        print("onLaunch: $message");
-        // setState(() {
-        //   this.msg = message.toString();
-        // });
-        // _navigateToItemDetail(message);
+        Map<String, dynamic> convertedMessage = _convertMessage(message);
+                if(convertedMessage != null) {
+                  print("onLaunch: $message");
+                }
       },
       onResume: (Map<String, dynamic> message) async {
-        print("onResume: $message");
-        // setState(() {
-        //   this.msg = message.toString();
-        // });
-        // _navigateToItemDetail(message);
+           Map<String, dynamic> convertedMessage = _convertMessage(message);
+                if(convertedMessage != null) {
+                  print("onResume: $message");
+                }
       },
+      // onMessage: (Map<String, dynamic> message) async {
+      //   print("onMessage: $message");
+      //   _showNotification(message["notification"]["title"], message["notification"]["body"]);
+      // },
+      // onLaunch: (Map<String, dynamic> message) async {
+      //   print("onLaunch: $message");
+      // },
+      // onResume: (Map<String, dynamic> message) async {
+      //   print("onResume: $message");
+      // },
     );
+  }
+
+  Map<String, dynamic> _convertMessage(Map<String, dynamic> message) {
+    try {
+      if (Platform.isIOS) {
+        return {
+          'title': message['aps']['alert']['title'],
+          'body': message['aps']['alert']['body'],
+          'order_id': message['order_id'],
+          'status': message['status'],
+        };
+      } else {
+        return {
+          'title': message['notification']['title'],
+          'body': message['notification']['body'],
+          'order_id': message['data']['order_id'],
+          'status': message['data']['status'],
+        };
+      }
+    } catch (e) {
+      return null;
+    }
   }
 }

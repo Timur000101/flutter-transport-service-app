@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>749161694603-7qh2tg94ntr09rmsd0vbbea8mgjgnhru.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.749161694603-7qh2tg94ntr09rmsd0vbbea8mgjgnhru</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBkqT2lEgUbgByVT7-DfREEpzddX8Gzuo0</string>
+	<key>GCM_SENDER_ID</key>
+	<string>749161694603</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.kz.BumperApp</string>
+	<key>PROJECT_ID</key>
+	<string>bumper-ed6ea</string>
+	<key>STORAGE_BUCKET</key>
+	<string>bumper-ed6ea.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:749161694603:ios:16f4b39be9181970685b8e</string>
+</dict>
+</plist>
