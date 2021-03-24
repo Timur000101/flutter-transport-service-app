@@ -15,6 +15,7 @@ class _PushNotificationServiceState extends State<PushNotificationService> {
   void initState() {
     super.initState();
     _getToken();
+
     _configureFirebaseListeners();
   }
 
@@ -50,6 +51,7 @@ class _PushNotificationServiceState extends State<PushNotificationService> {
   }
 
   _configureFirebaseListeners() {
+    _firebaseMessaging.requestNotificationPermissions();
     _firebaseMessaging.configure(
         onMessage: (Map<String, dynamic> message) async {
           print("onMessage: $message");
