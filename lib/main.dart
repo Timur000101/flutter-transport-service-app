@@ -26,6 +26,7 @@ class MyApp extends StatelessWidget {
     _firebaseMessaging.requestNotificationPermissions();
     _getToken();
     _configureFirebaseListeners();
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
@@ -58,6 +59,7 @@ class MyApp extends StatelessWidget {
   }
 
   _configureFirebaseListeners() {
+
     _firebaseMessaging.configure(
       onMessage: (Map<String, dynamic> message) async {
         print("onMessage: $message");

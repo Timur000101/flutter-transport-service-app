@@ -1,4 +1,4 @@
-name: Bumper.kz
+name: sto_app
 description: Bumper.kz mobile app.
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
@@ -27,7 +27,6 @@ dependencies:
   location: ^3.0.0
   firebase_messaging: ^7.0.3
   flutter_local_notifications: ^3.0.1+6
-#  app_settings: ^4.0.1
 
 dev_dependencies:
   flutter_test:
