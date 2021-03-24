@@ -59,13 +59,13 @@ class _ProfilePageState extends State<ProfilePage> {
 
   sendDeviceToken() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-  //print("asdasd");
+
     var isReg = sharedPreferences.getBool(AppConstants.isReg);
     if (isReg == true) {
       var isSended =
           sharedPreferences.getBool(AppConstants.isSendedDeviceToken);
-      // print(sharedPreferences.getString(AppConstants.deviceToken));
-      // print(isSended);
+      print(sharedPreferences.getString(AppConstants.deviceToken));
+      print(isSended);
       if (isSended == null || isSended == false) {
         var token = sharedPreferences.getString(AppConstants.key);
         var deviceToken = sharedPreferences.getString(AppConstants.deviceToken);
@@ -200,7 +200,7 @@ class _ProfilePageState extends State<ProfilePage> {
     checkInternetConnection().then((value) => {
           if (value)
             {getuserdetail(),
-              // sendDeviceToken()
+              sendDeviceToken()
             }
           else
             {
