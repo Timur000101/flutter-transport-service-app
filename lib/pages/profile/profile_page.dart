@@ -65,28 +65,31 @@ class _ProfilePageState extends State<ProfilePage> {
       var isSended =
           sharedPreferences.getBool(AppConstants.isSendedDeviceToken);
       print(sharedPreferences.getString(AppConstants.deviceToken));
-      print(isSended);
+      // print(isSended);
       if (isSended == null || isSended == false) {
         var token = sharedPreferences.getString(AppConstants.key);
         var deviceToken = sharedPreferences.getString(AppConstants.deviceToken);
-        // print(deviceToken);
-        var url = "${AppConstants.baseUrl}users/push/register/";
-        var headers = {
-          "Accept": "application/json",
-          "Authorization": "Token $token"
-        };
-        final response = await http.post(url, headers: headers, body: {
-          "reg_id": deviceToken,
-          "cmt": Platform.isAndroid ? "fcm" : "apn"
-        });
+        print(deviceToken);
+        if (deviceToken != null){
+          var url = "${AppConstants.baseUrl}users/push/register/";
+          var headers = {
+            "Accept": "application/json",
+            "Authorization": "Token $token"
+          };
+          final response = await http.post(url, headers: headers, body: {
+            "reg_id": deviceToken,
+            "cmt": Platform.isAndroid ? "fcm" : "apn"
+          });
 
-        if (response.statusCode == 200) {
-          Map<String, dynamic> status = jsonDecode(response.body);
-          if (status['status'] == "ok") {
-            sharedPreferences.setBool(AppConstants.isSendedDeviceToken, true);
-            print("sended device token");
+          if (response.statusCode == 200) {
+            Map<String, dynamic> status = jsonDecode(response.body);
+            if (status['status'] == "ok") {
+              sharedPreferences.setBool(AppConstants.isSendedDeviceToken, true);
+              print("sended device token");
+            }
           }
         }
+        
       }
     }
   }
@@ -100,7 +103,7 @@ class _ProfilePageState extends State<ProfilePage> {
     });
 
     if (response.statusCode == 200) {
-      return UserDetail.fromJson(jsonDecode(response.body));
+      return UserDetail.fromJson(jsonDecode(utf8.decode(response.body.codeUnits)));
     } else {
       throw Exception("Falied to getUserDetail");
     }
