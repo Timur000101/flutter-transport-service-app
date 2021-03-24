@@ -89,7 +89,7 @@ class _ServicesPageState extends State<ServicesPage> {
         ),
         onTap: () async {
           SharedPreferences prefs = await SharedPreferences.getInstance();
-          if (prefs.getBool(AppConstants.isReg)){
+          if (prefs.getBool(AppConstants.isReg)==true){
             if (path != 6){
               Navigator.push( context, MaterialPageRoute(builder: (context) => ServiceDetail(indx: path,)));
             }
