@@ -10,7 +10,7 @@ import 'package:sto_app/pages/auth/sms_page.dart';
 import 'package:sto_app/utils/utils.dart';
 import 'package:http/http.dart' as http;
 import 'package:sto_app/utils/internet_manager.dart';
-
+import 'package:url_launcher/url_launcher.dart';
 Future<String> registration(String phone, String name) async {
   // print(phone);
   // print(name);
@@ -192,32 +192,37 @@ class _SignInState extends State<SignIn> {
                           height: 10.0,
                         ),
                         Container(
-                            width: MediaQuery.of(context).size.width,
-                            child: RichText(
-                                textAlign: TextAlign.center,
-                                text: TextSpan(children: [
-                                  TextSpan(
-                                    text:
-                                        'Нажимая "Продолжить", вы соглашаетесь с ',
-                                    style: TextStyle(
-                                        color: AppColors.primaryTextColor),
-                                  ),
-                                  TextSpan(
-                                      text: "обработкой персональных данных ",
-                                      style: TextStyle(color: Colors.blue),
-                                      recognizer: TapGestureRecognizer()
-                                        ..onTap = () {}),
-                                  TextSpan(
-                                    text: "и ",
-                                    style: TextStyle(
-                                        color: AppColors.primaryTextColor),
-                                  ),
-                                  TextSpan(
-                                      text: "правилами сервиса ",
-                                      style: TextStyle(color: Colors.blue),
-                                      recognizer: TapGestureRecognizer()
-                                        ..onTap = () {}),
-                                ]))),
+                              width: MediaQuery.of(context).size.width,
+                              child: RichText(
+                                  textAlign: TextAlign.center,
+                                  text: TextSpan(children: [
+                                    TextSpan(
+                                      text:
+                                          'Нажимая "Продолжить", вы соглашаетесь с ',
+                                      style: TextStyle(
+                                          color: AppColors.primaryTextColor),
+                                    ),
+                                    TextSpan(
+                                        text: "обработкой персональных данных ",
+                                        style: TextStyle(color: Colors.blue, decoration: TextDecoration.underline),
+                                        recognizer: TapGestureRecognizer()
+                                          ..onTap = () {
+                                            launch("https://back.bumper-app.kz/users/private/policy/");
+                                          }),
+                                    TextSpan(
+                                      text: "и ",
+                                      style: TextStyle(
+                                          color: AppColors.primaryTextColor),
+                                    ),
+                                    TextSpan(
+                                        text: "правилами сервиса ",
+                                        style: TextStyle(color: Colors.blue, decoration: TextDecoration.underline),
+                                        recognizer: TapGestureRecognizer()
+                                          ..onTap = () {
+                                            launch("https://back.bumper-app.kz/users/private/policy/");
+                                          }),
+                                  ]))),
+
                         Divider(
                           color: Colors.grey.withOpacity(0.5),
                           height: 30,

@@ -231,7 +231,7 @@ class _SupportPageState extends State<SupportPage> {
   }
 
   call(){
-    launch("tel://+77783579279");
+    launch("tel://+77783121039");
   }
 
   message(){

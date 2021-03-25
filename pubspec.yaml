@@ -28,10 +28,16 @@ dependencies:
   firebase_core: 
   firebase_messaging: ^7.0.3
   flutter_local_notifications: ^3.0.1+6
+  flutter_launcher_icons: ^0.8.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/images/categories/Logo.png"
 
 flutter:
 

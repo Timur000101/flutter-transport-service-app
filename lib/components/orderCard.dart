@@ -12,7 +12,7 @@ class OrderCard extends StatefulWidget {
   const OrderCard({
     Key key,
     @required this.order,
-    @required this.index,
+    @required this.index, 
     @required this.callback,
   }) : super(key: key);
 
@@ -132,7 +132,7 @@ class _OrderCardState extends State<OrderCard> {
                                   Padding(
                                     padding: const EdgeInsets.only(left: 8.0, right: 0.0),
                                     child: Text(
-                                      '4.1 км',
+                                    widget.order.distance,
                                       style: TextStyle(
                                           fontSize: 16,
                                           color: AppColors.primaryTextColor),
@@ -236,7 +236,7 @@ class _OrderCardState extends State<OrderCard> {
     print(response.statusCode);
     if (response.statusCode == 200) {
       Navigator.pop(context);
-      widget.callback();
+      widget.callback ();
     } else {
       print("Falied");
     }
