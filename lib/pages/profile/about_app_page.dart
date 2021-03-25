@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:sto_app/core/const.dart';
 import 'package:sto_app/widgets/app_widgets.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'terms_of_use_page.dart';
 
@@ -45,10 +48,14 @@ class _AboutAppPageState extends State<AboutAppPage> {
                     leading: Icon(Icons.warning, color: AppColors.mainColor, size: 30,),
                     trailing: Icon(Icons.keyboard_arrow_right_outlined),
                     tileColor: Colors.white,
-                    onTap: () {
-                      Navigator.push(context, MaterialPageRoute(
-                        builder: (context) => TermsOfUsePage()),
-                      );
+                    onTap: () async {
+                      var url = "https://back.bumper-app.kz/users/private/policy/";
+                      if (await canLaunch(url)) {
+                        await launch(url);
+                      } 
+                      else {
+                        throw 'Could not launch $url';
+                      }
                     },
                   ),
                 );
