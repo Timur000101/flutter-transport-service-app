@@ -1,11 +1,8 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:sto_app/core/const.dart';
 import 'package:sto_app/widgets/app_widgets.dart';
 import 'package:url_launcher/url_launcher.dart';
-
-import 'terms_of_use_page.dart';
 
 class AboutAppPage extends StatefulWidget {
   @override
