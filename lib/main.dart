@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sto_app/core/const.dart';
-import 'package:sto_app/pages/home_page.dart';
 import 'package:sto_app/pages/start_up.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 
@@ -70,7 +69,7 @@ class MyApp extends StatelessWidget {
     });
     // _firebaseMessaging.getToken().then((deviceToken) {
     //   print(deviceToken);
-    //   // print('asd');
+    //  x` // print('asd');
     //   // sharedPreferences.setString(AppConstants.deviceToken, deviceToken);
     // });
   }
@@ -79,22 +78,22 @@ class MyApp extends StatelessWidget {
     _firebaseMessaging.configure(
       onMessage: (Map<String, dynamic> message) async {
         Map<String, dynamic> convertedMessage = _convertMessage(message);
-                if(convertedMessage != null) {
-                  print("onMessage: $message");
-                  _showNotification(message["title"], message["body"]);
-                }
+        if(convertedMessage != null) {
+          print("onMessage: $message");
+          _showNotification(message["title"], message["body"]);
+        }
       },
       onLaunch: (Map<String, dynamic> message) async {
         Map<String, dynamic> convertedMessage = _convertMessage(message);
-                if(convertedMessage != null) {
-                  print("onLaunch: $message");
-                }
+        if(convertedMessage != null) {
+          print("onLaunch: $message");
+        }
       },
       onResume: (Map<String, dynamic> message) async {
-           Map<String, dynamic> convertedMessage = _convertMessage(message);
-                if(convertedMessage != null) {
-                  print("onResume: $message");
-                }
+        Map<String, dynamic> convertedMessage = _convertMessage(message);
+        if(convertedMessage != null) {
+          print("onResume: $message");
+        }
       },
       // onMessage: (Map<String, dynamic> message) async {
       //   print("onMessage: $message");
@@ -122,8 +121,8 @@ class MyApp extends StatelessWidget {
         return {
           'title': message['notification']['title'],
           'body': message['notification']['body'],
-          'order_id': message['data']['order_id'],
-          'status': message['data']['status'],
+          // 'order_id': message['data']['order_id'],
+          // 'status': message['data']['status'],
         };
       }
     } catch (e) {

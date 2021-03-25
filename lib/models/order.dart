@@ -1,6 +1,6 @@
 import 'car.dart';
 
-class Order{
+class  Order{
   int id;
   Car car;
   String stoPhone;
@@ -8,6 +8,7 @@ class Order{
   int price;
   String time;
   dynamic subservice;
+  String distance;
 
   Order({
     this.id,
@@ -17,6 +18,7 @@ class Order{
     this.price,
     this.time,
     this.subservice,
+    this.distance,
   });
 
   Order.fromJson(Map<String, dynamic> json) {
@@ -27,6 +29,7 @@ class Order{
     price = json['price'];
     time = json['time'];
     subservice = json['order']['subservice'];
+    distance = json['distance_text'];
   }
 
   Map<String, dynamic> toJson() {
@@ -38,6 +41,7 @@ class Order{
     data['price'] = this.price;
     data['time'] = this.time;
     data['subservice'] = this.subservice;
+    data['distance'] = this.distance;
     return data;
   }
 

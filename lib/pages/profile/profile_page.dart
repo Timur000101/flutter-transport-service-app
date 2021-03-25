@@ -565,11 +565,12 @@ class _ProfilePageState extends State<ProfilePage> {
     showDialog(context: context, builder: (BuildContext context) => dialog);
   }
 
-  // https://play.google.com/store/apps/details?id=package_name
+
   _launchURL() async {
     var url = "";
     if (Platform.isAndroid) {
-      url = "https://play.google.com/store/apps/";
+      url = "https://play.google.com/store/apps/details?id=com.bumper.sto_app";
+
     }
     if (Platform.isIOS) {
       url = 'https://apple.com';
