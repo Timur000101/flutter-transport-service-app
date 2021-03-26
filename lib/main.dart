@@ -76,8 +76,10 @@ class MyApp extends StatelessWidget {
         Map<String, dynamic> convertedMessage = _convertMessage(message);
         if(convertedMessage != null) {
           print("onMessage: $message");
-          final snackBar = SnackBar(content: Text(message['body']));
-          globalKey.currentState.showSnackBar(snackBar);
+          // final snackBar = SnackBar(content: Text(message['body']));
+          // globalKey.currentState.showSnackBar(snackBar);
+          var msg = _convertMessage(message);
+          _showNotification(msg["title"], msg["body"]);
         }
       },
       onLaunch: (Map<String, dynamic> message) async {
@@ -103,7 +105,7 @@ class MyApp extends StatelessWidget {
           'body': message['aps']['alert'],
         };
       } else {
-        return {
+        return {    
           'title': 'BUMPER.KZ',
           'body': message['notification']['body'],
         };
