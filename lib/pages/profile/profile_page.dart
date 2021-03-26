@@ -32,10 +32,9 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   final globalKey = GlobalKey<ScaffoldState>();
-  String avaURL =
-      "https://www.sunsetlearning.com/wp-content/uploads/2019/09/User-Icon-Grey.png";
-  String name = "Пользователь";
-  String phone = "+7 (___) ___-__-__";
+  String avaURL = AppConstants.profileAva;
+  String name = AppConstants.profileName;
+  String phone = AppConstants.profilePhone;
   String secondPhone = "";
   String thirdPhone = "";
 
@@ -56,6 +55,24 @@ class _ProfilePageState extends State<ProfilePage> {
     MenuItem(title: "Оценить приложение", icon: Stoappicons.star),
     MenuItem(title: "О приложении", icon: Icons.warning_rounded)
   ];
+
+  getInfoFromSP() async{
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    var name_SP = sharedPreferences.getString(AppConstants.name);
+    var ava_SP = sharedPreferences.getString(AppConstants.avatar);
+    var phone_SP = sharedPreferences.getString(AppConstants.phone);
+    if (name_SP != null){
+      AppConstants.profileName = name_SP;
+    }
+
+    if (ava_SP != null){
+      AppConstants.profileAva = ava_SP;
+    }
+
+    if (phone_SP != null){
+      AppConstants.profilePhone = "+7 (${phone_SP.substring(1, 4)}) ${phone_SP.substring(4, 7)}-${phone_SP.substring(7, 9)}-${phone_SP.substring(9, 11)}";
+    }
+  }
 
   sendDeviceToken() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
@@ -197,6 +214,7 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   void initState() {
     super.initState();
+    getInfoFromSP();
     getRole();
     checkInternetConnection().then((value) => {
           if (value)
@@ -210,11 +228,10 @@ class _ProfilePageState extends State<ProfilePage> {
             }
         });
   }
+
   @override
   void dispose() {
-
     super.dispose();
-
   }
 
   @override

@@ -41,6 +41,10 @@ class AppConstants {
   static bool isreg = false;
   // if role == false User or role == true CTO
   static bool role = false;
+
+  static String profileName = "Пользователь";
+  static String profilePhone = "+7 (___) ___-__-__";
+  static String profileAva = "https://www.sunsetlearning.com/wp-content/uploads/2019/09/User-Icon-Grey.png";
 }
 
 class Stoappicons {

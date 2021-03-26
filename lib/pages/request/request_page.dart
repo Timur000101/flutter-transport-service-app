@@ -35,11 +35,11 @@ class _RequestPageState extends State<RequestPage> {
       body: RefreshIndicator(
         key: _refreshIndicatorKey,
         onRefresh: _refresh,
-        child: ListView.builder(
+        child: (request_array.length != 0) ? ListView.builder(
           itemCount: request_array.length,
           itemBuilder: (BuildContext context, int index) {
             return RequestListItem(request_array[index]);
-          }),
+          }) : Center(child: Text('Заказов пока нет...')),
       )
     );
   }

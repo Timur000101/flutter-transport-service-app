@@ -37,7 +37,7 @@ class _OrdersFromExecutorPageState extends State<OrdersFromExecutorPage> {
         body: RefreshIndicator(
             key: _refreshIndicatorKey,
             onRefresh: _refresh,
-            child: Container(
+            child: (orderList.length != 0) ? Container(
               child: ListView.builder(
                   itemCount: orderList.length,
                   itemBuilder: (context, int index) => OrderCard(
@@ -45,7 +45,9 @@ class _OrdersFromExecutorPageState extends State<OrdersFromExecutorPage> {
                         index: index,
                         callback: _getCurrentlocation,
                       )),
-            )));
+            ) : Center(child: Text('Заявок пока нет...'),)
+        )
+    );
   }
 
   Future<String> getToken() async {
