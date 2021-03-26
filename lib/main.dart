@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sto_app/core/const.dart';
 import 'package:sto_app/pages/start_up.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:sto_app/utils/alert.dart';
 
 void main() async {
   runApp(MyApp());

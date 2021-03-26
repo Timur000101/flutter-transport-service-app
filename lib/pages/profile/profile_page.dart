@@ -509,7 +509,7 @@ class _ProfilePageState extends State<ProfilePage> {
       name = sharedPreferences.getString(AppConstants.name);
     } else {
       sharedPreferences.setBool(AppConstants.isClient, true);
-      avaURL = sharedPreferences.getString(AppConstants.ctoLogo);
+      // avaURL = sharedPreferences.getString(AppConstants.ctoLogo);
       name = sharedPreferences.getString(AppConstants.ctoName);
     }
   }

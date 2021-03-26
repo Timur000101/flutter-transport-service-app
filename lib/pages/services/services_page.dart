@@ -102,16 +102,6 @@ class _ServicesPageState extends State<ServicesPage> {
               var dialog = CustomAlertDialog(
                 title: "Внимание",
                 message:  "Чтобы оставить заказ зайдите как заказчик.",
-                onPostivePressed: ()   {
-                  Navigator.pop(context);
-                  Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(
-                      builder: (BuildContext context) =>SignIn(),
-                    ),
-                        (route) => false,
-                  );
-                },
                 negativeBtnText: 'Назад');
             showDialog(context: context, builder: (BuildContext context) => dialog);
             }
