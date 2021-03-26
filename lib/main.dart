@@ -76,10 +76,7 @@ class MyApp extends StatelessWidget {
         Map<String, dynamic> convertedMessage = _convertMessage(message);
         if(convertedMessage != null) {
           print("onMessage: $message");
-          // final snackBar = SnackBar(content: Text(message['body']));
-          // globalKey.currentState.showSnackBar(snackBar);
-          var msg = _convertMessage(message);
-          _showNotification(msg["title"], msg["body"]);
+          _showNotification(convertedMessage["title"], convertedMessage["body"]);
         }
       },
       onLaunch: (Map<String, dynamic> message) async {
