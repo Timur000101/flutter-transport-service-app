@@ -77,6 +77,7 @@ class MyApp extends StatelessWidget {
     _firebaseMessaging.configure(
       onMessage: (Map<String, dynamic> message) async {
         Map<String, dynamic> convertedMessage = _convertMessage(message);
+        print(convertedMessage);
         if(convertedMessage != null) {
           print("onMessage: $message");
           _showNotification(message["title"], message["body"]);
@@ -94,16 +95,6 @@ class MyApp extends StatelessWidget {
           print("onResume: $message");
         }
       },
-      // onMessage: (Map<String, dynamic> message) async {
-      //   print("onMessage: $message");
-      //   _showNotification(message["notification"]["title"], message["notification"]["body"]);
-      // },
-      // onLaunch: (Map<String, dynamic> message) async {
-      //   print("onLaunch: $message");
-      // },
-      // onResume: (Map<String, dynamic> message) async {
-      //   print("onResume: $message");
-      // },
     );
   }
 
@@ -112,14 +103,12 @@ class MyApp extends StatelessWidget {
     try {
       if (Platform.isIOS) {
         return {
-          'title': message['aps']['alert']['title'],
-          'body': message['aps']['alert']['body'],
-          'order_id': message['order_id'],
-          'status': message['status'],
+          'title': 'BUMPER.KZ',
+          'body': message['aps']['alert'],
         };
       } else {
         return {
-          'title': message['notification']['title'],
+          'title': 'BUMPER.KZ',
           'body': message['notification']['body'],
           // 'order_id': message['data']['order_id'],
           // 'status': message['data']['status'],

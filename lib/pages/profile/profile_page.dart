@@ -76,7 +76,7 @@ class _ProfilePageState extends State<ProfilePage> {
           };
           final response = await http.post(url, headers: headers, body: {
             "reg_id": deviceToken,
-            "cmt": Platform.isAndroid ? "fcm" : "apn"
+            "cmt": "fcm",
           });
 
           if (response.statusCode == 200) {
