@@ -90,6 +90,8 @@ class _OrderCardState extends State<OrderCard> {
                                 ),
                               ),
                             ),
+                            SizedBox(height: 10,),
+                            Text(timeText + widget.order.time, style: new TextStyle(fontSize: 16)),
                           ],
                         ),
                       ),
@@ -98,57 +100,55 @@ class _OrderCardState extends State<OrderCard> {
                     Padding(
                       padding: const EdgeInsets.only(top: 8.0),
                       child: Container(
-                          child: Flexible(
-                            child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                              Row(
-                                children: [
+                        width: MediaQuery.of(context).size.width * 0.35,
+                          child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Icon(
+                                  Icons.location_on,
+                                  color: AppColors.primaryTextColor,
+                                ),
+                                Text("Алматы"),
+                              ],
+                            ),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 10.0),
+                              child: Text(widget.order.price.toString() + ' тг',
+                                  style: new TextStyle(fontSize: 18)),
+                            ),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(top: 5.0, left: 10),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: <Widget>[
                                   Icon(
-                                    Icons.location_on,
+                                    Stoappicons.distance,
                                     color: AppColors.primaryTextColor,
                                   ),
-                                  Text("Алматы"),
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 8.0, right: 0.0),
+                                    child: Text(
+                                    widget.order.distance,
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          color: AppColors.primaryTextColor),
+                                    ),
+                                  ),
                                 ],
                               ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 10.0),
-                                child: Text(widget.order.price.toString() + ' тг',
-                                    style: new TextStyle(fontSize: 18)),
-                              ),
-                              Text(timeText,
-                                    style: new TextStyle(fontSize: 16)),
-                              Text(widget.order.time + '  ',
-                                    style: new TextStyle(fontSize: 16)),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 15.0, left: 10),
-                                child: Row(
-                                  children: <Widget>[
-                                    Icon(
-                                      Stoappicons.distance,
-                                      color: AppColors.primaryTextColor,
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(left: 8.0, right: 0.0),
-                                      child: Text(
-                                      widget.order.distance,
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            color: AppColors.primaryTextColor),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ]),
-                          )),
+                            ),
+                          ])),
                     )
                   ],
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(top: 10.0),
+                  padding: const EdgeInsets.only(top: 5.0),
                   child: Row(children: [
                     Padding(
                         padding:

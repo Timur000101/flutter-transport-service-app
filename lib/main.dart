@@ -15,6 +15,7 @@ class MyApp extends StatelessWidget {
   FlutterLocalNotificationsPlugin localNotificationsPlugin;
   AndroidInitializationSettings androidInitializationSettings = new AndroidInitializationSettings('@mipmap/ic_launcher');
   IOSInitializationSettings iosInitializationSettings = new IOSInitializationSettings();
+  final globalKey = GlobalKey<ScaffoldState>();
 
 
   @override
@@ -24,10 +25,11 @@ class MyApp extends StatelessWidget {
     localNotificationsPlugin = FlutterLocalNotificationsPlugin();
     localNotificationsPlugin.initialize(initializationSettings);
     if (Platform.isIOS) iOS_Permission();
-    _configureFirebaseListeners();
+    _configureFirebaseListeners(context);
     _getToken();
 
     return MaterialApp(
+      key: globalKey,
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
@@ -54,33 +56,27 @@ class MyApp extends StatelessWidget {
     _firebaseMessaging.onIosSettingsRegistered
         .listen((IosNotificationSettings settings)
     {
-      print("Settings registered: $settings");
+      // print("Settings registered: $settings");
     });
   }
 
   _getToken() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    // getting registration id
     _firebaseMessaging.getToken().then((String token) async {
       assert(token != null);
-      print('Registration Id: $token');
+      // print('Registration Id: $token');
       sharedPreferences.setString(AppConstants.deviceToken, token);
     });
-    // _firebaseMessaging.getToken().then((deviceToken) {
-    //   print(deviceToken);
-    //  x` // print('asd');
-    //   // sharedPreferences.setString(AppConstants.deviceToken, deviceToken);
-    // });
   }
 
-  _configureFirebaseListeners() {
+  _configureFirebaseListeners(BuildContext context) {
     _firebaseMessaging.configure(
       onMessage: (Map<String, dynamic> message) async {
         Map<String, dynamic> convertedMessage = _convertMessage(message);
-        print(convertedMessage);
         if(convertedMessage != null) {
           print("onMessage: $message");
-          _showNotification(message["title"], message["body"]);
+          final snackBar = SnackBar(content: Text(message['body']));
+          globalKey.currentState.showSnackBar(snackBar);
         }
       },
       onLaunch: (Map<String, dynamic> message) async {
@@ -99,7 +95,6 @@ class MyApp extends StatelessWidget {
   }
 
   Map<String, dynamic> _convertMessage(Map<String, dynamic> message) {
-    print(message);
     try {
       if (Platform.isIOS) {
         return {
@@ -110,8 +105,6 @@ class MyApp extends StatelessWidget {
         return {
           'title': 'BUMPER.KZ',
           'body': message['notification']['body'],
-          // 'order_id': message['data']['order_id'],
-          // 'status': message['data']['status'],
         };
       }
     } catch (e) {

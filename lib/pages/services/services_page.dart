@@ -89,12 +89,31 @@ class _ServicesPageState extends State<ServicesPage> {
         ),
         onTap: () async {
           SharedPreferences prefs = await SharedPreferences.getInstance();
-          if (prefs.getBool(AppConstants.isRegAsCto)==true){
-            if (path != 6){
-              Navigator.push( context, MaterialPageRoute(builder: (context) => ServiceDetail(indx: path,)));
+          if (prefs.getBool(AppConstants.isReg)==true){
+            if (AppConstants.role == false){
+              if (path != 6){
+                Navigator.push( context, MaterialPageRoute(builder: (context) => ServiceDetail(indx: path,)));
+              }
+              else{
+                Navigator.push( context, MaterialPageRoute(builder: (context) => ServiceFinishWash(servicePK: path)));
+              }
             }
             else{
-              Navigator.push( context, MaterialPageRoute(builder: (context) => ServiceFinishWash(servicePK: path)));
+              var dialog = CustomAlertDialog(
+                title: "Внимание",
+                message:  "Чтобы оставить заказ зайдите как заказчик.",
+                onPostivePressed: ()   {
+                  Navigator.pop(context);
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                      builder: (BuildContext context) =>SignIn(),
+                    ),
+                        (route) => false,
+                  );
+                },
+                negativeBtnText: 'Назад');
+            showDialog(context: context, builder: (BuildContext context) => dialog);
             }
           }
           else{

@@ -265,6 +265,7 @@ class _RequestCtoPageState extends State<RequestCtoPage> {
         keyboardType: textInputType,
         controller: contoller,
         cursorColor: AppColors.primaryTextColor,
+        maxLength: 20,
         decoration: InputDecoration(
           suffixText: suffixText,
           prefixIcon: icon,
