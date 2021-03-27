@@ -590,7 +590,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
     }
     if (Platform.isIOS) {
-      url = 'https://apple.com';
+      url = 'https://bumper-app.kz/';
     }
     if (await canLaunch(url)) {
       await launch(url);

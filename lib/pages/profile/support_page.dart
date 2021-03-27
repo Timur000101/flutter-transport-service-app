@@ -246,13 +246,7 @@ class _SupportPageState extends State<SupportPage> {
   }
 
   visitSite() async {
-    var url = "";
-    if (Platform.isAndroid) {
-      url = "https://play.google.com/store/apps/";
-    }
-    if (Platform.isIOS) {
-      url = 'https://apple.com';
-    }
+    var url = "https://bumper-app.kz/";
     if (await canLaunch(url)) {
       await launch(url);
     } 
