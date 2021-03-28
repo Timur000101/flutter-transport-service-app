@@ -65,7 +65,7 @@ class MyApp extends StatelessWidget {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     _firebaseMessaging.getToken().then((String token) async {
       assert(token != null);
-      print(token);
+      // print(token);
       sharedPreferences.setString(AppConstants.deviceToken, token);
     });
   }

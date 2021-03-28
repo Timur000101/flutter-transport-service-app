@@ -106,7 +106,7 @@ class _ProfilePageState extends State<ProfilePage> {
             Map<String, dynamic> status = jsonDecode(response.body);
             if (status['status'] == "ok") {
               sharedPreferences.setBool(AppConstants.isSendedDeviceToken, true);
-              print("sended device token");
+              // print("sended device token");
             }
           }
         }

@@ -76,7 +76,6 @@ class _OrderActivePageState extends State<OrderActivePage> {
   void initState(){
     _refresh();
     super.initState();
-
   }
 
   @override
@@ -93,8 +92,6 @@ class _OrderActivePageState extends State<OrderActivePage> {
             }),
         )
         );
-
-
   }
 
 // Widget projectWidget() {

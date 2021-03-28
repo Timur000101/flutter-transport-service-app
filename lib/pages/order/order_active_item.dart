@@ -277,7 +277,7 @@ class OrderActiveItem extends StatelessWidget {
   showCustomAlert(context) {
     var dialog = CustomAlertDialog(
         title: "Внимание",
-        message: "Вы не зарегистрированы, зарегистрироваться?",
+        message: "Вы уверены?",
         onPostivePressed: () {
           finishOrder(context);
         },
