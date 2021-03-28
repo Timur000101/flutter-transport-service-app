@@ -14,8 +14,9 @@ import 'package:http/http.dart' as http;
 
 class OrderActiveItem extends StatelessWidget {
   final ActiveOrderCustomer active;
+  final Function callback;
 
-  OrderActiveItem({Key key, this.active}) : super(key: key);
+  OrderActiveItem({Key key, this.active, this.callback}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -246,6 +247,7 @@ class OrderActiveItem extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child:AppConstants.role ? ElevatedButton(
                   onPressed: () {
+                    callback();
                     finishOrder(context);
                   },
                   child: Padding(

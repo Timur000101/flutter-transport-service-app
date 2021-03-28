@@ -89,7 +89,7 @@ class _OrderActivePageState extends State<OrderActivePage> {
         child:  ListView.builder(
             itemCount: activeListCustomer.length,
             itemBuilder: (BuildContext context, int index) {
-              return OrderActiveItem(active: activeListCustomer[index]);
+              return OrderActiveItem(active: activeListCustomer[index], callback: getActiveCustomer);
             }),
         )
         );
