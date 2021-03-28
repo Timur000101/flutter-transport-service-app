@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:sto_app/core/const.dart';
 import 'package:sto_app/models/active_order_customer.dart';
 import 'package:sto_app/models/order_history.dart';
+import 'package:sto_app/utils/alert.dart';
 import 'package:sto_app/utils/utils.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:http/http.dart' as http;
@@ -16,7 +17,7 @@ class OrderActiveItem extends StatelessWidget {
   final ActiveOrderCustomer active;
   final Function callback;
 
-  OrderActiveItem({Key key, this.active, this.callback}) : super(key: key);
+  OrderActiveItem({Key key, this.active,@required this.callback}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -146,6 +147,8 @@ class OrderActiveItem extends StatelessWidget {
       if (status['status'] == "ok") {
         Navigator.pop(context);
         Scaffold.of(context).showSnackBar(SnackBar(content: Text("Заказ завершен")));
+        callback();
+        Navigator.pop(context);
       }
     } else {
       // If the server did not return a 200 OK response,
@@ -247,8 +250,7 @@ class OrderActiveItem extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child:AppConstants.role ? ElevatedButton(
                   onPressed: () {
-                    callback();
-                    finishOrder(context);
+                    showCustomAlert(context);
                   },
                   child: Padding(
                     padding: const EdgeInsets.symmetric(
@@ -271,6 +273,19 @@ class OrderActiveItem extends StatelessWidget {
       ),
     );
   }
+
+  showCustomAlert(context) {
+    var dialog = CustomAlertDialog(
+        title: "Внимание",
+        message: "Вы не зарегистрированы, зарегистрироваться?",
+        onPostivePressed: () {
+          finishOrder(context);
+        },
+        positiveBtnText: 'Да',
+        negativeBtnText: 'Нет');
+    showDialog(context: context, builder: (BuildContext context) => dialog);
+  }
+
   _launchURL(phone) async {
     var url = "https://wa.me/$phone";
 

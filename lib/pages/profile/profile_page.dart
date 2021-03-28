@@ -414,17 +414,23 @@ class _ProfilePageState extends State<ProfilePage> {
                                 horizontal: 0, vertical: 0),
                             onPressed: () {
                               if (isReg == true) {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => EditProfile(
-                                            imageurl: avaURL,
-                                            name: name,
-                                            phone: phone,
-                                            secondPhone: secondPhone,
-                                            thirdPhone: thirdPhone,
-                                          )),
-                                ).whenComplete(() => {getuserdetail()});
+                                if (!AppConstants.role) {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            EditProfile(
+                                              imageurl: avaURL,
+                                              name: name,
+                                              phone: phone,
+                                              secondPhone: secondPhone,
+                                              thirdPhone: thirdPhone,
+                                            )),
+                                  ).whenComplete(() => {getuserdetail()});
+                                }
+                                else {
+                                 showCustomAlertCto();
+                                }
                               } else {
                                 showCustomAlert();
                               }
@@ -587,6 +593,18 @@ class _ProfilePageState extends State<ProfilePage> {
         negativeBtnText: 'Нет');
     showDialog(context: context, builder: (BuildContext context) => dialog);
   }
+  showCustomAlertCto() {
+    var dialog = CustomAlertDialog(
+        title: "Внимание",
+        message: "Вы не можете редактировать профиль исполнителя! Для этого обратитесь в службу поддержки.",
+        onPostivePressed: () {
+          Navigator.pop(context);
+        },
+        positiveBtnText: 'Ок',
+        );
+    showDialog(context: context, builder: (BuildContext context) => dialog);
+  }
+
 
 
   _launchURL() async {
