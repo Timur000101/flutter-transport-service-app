@@ -30,18 +30,19 @@ class _RequestPageState extends State<RequestPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.backgroundColor,
-      appBar: buildAppBar("Заявки"),
-      body: RefreshIndicator(
-        key: _refreshIndicatorKey,
-        onRefresh: _refresh,
-        child: (request_array.length != 0) ? ListView.builder(
-          itemCount: request_array.length,
-          itemBuilder: (BuildContext context, int index) {
-            return RequestListItem(request_array[index]);
-          }) : Center(child: Text('Заказов пока нет...')),
-      )
-    );
+        backgroundColor: AppColors.backgroundColor,
+        appBar: buildAppBar("Заявки"),
+        body: RefreshIndicator(
+          key: _refreshIndicatorKey,
+          onRefresh: _refresh,
+          child: (request_array.length != 0)
+              ? ListView.builder(
+                  itemCount: request_array.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return RequestListItem(request_array[index]);
+                  })
+              : Center(child: Text('Заказов пока нет...')),
+        ));
   }
 
   Future<String> getToken() async {
@@ -59,22 +60,24 @@ class _RequestPageState extends State<RequestPage> {
     var token = await getToken();
     await http.get(
       "${AppConstants.baseUrl}order/",
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-          "Accept": "application/json",
-          "Authorization": "Token $token"
-        },
-      ).then((response) {
-        List<RequestItem> list = List<RequestItem>();
-        var responseBody = jsonDecode(utf8.decode(response.body.codeUnits));
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        "Accept": "application/json",
+        "Authorization": "Token $token"
+      },
+    ).then((response) {
+      List<RequestItem> list = List<RequestItem>();
+      var responseBody = jsonDecode(utf8.decode(response.body.codeUnits));
 
-        for (Object i in responseBody){
-          list.add(RequestItem.fromJson(i));
-        }
+      for (Object i in responseBody) {
+        list.add(RequestItem.fromJson(i));
+      }
+      if (mounted) {
         setState(() {
           request_array = list;
         });
-      }).catchError((error) => print(error));
+      }
+    }).catchError((error) => print(error));
   }
 
   isRegister() async {

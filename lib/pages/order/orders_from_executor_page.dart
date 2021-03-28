@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sto_app/components/orderCard.dart';
 import 'package:sto_app/core/const.dart';
@@ -11,7 +10,7 @@ import 'package:sto_app/widgets/app_widgets.dart';
 import '../../models/order.dart';
 import 'package:http/http.dart' as http;
 import 'package:location/location.dart';
-// import 'package:app_settings/app_settings.dart';
+
 
 class OrdersFromExecutorPage extends StatefulWidget {
   @override
