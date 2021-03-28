@@ -36,9 +36,11 @@ class _MessagePageState extends State<MessagePage> {
       for (Object i in responseBody) {
         list.add(Message.fromJson(i));
       }
-      setState(() {
-        messages = list;
-      });
+      if (mounted){
+        setState(() {
+          messages = list;
+        });
+      }
     }
     else {
        throw ("failed get message");
