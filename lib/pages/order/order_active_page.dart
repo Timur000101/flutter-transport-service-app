@@ -126,7 +126,6 @@ Widget projectWidget() {
   }
 
 
-
   Future<String> getToken() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     return sharedPreferences.getString(AppConstants.key);
