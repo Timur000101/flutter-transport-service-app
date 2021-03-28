@@ -97,23 +97,23 @@ class _OrderActivePageState extends State<OrderActivePage> {
 
   }
 
-Widget projectWidget() {
-  return FutureBuilder(
-    builder: (context, projectSnap) {
-      if (projectSnap.connectionState == ConnectionState.none &&
-          projectSnap.hasData == null) {
-        //print('project snapshot data is: ${projectSnap.data}');
-        return Container();
-      }
-      return ListView.builder(
-      itemCount: activeListCustomer.length,
-      itemBuilder: (BuildContext context, int index) {
-      return OrderActiveItem(active: activeListCustomer[index]);
-      });
-    },
-    future: getActiveCustomer(),
-  );
-}
+// Widget projectWidget() {
+//   return FutureBuilder(
+//     builder: (context, projectSnap) {
+//       if (projectSnap.connectionState == ConnectionState.none &&
+//           projectSnap.hasData == null) {
+//         //print('project snapshot data is: ${projectSnap.data}');
+//         return Container();
+//       }
+//       return ListView.builder(
+//       itemCount: activeListCustomer.length,
+//       itemBuilder: (BuildContext context, int index) {
+//       return OrderActiveItem(active: activeListCustomer[index], );
+//       });
+//     },
+//     future: getActiveCustomer(),
+//   );
+// }
 
   // ListView.builder(
   // itemCount: AppConstants.role ? activeListCto.length : activeListCustomer.length,
@@ -124,7 +124,6 @@ Widget projectWidget() {
      await getActiveCustomer();
     return null;
   }
-
 
   Future<String> getToken() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
