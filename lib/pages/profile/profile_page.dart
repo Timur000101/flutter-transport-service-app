@@ -59,10 +59,16 @@ class _ProfilePageState extends State<ProfilePage> {
   getInfoFromSP() async{
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     var name_SP = sharedPreferences.getString(AppConstants.name);
+    var nameSTO_SP = sharedPreferences.getString(AppConstants.ctoName);
     var ava_SP = sharedPreferences.getString(AppConstants.avatar);
     var phone_SP = sharedPreferences.getString(AppConstants.phone);
     if (name_SP != null){
-      AppConstants.profileName = name_SP;
+      if (AppConstants.role){
+        AppConstants.profileName = nameSTO_SP;
+      }
+      else{
+        AppConstants.profileName = name_SP;
+      }
     }
 
     if (ava_SP != null){
