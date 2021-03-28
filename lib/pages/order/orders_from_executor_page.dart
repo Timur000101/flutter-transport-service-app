@@ -56,8 +56,8 @@ class _OrdersFromExecutorPageState extends State<OrdersFromExecutorPage> {
   }
 
   Future<Null> _refresh() async {
-    await Future.delayed(Duration(seconds: 2));
-    _getCurrentlocation();
+    // await Future.delayed(Duration(seconds: 2));
+    await _getCurrentlocation();
     return null;
   }
 
@@ -65,13 +65,7 @@ class _OrdersFromExecutorPageState extends State<OrdersFromExecutorPage> {
     // print("lat : $lat");
     // print("lng : $lng");
     var token = await getToken();
-    // var queryParams = {'lat':  lat, 'lng': lng};
 
-    // Map<String, dynamic> queryParameters = {
-    //   'lat':  lat, 'lng': lng
-    // };
-    //
-    // var uri = Uri.https("back.bumper-app.kz", "order/request/", queryParameters);
     var headers = {
       'Content-Type': 'application/json; charset=UTF-8',
       "Accept": "application/json",
