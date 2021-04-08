@@ -1,14 +1,5 @@
-/* 
-  InfoPlist.strings
-  Runner
-
-  Created by THANOS on 3/29/21.
-  
-*/
-
-
-NSCameraUsageDescription = "Разрешить доступ к камере для съемки фотографий, которые мы используем в заказе."
-NSLocationAlwaysUsageDescription = "Разрешите доступ к местоположению, чтобы находить заказы рядом с вами."
-NSLocationWhenInUseUsageDescription = "Разрешите доступ к местоположению, чтобы находить заказы рядом с вами."
-NSMicrophoneUsageDescription = "Разрешить доступ к микрофону."
-NSPhotoLibraryUsageDescription = "Разрешите доступ к фото-библиотеке, чтобы использовать фото в заказе."
+NSCameraUsageDescription = "Разрешить доступ к камере для съемки фотографий, которые мы используем в заказе.";
+NSLocationAlwaysUsageDescription = "Разрешите доступ к местоположению, чтобы находить заказы рядом с вами.";
+NSLocationWhenInUseUsageDescription = "Разрешите доступ к местоположению, чтобы находить заказы рядом с вами.";
+NSMicrophoneUsageDescription = "Разрешить доступ к микрофону.";
+NSPhotoLibraryUsageDescription = "Разрешите доступ к фото-библиотеке, чтобы использовать фото в заказе.";

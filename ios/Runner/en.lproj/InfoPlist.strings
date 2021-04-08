@@ -1,14 +1,5 @@
-/* 
-  InfoPlist.strings
-  Runner
-
-  Created by THANOS on 3/29/21.
-  
-*/
-
-
-NSCameraUsageDescription = "Allow access to the camera for taking photos that we use in the order."
-NSLocationAlwaysUsageDescription = "Allow location access to find orders near you."
-NSLocationWhenInUseUsageDescription = "Allow location access to find orders near you."
-NSMicrophoneUsageDescription = "Allow access to microphone."
-NSPhotoLibraryUsageDescription = "Allow access to the photo library to use the photo in the order."
+NSCameraUsageDescription = "Allow access to the camera for taking photos that we use in the order.";
+NSLocationAlwaysUsageDescription = "Allow location access to find orders near you.";
+NSLocationWhenInUseUsageDescription = "Allow location access to find orders near you.";
+NSMicrophoneUsageDescription = "Allow access to microphone.";
+NSPhotoLibraryUsageDescription = "Allow access to the photo library to use the photo in the order.";
